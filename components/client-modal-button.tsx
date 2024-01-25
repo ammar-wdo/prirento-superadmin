@@ -17,6 +17,7 @@ type Props = {
   id?:string
   destructive?: boolean;
   delete?: DeleteFunction
+  className?:string
 };
 
 const ClientModalButton = ({
@@ -26,11 +27,13 @@ const ClientModalButton = ({
   small,
   destructive,
   delete: deleteFunction,
-  id
+  id,
+  className
 }: Props) => {
   const { setOpen } = useModal();
   return (
     <Button
+    className={className || ''}
       variant={destructive ? "destructive" : "default"}
       size={small ? "sm" : "default"}
       onClick={() => setOpen(modal, data, deleteFunction,id)}

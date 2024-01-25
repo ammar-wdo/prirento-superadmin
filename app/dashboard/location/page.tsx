@@ -10,7 +10,7 @@ const page = (props: Props) => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <Heading title="Location" description="Manage locations" />
+        <Heading title="Location" description="Manage locations & sub-locations" />
         <ClientModalButton data={{}} modal="location" >Add location</ClientModalButton>
       </div>
       <div className="mt-12">
