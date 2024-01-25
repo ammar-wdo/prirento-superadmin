@@ -1,14 +1,23 @@
-import Heading from '@/components/heading'
-import React from 'react'
+import LocationFeed from "@/components/(location)/location-feed";
+import ClientModalButton from "@/components/client-modal-button";
+import Heading from "@/components/heading";
+import { Button } from "@/components/ui/button";
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const page = (props: Props) => {
   return (
     <div>
-      <Heading title="Location" description="Manage locations" />
+      <div className="flex items-center justify-between">
+        <Heading title="Location" description="Manage locations" />
+        <ClientModalButton data={{}} modal="location" >Add location</ClientModalButton>
+      </div>
+      <div className="mt-12">
+        <LocationFeed />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
