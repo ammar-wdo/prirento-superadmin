@@ -1,4 +1,5 @@
 import Heading from '@/components/heading'
+import NaviatorButton from '@/components/navigator-button'
 import React from 'react'
 
 type Props = {}
@@ -6,7 +7,12 @@ type Props = {}
 const page = (props: Props) => {
   return (
     <div>
+      <div className='flex items-center justify-between'>
       <Heading title="Company" description="Manage companies" />
+      <NaviatorButton title='Create company' href='/dashboard/company/new' />
+
+      </div>
+   
     </div>
   )
 }
