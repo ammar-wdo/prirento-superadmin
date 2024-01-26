@@ -1,11 +1,12 @@
-import { Category, Location } from "@prisma/client";
+import { Category, Location, SubLocation } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "location" | "category" | "delete";
+export type ModalType = "location" | "category" | "delete" | "sub-location";
 
 export type ModalData = {
   location?: Location;
-  category?:Category
+  category?:Category,
+  subLocation?:SubLocation
 };
 
 export type DeleteFunction = (
@@ -20,12 +21,14 @@ type Store = {
   type: ModalType | "";
   data?: ModalData;
   deleteFunction?: DeleteFunction | undefined;
-  id?: string;
+  deleteId?: string;
+  parentId?:string,
   setOpen: (
     type: ModalType,
     data: ModalData,
     func?: DeleteFunction,
-    id?: string
+    id?: string,
+    parentId?:string
   ) => void;
   setClose: () => void;
 };
@@ -34,8 +37,8 @@ export const useModal = create<Store>()((set) => ({
   open: false,
   data: {},
   type: "",
-  setOpen: (type: ModalType, data = {}, func?: DeleteFunction, id?: string) =>
-    set({ open: true, type, data, deleteFunction: func, id }),
+  setOpen: (type: ModalType, data = {}, func?: DeleteFunction, deleteId?: string,parentId?:string) =>
+    set({ open: true, type, data, deleteFunction: func, deleteId ,parentId}),
   setClose: () =>
-    set({ open: false, type: "", data: {}, deleteFunction: undefined, id: "" }),
+    set({ open: false, type: "", data: {}, deleteFunction: undefined, deleteId: "",parentId:"" }),
 }));

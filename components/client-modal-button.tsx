@@ -8,17 +8,19 @@ import {
   ModalType,
   useModal,
 } from "@/hooks/modals-hook/modals.hook";
+import { cn } from "@/lib/utils";
 
 type Props = {
   children: React.ReactNode;
   modal: ModalType;
   data: ModalData;
   small?: boolean;
-  id?:string
+  deleteId?:string
   destructive?: boolean;
   delete?: DeleteFunction
+  parentId?:string,
   className?:string
-};
+} 
 
 const ClientModalButton = ({
   children,
@@ -27,16 +29,17 @@ const ClientModalButton = ({
   small,
   destructive,
   delete: deleteFunction,
-  id,
+  deleteId,
+  parentId,
   className
 }: Props) => {
   const { setOpen } = useModal();
   return (
     <Button
-    className={className || ''}
+    className={cn(className || '')}
       variant={destructive ? "destructive" : "default"}
       size={small ? "sm" : "default"}
-      onClick={() => setOpen(modal, data, deleteFunction,id)}
+      onClick={() => setOpen(modal, data, deleteFunction,deleteId,parentId)}
     >
       {children}
     </Button>

@@ -14,7 +14,7 @@ const CategoryCard = ({ category }: Props) => {
       <div className="flex items-center gap-1">
         <ClientModalButton
           delete={deleteCategory}
-          id={category.id}
+          deleteId={category.id}
           destructive
           small
           data={{}}

@@ -20,15 +20,15 @@ type Props = {};
 const DeleteModal = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { open, type, setClose, deleteFunction, id } = useModal();
+  const { open, type, setClose, deleteFunction, deleteId } = useModal();
 
   const isOpen = open && type === "delete";
 const router = useRouter()
   const handleDelete = async () => {
-    if (!deleteFunction || !id) return;
+    if (!deleteFunction || !deleteId) return;
     try {
       setIsLoading(true);
-      const res = await deleteFunction(id);
+      const res = await deleteFunction(deleteId);
       if (res.message) {
         toast.error(res.message);
       } else {
