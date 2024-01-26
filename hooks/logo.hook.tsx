@@ -54,7 +54,7 @@ export const useLogo = ({ form }: Props) => {
 
   const setImage = (url: string) => {
     form.setValue("logo", url);
-    console.log("form logo", form.getValues("logo"));
+   
   };
   const ImagePlaceholder = () => {
     if (!!form?.watch("logo"))

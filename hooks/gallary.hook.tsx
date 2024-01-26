@@ -16,7 +16,7 @@ import {v4 as uuidv4 } from 'uuid';
 export const useGallary= ({form}:Props)=>{
 
 
-    console.log(form.getValues('gallary'))
+   
     const { edgestore } = useEdgeStore();
 
     const setImages = (url: string) => {
@@ -43,7 +43,7 @@ export const useGallary= ({form}:Props)=>{
               ;
             },
           });
-  console.log(res.url)
+ 
           setImages(res.url);
         
     

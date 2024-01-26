@@ -1,6 +1,7 @@
 import CompanyForm from '@/components/(company)/company-form'
 import Heading from '@/components/heading'
 import prisma from '@/lib/prisma'
+import { notFound } from 'next/navigation'
 import React from 'react'
 
 type Props = {
@@ -12,6 +13,8 @@ const page = async({params}: Props) => {
   const categoriesRes =  prisma.category.findMany()
 
   const [categories,company] = await Promise.all([categoriesRes,companyRes])
+
+  if(!company && params.companyId !=='new') return notFound()
 
   return (
     <div>

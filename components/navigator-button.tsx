@@ -8,11 +8,11 @@ type Props = {
     
 } & React.HTMLProps<HTMLButtonElement>
 
-const NaviatorButton = ({title,href,...props}: Props) => {
+const NavigatorButton = ({title,href,className}: Props) => {
     const router = useRouter()
   return (
-    <Button onClick={()=>router.push(href)}>{title}</Button>
+    <Button className={className} onClick={()=>router.push(href)}>{title}</Button>
   )
 }
 
-export default NaviatorButton
+export default NavigatorButton

@@ -1,3 +1,4 @@
+import CompanyFeed from '@/components/(company)/company-feed'
 import Heading from '@/components/heading'
 import NaviatorButton from '@/components/navigator-button'
 import React from 'react'
@@ -12,6 +13,8 @@ const page = (props: Props) => {
       <NaviatorButton title='Create company' href='/dashboard/company/new' />
 
       </div>
+
+      <div className='mt-12'><CompanyFeed/></div>
    
     </div>
   )

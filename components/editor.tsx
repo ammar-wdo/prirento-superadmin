@@ -1,12 +1,11 @@
 
 "use client"
-
 import { BlockNoteEditor } from "@blocknote/core";
-import "@blocknote/core/style.css";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
+import "@blocknote/react/style.css";
 
 
-import { useTheme } from "next-themes";
+
 import { useEdgeStore } from "@/lib/edgestore";
 
 
@@ -21,7 +20,7 @@ type Props ={
 export default function Editor({onChange,initialContent,editable}:Props) {
 
 
-const {resolvedTheme} = useTheme()
+
 
   
     const {edgestore} = useEdgeStore()
@@ -51,5 +50,5 @@ const {resolvedTheme} = useTheme()
 
 
 
-  return <div><BlockNoteView theme={resolvedTheme ==='dark' ? 'dark' : 'light'}  editor={editor} /></div>;
+  return <div><BlockNoteView   editor={editor} /></div>;
 }

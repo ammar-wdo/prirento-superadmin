@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Category, Company } from "@prisma/client";
 import { useLogo } from "../logo.hook";
 import { useGallary } from "../gallary.hook";
+import { addCompany, editCompany } from "@/actions/company-actions";
 
 type Props = {
   company?: Company;
@@ -22,6 +23,7 @@ export const useCompany = ({ company }: Props) => {
       email: company?.email || "",
       password: company?.password || "",
       newPassword: "",
+      address:company?.address || "",
       phoneNumber: company?.phoneNumber || "",
       whatsApp: company?.whatsApp || "",
       logo: company?.logo || "",
@@ -30,12 +32,30 @@ export const useCompany = ({ company }: Props) => {
       categoryId: company?.categoryId || "",
       openingTime: company?.openingTime || [],
       promoted: company?.promoted,
+      terms:company?.terms || ""
     },
   });
 
   async function onSubmit(values: z.infer<typeof companySchema>) {
     try {
+      
+        let res 
+        if(company){
+res = await editCompany(values,company.id)
+        }else{
+            res = await addCompany(values)
+         
+        }
+
+        if(res.message){
+            toast.error(res.message)
+        }else{
+            toast.success(res.success)
+router.push('/dashboard/company')
+router.refresh()
+        }
     } catch (error) {
+        console.log(error)
       toast.error("Something went wrong");
     }
   }
