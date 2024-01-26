@@ -1,6 +1,7 @@
 'use client'
 
 import SubLocationForm from "@/components/(sub-location)/sublocation-form"
+import CarModelModal from "@/components/modals/carModel-modal"
 import CategoryModal from "@/components/modals/category-modal"
 import DeleteModal from "@/components/modals/delete-modal"
 import LocationModal from "@/components/modals/location-modal"
@@ -20,7 +21,7 @@ const ModalProvider = (props: Props) => {
     <DeleteModal/>
     <CategoryModal />
     <SubLocationModal/>
-
+    <CarModelModal/>
     </>
   )
 }

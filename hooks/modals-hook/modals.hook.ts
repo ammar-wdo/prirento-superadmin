@@ -1,12 +1,13 @@
-import { Category, Location, SubLocation } from "@prisma/client";
+import { CarModel, Category, Location, SubLocation } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "location" | "category" | "delete" | "sub-location";
+export type ModalType = "location" | "category" | "delete" | "sub-location" | "carModel";
 
 export type ModalData = {
   location?: Location;
   category?:Category,
-  subLocation?:SubLocation
+  subLocation?:SubLocation,
+  carModel?:CarModel
 };
 
 export type DeleteFunction = (

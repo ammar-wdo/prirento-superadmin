@@ -84,3 +84,14 @@ model Category {
 
 
 
+model CarModel {
+  id String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+

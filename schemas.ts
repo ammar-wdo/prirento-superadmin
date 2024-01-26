@@ -52,3 +52,8 @@ export const companySchema = z.object({
 
 
   })
+
+  export const carModelSchema = z.object({
+    name: z.string().min(2,'At least 2 characters').max(20,'maximum 20 characters'),
+
+  })
