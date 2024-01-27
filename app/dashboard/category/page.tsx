@@ -12,7 +12,7 @@ const page = (props: Props) => {
     <div>
       <div className="flex items-center justify-between">
         <Heading title="Category" description="Manage categories for items" />
-        <ClientModalButton data={{}} modal="category" >Add category</ClientModalButton>
+        <ClientModalButton modalInputs={{modal:'category',toDelete:false}}>Add category</ClientModalButton>
       </div>
       <div className="mt-12">
         <CategoryFeed />

@@ -19,7 +19,7 @@ import { useCarModel } from "@/hooks/(car-model)/car-model.hook";
 type Props = {};
 
 const CarModelForm = (props: Props) => {
-    const {data} = useModal()
+    const {modalInputs} = useModal()
   const { form, onSubmit } = useCarModel();
   return (
     <Form {...form}>
@@ -39,7 +39,7 @@ const CarModelForm = (props: Props) => {
           )}
         />
         <ActionLoaderButton isLoading={form.formState.isSubmitting}>
-         {data?.carModel ? 'Update' : 'Submit'}
+         {(modalInputs?.modal==='carModel' && modalInputs.carModel) ? 'Update' : 'Submit'}
         </ActionLoaderButton>
       </form>
     </Form>

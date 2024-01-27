@@ -15,8 +15,8 @@ type Props = {}
 
 const CategoryModal = (props: Props) => {
 
-    const {open,type,setClose} = useModal()
-    const isOpen = open && type==='category'
+    const {open,modalInputs,setClose} = useModal()
+    const isOpen = open && modalInputs?.modal==='category'
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
  

@@ -18,7 +18,8 @@ import { useModal } from "@/hooks/modals-hook/modals.hook";
 type Props = {};
 
 const LocationForm = (props: Props) => {
-    const {data} = useModal()
+    const {modalInputs} = useModal()
+    
   const { form, onSubmit } = useLocation();
   return (
     <Form {...form}>
@@ -38,7 +39,7 @@ const LocationForm = (props: Props) => {
           )}
         />
         <ActionLoaderButton isLoading={form.formState.isSubmitting}>
-         {data?.location ? 'Update' : 'Submit'}
+         {(modalInputs?.modal==='location' && modalInputs.location) ? 'Update' : 'Submit'}
         </ActionLoaderButton>
       </form>
     </Form>

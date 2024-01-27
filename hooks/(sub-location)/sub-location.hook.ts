@@ -7,10 +7,21 @@ import { useRouter } from "next/navigation";
 import { addLocation, editLocation } from "@/actions/location-actions";
 import { toast } from "sonner";
 import { addSubLocation, editSubLocation } from "@/actions/sublocations-actions";
+import { SubLocation } from "@prisma/client";
 
 export const useSubLocation = () => {
-  const { setClose, data ,parentId} = useModal();
-  const subLocation = data?.subLocation;
+  const { setClose,  modalInputs} = useModal();
+
+
+let subLocation:SubLocation | undefined = undefined
+let parentId:string = ''
+
+if(modalInputs?.modal==='sub-location'){
+  subLocation = modalInputs.subLocation
+  parentId = modalInputs.parentId as string
+}
+
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof subLocationSchema>>({
@@ -23,7 +34,7 @@ export const useSubLocation = () => {
 
   async function onSubmit(values: z.infer<typeof subLocationSchema>) {
     try {
-        
+        console.log('try')
       let res;
       if (subLocation) {
       

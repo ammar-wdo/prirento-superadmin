@@ -19,7 +19,8 @@ import { useSubLocation } from "@/hooks/(sub-location)/sub-location.hook";
 type Props = {};
 
 const SubLocationForm = (props: Props) => {
-    const {data} = useModal()
+    const {modalInputs} = useModal()
+
   const { form, onSubmit } = useSubLocation();
   return (
     <Form {...form}>
@@ -39,7 +40,7 @@ const SubLocationForm = (props: Props) => {
           )}
         />
         <ActionLoaderButton isLoading={form.formState.isSubmitting}>
-         {data?.subLocation ? 'Update' : 'Submit'}
+         {(modalInputs?.modal==='sub-location' && modalInputs.subLocation) ? 'Update' : 'Submit'}
         </ActionLoaderButton>
       </form>
     </Form>

@@ -14,8 +14,8 @@ type Props = {}
 
 const LocationModal = (props: Props) => {
 
-    const {open,type,setClose} = useModal()
-    const isOpen = open && type==='location'
+    const {open,modalInputs,setClose} = useModal()
+    const isOpen = open && modalInputs?.modal==='location'
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
  

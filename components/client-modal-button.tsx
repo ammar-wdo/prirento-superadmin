@@ -4,33 +4,30 @@ import React from "react";
 import { Button } from "./ui/button";
 import {
   DeleteFunction,
-  ModalData,
-  ModalType,
+ 
+  ModalInputs,
+ 
   useModal,
 } from "@/hooks/modals-hook/modals.hook";
 import { cn } from "@/lib/utils";
 
 type Props = {
   children: React.ReactNode;
-  modal: ModalType;
-  data: ModalData;
+modalInputs:ModalInputs
   small?: boolean;
-  deleteId?:string
+
   destructive?: boolean;
-  delete?: DeleteFunction
-  parentId?:string,
+
+
   className?:string
 } 
 
 const ClientModalButton = ({
   children,
-  modal,
-  data = {},
+ 
   small,
   destructive,
-  delete: deleteFunction,
-  deleteId,
-  parentId,
+ modalInputs,
   className
 }: Props) => {
   const { setOpen } = useModal();
@@ -39,7 +36,7 @@ const ClientModalButton = ({
     className={cn(className || '')}
       variant={destructive ? "destructive" : "default"}
       size={small ? "sm" : "default"}
-      onClick={() => setOpen(modal, data, deleteFunction,deleteId,parentId)}
+      onClick={() => setOpen(modalInputs)}
     >
       {children}
     </Button>

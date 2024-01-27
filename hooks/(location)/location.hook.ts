@@ -6,10 +6,16 @@ import { useModal } from "../modals-hook/modals.hook";
 import { useRouter } from "next/navigation";
 import { addLocation, editLocation } from "@/actions/location-actions";
 import { toast } from "sonner";
+import { Location } from "@prisma/client";
 
 export const useLocation = () => {
-  const { setClose, data } = useModal();
-  const location = data?.location;
+  const { setClose, modalInputs } = useModal();
+  let location:Location | null = null
+if(modalInputs?.modal==='location'){
+  location = modalInputs?.location!
+};
+
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof locationSchema>>({
@@ -22,8 +28,8 @@ export const useLocation = () => {
   async function onSubmit(values: z.infer<typeof locationSchema>) {
     try {
       let res;
-      if (data?.location) {
-        res = await editLocation(values, data?.location.id);
+      if (location) {
+        res = await editLocation(values,location.id);
       } else {
         res = await addLocation(values);
       }

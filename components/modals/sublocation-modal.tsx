@@ -15,8 +15,9 @@ type Props = {}
 
 const SubLocationModal = (props: Props) => {
 
-    const {open,type,setClose} = useModal()
-    const isOpen = open && type==='sub-location'
+    const {open,modalInputs,setClose} = useModal()
+  
+    const isOpen = open && modalInputs?.modal==='sub-location'
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
  

@@ -18,7 +18,7 @@ import { useCategory } from "@/hooks/(category)/category.hook";
 type Props = {};
 
 const CategoryForm = (props: Props) => {
-    const {data} = useModal()
+    const {modalInputs} = useModal()
   const { form, onSubmit } = useCategory();
   return (
     <Form {...form}>
@@ -38,7 +38,7 @@ const CategoryForm = (props: Props) => {
           )}
         />
         <ActionLoaderButton isLoading={form.formState.isSubmitting}>
-         {data?.category ? 'Update' : 'Submit'}
+         {(modalInputs?.modal==='category' && modalInputs.category)? 'Update' : 'Submit'}
         </ActionLoaderButton>
       </form>
     </Form>

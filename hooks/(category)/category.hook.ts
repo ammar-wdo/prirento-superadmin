@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
 import { addCategory, editCategory } from "@/actions/category-actions";
+import { Category } from "@prisma/client";
 
 export const useCategory = () => {
-  const { setClose, data } = useModal();
-  const category = data?.category;
+  const { setClose, modalInputs } = useModal();
+  let category : Category | undefined = undefined
+  if(modalInputs?.modal==='category') category = modalInputs.category
   const router = useRouter();
 
   const form = useForm<z.infer<typeof categorySchema>>({
@@ -23,8 +25,8 @@ export const useCategory = () => {
   async function onSubmit(values: z.infer<typeof categorySchema>) {
     try {
       let res;
-      if (data?.category) {
-        res = await editCategory(values, data?.category.id);
+      if (category) {
+        res = await editCategory(values,category.id);
       } else {
         res = await addCategory(values);
       }

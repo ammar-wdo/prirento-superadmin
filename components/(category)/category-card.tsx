@@ -13,16 +13,25 @@ const CategoryCard = ({ category }: Props) => {
     <div className="flex items-center gap-2 border p-3 rounded-md">
       <div className="flex items-center gap-1">
         <ClientModalButton
-          delete={deleteCategory}
-          deleteId={category.id}
+          modalInputs={{
+            toDelete: true,
+            deleteFunction: deleteCategory,
+            deleteId: category.id,
+            modal: "delete",
+          }}
           destructive
           small
-          data={{}}
-          modal="delete"
         >
           <Trash className="w-3 h-3 cursor-pointer" />{" "}
         </ClientModalButton>
-        <ClientModalButton small data={{ category: category }} modal="category">
+        <ClientModalButton
+          small
+          modalInputs={{
+            modal: "category",
+            category: category,
+            toDelete: false,
+          }}
+        >
           <Edit2 className="w-3 h-3 cursor-pointer" />{" "}
         </ClientModalButton>
       </div>

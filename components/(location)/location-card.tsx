@@ -18,10 +18,13 @@ const LocationCard = ({ location }: Props) => {
         <p>{location.name}</p>
         <ToolTip side="top" title="Add Sub-location">
           <ClientModalButton
+            modalInputs={{
+              modal: "sub-location",
+              toDelete: false,
+              parentId:location.id
+            
+            }}
             className=""
-            data={{}}
-            modal="sub-location"
-            parentId={location.id}
           >
             <PlusCircle />
           </ClientModalButton>
@@ -44,19 +47,24 @@ const LocationCard = ({ location }: Props) => {
               <div className="flex gap-1  ">
                 <ClientModalButton
                   className="w-6 h-6 rounded-sm p-0"
-                  delete={deleteSubLocation}
-                  deleteId={el.id}
                   destructive
-                  data={{}}
-                  modal="delete"
+                  modalInputs={{
+                    toDelete: true,
+                    deleteFunction: deleteSubLocation,
+                    deleteId: el.id,
+                    modal: "delete",
+                  }}
                 >
                   <Trash className="w-3 h-3 cursor-pointer" />{" "}
                 </ClientModalButton>
                 <ClientModalButton
                   className="w-6 h-6 p-0 rounded-sm"
-                  data={{ subLocation: el }}
-                  parentId={location.id}
-                  modal="sub-location"
+                  modalInputs={{
+                    toDelete: false,
+                    modal: "sub-location",
+                    subLocation: el,
+                    parentId: location.id,
+                  }}
                 >
                   <Edit2 className="w-3 h-3 cursor-pointer" />{" "}
                 </ClientModalButton>
@@ -69,18 +77,23 @@ const LocationCard = ({ location }: Props) => {
       <div className="flex gap-1 w-full mt-auto">
         <ClientModalButton
           className="w-full"
-          delete={deleteLocation}
-          deleteId={location.id}
+          modalInputs={{
+            toDelete: true,
+            deleteId: location.id,
+            deleteFunction: deleteLocation,
+            modal: "delete",
+          }}
           destructive
-          data={{}}
-          modal="delete"
         >
           <Trash className="w-3 h-3 cursor-pointer" />{" "}
         </ClientModalButton>
         <ClientModalButton
           className="w-full"
-          data={{ location: location }}
-          modal="location"
+          modalInputs={{
+            toDelete: false,
+            modal: "location",
+            location: location,
+          }}
         >
           <Edit2 className="w-3 h-3 cursor-pointer" />{" "}
         </ClientModalButton>

@@ -11,7 +11,7 @@ const page = (props: Props) => {
     <div>
       <div className="flex items-center justify-between">
         <Heading title="Location" description="Manage locations & sub-locations" />
-        <ClientModalButton data={{}} modal="location" >Add location</ClientModalButton>
+        <ClientModalButton modalInputs={{toDelete:false,modal:'location'}} >Add location</ClientModalButton>
       </div>
       <div className="mt-12">
         <LocationFeed />

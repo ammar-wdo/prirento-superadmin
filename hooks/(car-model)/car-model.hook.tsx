@@ -9,10 +9,13 @@ import { toast } from "sonner";
 import { addCategory, editCategory } from "@/actions/category-actions";
 import { carModelSchema } from "@/schemas";
 import { addCarModel, editCarModel } from "@/actions/carModel-actions";
+import { CarModel } from "@prisma/client";
 
 export const useCarModel = () => {
-  const { setClose, data } = useModal();
-  const carModel = data?.carModel;
+  const { setClose, modalInputs } = useModal();
+  let carModel: CarModel | undefined = undefined;
+  if (modalInputs?.modal === "carModel") carModel = modalInputs.carModel;
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof carModelSchema>>({
@@ -25,8 +28,8 @@ export const useCarModel = () => {
   async function onSubmit(values: z.infer<typeof carModelSchema>) {
     try {
       let res;
-      if (data?.carModel) {
-        res = await editCarModel(values, data?.carModel.id);
+      if (carModel) {
+        res = await editCarModel(values, carModel.id);
       } else {
         res = await addCarModel(values);
       }
