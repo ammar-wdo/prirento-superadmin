@@ -23,13 +23,14 @@ const DeleteModal = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { open, modalInputs, setClose} = useModal();
+  const router = useRouter()
 
   if(modalInputs?.toDelete!== true) return 
 
   const {deleteFunction,deleteId} = modalInputs
 
   const isOpen = open && modalInputs?.toDelete === true;
-const router = useRouter()
+
   const handleDelete = async () => {
     if (!deleteFunction || !deleteId) return;
     try {
