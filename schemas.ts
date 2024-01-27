@@ -163,7 +163,7 @@ export const carSchema = z
   })
   .refine((data) => data.reservationFlatFee || data.reservationPercentage, {
     message: "Reservation flat fee or reservation percentage is required",
-    path: ["reservationFlatFee", "reservationPercentage"],
+    path: ["reservationFlatFee"],
   })
   .and(carTypeSchema)
   .and(transmitionSchema)

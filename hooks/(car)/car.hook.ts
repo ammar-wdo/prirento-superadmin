@@ -10,6 +10,7 @@ import { addCategory, editCategory } from "@/actions/category-actions";
 import { carModelSchema, carSchema } from "@/schemas";
 import { addCarModel, editCarModel } from "@/actions/carModel-actions";
 import { Car } from "@prisma/client";
+import { useGallary } from "../gallary.hook";
 
 export const useCar = (
   car: Car & {
@@ -65,6 +66,8 @@ export const useCar = (
 
     },
   });
+
+  const {ImagesPlaceholder,deleteImagesLoader,deleteanImage,imagesFile,imagesLoader,setImagesFile,uploadImages} = useGallary({form})
 
   async function onSubmit(values: z.infer<typeof carSchema>) {
     try {
