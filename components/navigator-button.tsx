@@ -3,7 +3,7 @@ import { Button } from './ui/button'
 import { useRouter } from 'next/navigation'
 
 type Props = {
-    title:string,
+    title?:string,
     href:string,
     
 } & React.HtmlHTMLAttributes<HTMLButtonElement>

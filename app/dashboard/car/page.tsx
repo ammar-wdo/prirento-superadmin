@@ -1,3 +1,4 @@
+import CarFeed from "@/components/(car)/car-feed";
 import CarBrandFeed from "@/components/(car-brand)/car-brand-feed";
 import CarModelFeed from "@/components/(car-model)/car-model-feed";
 import Heading from "@/components/heading";
@@ -12,6 +13,9 @@ const page = (props: Props) => {
       <CarBrandFeed/>
       <div className="mt-32">
       <CarModelFeed/>
+      </div>
+      <div className="mt-32">
+      <CarFeed/>
       </div>
      
     </div>

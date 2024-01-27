@@ -10,70 +10,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
-
-
 model Company {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
   name String
 
-  categoryId String
-  category Category @relation(fields: [categoryId],references: [id])
+  
 
-  email String @unique
-  password  String
-  address String
+  email       String @unique
+  password    String
+  address     String
   phoneNumber String
   whatsApp    String
 
-
-  logo  String
+  logo    String
   gallary String[]
 
   content String
 
-  promoted  Boolean
+  promoted Boolean
 
   openingTime String[]
 
-  terms     String
+  terms String
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  cars  Car[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
-
 model Location {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
   name String
 
   subLocations SubLocation[]
 
+  pickupCars  Car[] @relation("PickupLocations")
+  dropoffCars Car[] @relation("DropoffLocations")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
-
 model SubLocation {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
   name String
 
   locationId String
-  location Location @relation(fields: [locationId],references: [id])
+  location   Location @relation(fields: [locationId], references: [id])
+
+  pickupCars  Car[] @relation("PickupSubLocations")
+  dropoffCars Car[] @relation("DropoffSubLocations")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
-
 model Category {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
   name String
-
 
   companies Company[]
 
@@ -81,9 +79,8 @@ model Category {
   updatedAt DateTime @updatedAt
 }
 
-
 model CarBrand {
-  id String @id @default(uuid())
+  id    String @id @default(uuid())
   brand String
 
   logo String
@@ -94,19 +91,62 @@ model CarBrand {
   updatedAt DateTime @updatedAt
 }
 
-
 model CarModel {
-  id String @id @default(uuid())
-  name String
-  carBrandId  String
-  carBrand  CarBrand @relation(fields: [carBrandId],references: [id])
+  id         String   @id @default(uuid())
+  name       String
+  carBrandId String
+
+  carBrand   CarBrand @relation(fields: [carBrandId], references: [id])
+  cars       Car[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model Car {
+  id            String   @id @default(uuid())
+  description   String
+  year          String
+  colors        String
+  interiorColor String
+  seats         Int
+  doors         Int
+  engine        String
+  kmIncluded    Int
+  carType       String
+  gallary       String[]
+  transmition   String
+  electric      String
+  carStatus     String
 
+  deposite              Int
+  commession            Int
+  reservationFlatFee    Int?
+  reservationPercentage Int?
 
+  pricings  Int[]
+  hourPrice Int
 
+  minimumHours Int?
+  deleviryFee  Int
+  coolDown     Int
 
+  additionalFeatures  Json[]
 
+  disabled  Boolean @default(false)
+
+  pickupLocations  Location[] @relation("PickupLocations")
+  dropoffLocations Location[] @relation("DropoffLocations")
+
+  pickupSubLocations  SubLocation[] @relation("PickupSubLocations")
+  dropoffSubLocations SubLocation[] @relation("DropoffSubLocations")
+
+  companyId String
+  company Company @relation(fields: [companyId],references: [id])
+
+  carModelId  String
+  carModel    CarModel  @relation(fields: [carModelId],references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
