@@ -13,6 +13,7 @@ const CategoryCard = ({ category }: Props) => {
     <div className="flex items-center gap-2 border p-3 rounded-md">
       <div className="flex items-center gap-1">
         <ClientModalButton
+        
           modalInputs={{
             toDelete: true,
             deleteFunction: deleteCategory,

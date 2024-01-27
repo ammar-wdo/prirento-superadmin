@@ -6,7 +6,7 @@ type Props = {
     children:React.ReactNode
     isLoading:boolean
 
-} 
+} & React.HtmlHTMLAttributes<HTMLButtonElement>
 
 const ActionLoaderButton = ({children,isLoading}: Props) => {
   return (

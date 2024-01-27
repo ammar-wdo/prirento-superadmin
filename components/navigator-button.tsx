@@ -6,12 +6,12 @@ type Props = {
     title:string,
     href:string,
     
-} & React.HTMLProps<HTMLButtonElement>
+} & React.HtmlHTMLAttributes<HTMLButtonElement>
 
-const NavigatorButton = ({title,href,className}: Props) => {
+const NavigatorButton = ({title,href,className,children}: Props) => {
     const router = useRouter()
   return (
-    <Button className={className} onClick={()=>router.push(href)}>{title}</Button>
+    <Button className={className} onClick={()=>router.push(href)}>{title || children}</Button>
   )
 }
 
