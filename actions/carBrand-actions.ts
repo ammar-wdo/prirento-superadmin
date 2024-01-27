@@ -2,18 +2,18 @@
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import prisma from "@/lib/prisma";
-import { carModelSchema, categorySchema,  } from "@/schemas";
+import { carBrandSchema, carModelSchema, categorySchema,  } from "@/schemas";
 import { getServerSession } from "next-auth";
 
-export const addCarModel = async (data: any) => {
+export const addCarBrand = async (data: any) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { message: "Unauthorized" };
 
-    const validData = carModelSchema.safeParse(data);
+    const validData = carBrandSchema.safeParse(data);
     if (!validData.success) return { message: "Invalid inputs" };
 
-    await prisma.carModel.create({
+    await prisma.carBrand.create({
       data: {
        ...validData.data
       },
@@ -26,22 +26,22 @@ export const addCarModel = async (data: any) => {
   }
 };
 
-export const editCarModel = async (data: any, id: string) => {
+export const editCarBrand = async (data: any, id: string) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { message: "Unauthorized" };
 
     if (!id || typeof id !== "string") return { message: "Invalid Id " };
 
-    const validData = carModelSchema.safeParse(data);
+    const validData = carBrandSchema.safeParse(data);
     if (!validData.success) return { message: "Invalid inputs" };
 
-    await prisma.carModel.update({
+    await prisma.carBrand.update({
       where: {
         id,
       },
       data: {
-       ...validData.data,
+       ...validData.data
       },
     });
 
@@ -53,7 +53,7 @@ export const editCarModel = async (data: any, id: string) => {
 };
 
 
-export const deleteCarModel = async (id: string) => {
+export const deleteCarBrand = async (id: string) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { message: "Unauthorized" };
@@ -62,7 +62,7 @@ export const deleteCarModel = async (id: string) => {
 
    
 
-    await prisma.carModel.delete({
+    await prisma.carBrand.delete({
       where: {
         id,
       },

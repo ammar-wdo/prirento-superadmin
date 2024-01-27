@@ -11,28 +11,27 @@ import {
 import { useModal } from "@/hooks/modals-hook/modals.hook"
 
 
-import CarModelForm from "../(car-model)/car-model-form"
+import CarBrandForm from "../(car-brand)/car-brand-form"
 type Props = {}
 
-const CarModelModal = (props: Props) => {
+const CarBrandModal = (props: Props) => {
 
     const {open,modalInputs,setClose} = useModal()
-    const isOpen = open && modalInputs?.modal==='carModel'
-    const carsBrands = modalInputs?.modal==='carModel' ? modalInputs.carsBrands :[]
-    
+    const isOpen = open && modalInputs?.modal==='carBrand'
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
+ 
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Cars models</DialogTitle>
+        <DialogTitle>Cars brands</DialogTitle>
         <DialogDescription>
-          Manage Cars Models
+          Manage Cars brands
         </DialogDescription>
       </DialogHeader>
-      <CarModelForm carsBrands={carsBrands}/>
+      <CarBrandForm />
     </DialogContent>
   </Dialog>
   )
 }
 
-export default CarModelModal
+export default CarBrandModal

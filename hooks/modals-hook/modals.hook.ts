@@ -1,4 +1,4 @@
-import { CarModel, Category, Location, SubLocation } from "@prisma/client";
+import { CarBrand, CarModel, Category, Location, SubLocation } from "@prisma/client";
 import { create } from "zustand";
 
 export type DeleteFunction = (
@@ -33,6 +33,12 @@ export type ModalInputs =
       toDelete: false;
       modal: "carModel";
       carModel?: CarModel;
+      carsBrands:{id:string,brand:string}[]
+    }
+  | {
+      toDelete: false;
+      modal: "carBrand";
+      carBrand?: CarBrand;
     };
 
 type Store = {

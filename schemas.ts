@@ -53,7 +53,14 @@ export const companySchema = z.object({
 
   })
 
+  export const carBrandSchema = z.object({
+    brand: z.string().min(2,'Brand field is required').max(20,'maximum 20 characters'),
+    logo:z.string().min(1,'You should upload a logo')
+
+  })
+
   export const carModelSchema = z.object({
-    name: z.string().min(2,'At least 2 characters').max(20,'maximum 20 characters'),
+    name: z.string().min(2,'Model field is required').max(20,'maximum 20 characters'),
+    carBrandId:z.string().min(1,"Brand is required")
 
   })

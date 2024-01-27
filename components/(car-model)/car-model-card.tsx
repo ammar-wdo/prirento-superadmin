@@ -5,14 +5,20 @@ import { deleteCarModel } from "@/actions/carModel-actions";
 import { Edit2, Trash } from "lucide-react";
 
 type Props = {
-  carModel: CarModel;
+  carModel: CarModel & { carBrand: { brand: string } };
+  carsBrands: { id: string; brand: string }[];
 };
 
-const CarModelCard = ({ carModel }: Props) => {
+const CarModelCard = ({ carModel, carsBrands }: Props) => {
   return (
-    <div className="flex items-center gap-2 border p-3 rounded-md">
+    <div className="flex flex-col gap-2 border p-3 rounded-md min-w-[150px]">
+      <h3 className="text-sm font-medium capitalize">{carModel.name}</h3>
+      <p className="text-xs capitalize text-muted-foreground mt-1">
+        {carModel.carBrand.brand}
+      </p>
       <div className="flex items-center gap-1">
         <ClientModalButton
+          className="w-full"
           modalInputs={{
             toDelete: true,
             deleteFunction: deleteCarModel,
@@ -24,11 +30,19 @@ const CarModelCard = ({ carModel }: Props) => {
         >
           <Trash className="w-3 h-3 cursor-pointer" />{" "}
         </ClientModalButton>
-        <ClientModalButton small modalInputs={{toDelete:false,modal:'carModel',carModel}}>
+        <ClientModalButton
+          className="w-full"
+          small
+          modalInputs={{
+            toDelete: false,
+            modal: "carModel",
+            carModel,
+            carsBrands: carsBrands,
+          }}
+        >
           <Edit2 className="w-3 h-3 cursor-pointer" />{" "}
         </ClientModalButton>
       </div>
-      <p className="text-sm font-medium capitalize">{carModel.name}</p>
     </div>
   );
 };

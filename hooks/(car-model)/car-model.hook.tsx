@@ -22,10 +22,12 @@ export const useCarModel = () => {
     resolver: zodResolver(carModelSchema),
     defaultValues: {
       name: carModel?.name || "",
+      carBrandId:carModel?.carBrandId || ""
     },
   });
 
   async function onSubmit(values: z.infer<typeof carModelSchema>) {
+  
     try {
       let res;
       if (carModel) {

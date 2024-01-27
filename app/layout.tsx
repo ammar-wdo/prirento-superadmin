@@ -22,9 +22,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <EdgeStoreProvider>
         {children}
+        <ModalProvider />
         </EdgeStoreProvider>
       
-      <ModalProvider />
+    
       <Toaster position="top-right" richColors />
       </body>
     </html>

@@ -82,15 +82,30 @@ model Category {
 }
 
 
+model CarBrand {
+  id String @id @default(uuid())
+  brand String
+
+  logo String
+
+  carModels CarModel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 
 model CarModel {
   id String @id @default(uuid())
   name String
+  carBrandId  String
+  carBrand  CarBrand @relation(fields: [carBrandId],references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
 
 
 

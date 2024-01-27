@@ -1,6 +1,5 @@
 "use client";
 
-
 import {
   Form,
   FormControl,
@@ -16,10 +15,18 @@ import { useModal } from "@/hooks/modals-hook/modals.hook";
 
 import { useCarModel } from "@/hooks/(car-model)/car-model.hook";
 
-type Props = {};
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const CarModelForm = (props: Props) => {
-    const {modalInputs} = useModal()
+type Props = { carsBrands: { id: string; brand: string }[] };
+
+const CarModelForm = ({ carsBrands }: Props) => {
+  const { modalInputs } = useModal();
   const { form, onSubmit } = useCarModel();
   return (
     <Form {...form}>
@@ -38,8 +45,40 @@ const CarModelForm = (props: Props) => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="carBrandId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Brand*</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose car brand" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {carsBrands.map((brand) => (
+                    <SelectItem
+                      className="capitalize font-medium cursor-pointer"
+                      key={brand.id}
+                      value={brand.id}
+                    >
+                      {brand.brand}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <ActionLoaderButton isLoading={form.formState.isSubmitting}>
-         {(modalInputs?.modal==='carModel' && modalInputs.carModel) ? 'Update' : 'Submit'}
+          {modalInputs?.modal === "carModel" && modalInputs.carModel
+            ? "Update"
+            : "Submit"}
         </ActionLoaderButton>
       </form>
     </Form>

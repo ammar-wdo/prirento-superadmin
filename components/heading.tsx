@@ -1,15 +1,17 @@
+import { cn } from '@/lib/utils'
 import React from 'react'
 
 type Props = {
     title:string,
-    description:string
+    description:string,
+    small?:boolean
 }
 
-const Heading = ({title,description}: Props) => {
+const Heading = ({title,description,small}: Props) => {
   return (
-    <div className='flex flex-col gap-2'>
-        <h3 className='text-3xl font-bold capitalize'>{title}</h3>
-        <p className='text-sm font-medium text-muted-foreground capitalize'>{description}</p>
+    <div className={cn('flex flex-col gap-2',small && 'gap-0')}>
+        <h3 className={cn('text-3xl font-bold capitalize',small && 'text-base ')}>{title}</h3>
+        <p className={cn('text-sm font-medium text-muted-foreground capitalize',small && 'text-xs')}>{description}</p>
     </div>
   )
 }
