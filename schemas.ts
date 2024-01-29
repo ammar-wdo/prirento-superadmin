@@ -6,6 +6,10 @@ const requiredNumber = z.preprocess((input) => {
   return input === "" ? undefined : Number(input);
 }, z.number());
 
+const slugSchema = requiredString
+  .max(200, "Slug is too long") // 
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid slug format");
+
 export const loginSchema = z.object({
   username: requiredString.max(20, "maximum 20 characters"),
   password: z
@@ -32,6 +36,7 @@ export const companySchema = z.object({
   name: requiredString.max(20, "maximum 20 characters"),
   categoryId: requiredString,
   email: requiredString.min(2, "E-mail is required").email(),
+  slug:slugSchema,
   password: z.string().min(8, "Password should be at least 8 chars"),
   newPassword: z
     .union([z.string(), z.undefined()])
@@ -243,6 +248,7 @@ export const carSchema = z
       .refine((data) => data.length === 4, {
         message: "Year must be exactly 4 digits.",
       }),
+      slug:slugSchema,
 
     engine: requiredString,
 

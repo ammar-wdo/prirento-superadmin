@@ -84,6 +84,21 @@ const CompanyForm = ({ categories, company }: Props) => {
           )}
         />
 
+<FormField
+          control={form.control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug*</FormLabel>
+              <FormControl>
+                <Input placeholder="slug" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {company ? <FormField
           control={form.control}
           name="newPassword"

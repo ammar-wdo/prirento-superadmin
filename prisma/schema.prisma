@@ -14,7 +14,7 @@ model Company {
   id   String @id @default(uuid())
   name String
 
-  
+  slug String? @unique 
 
   email       String @unique
   password    String
@@ -36,7 +36,7 @@ model Company {
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
 
-  cars  Car[]
+  cars Car[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,12 +92,12 @@ model CarBrand {
 }
 
 model CarModel {
-  id         String   @id @default(uuid())
+  id         String @id @default(uuid())
   name       String
   carBrandId String
 
-  carBrand   CarBrand @relation(fields: [carBrandId], references: [id])
-  cars       Car[]
+  carBrand CarBrand @relation(fields: [carBrandId], references: [id])
+  cars     Car[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -119,6 +119,8 @@ model Car {
   electric      String
   carStatus     String
 
+  slug String? @unique 
+
   deposite              Int
   commession            Int
   reservationFlatFee    Int?
@@ -131,9 +133,9 @@ model Car {
   deleviryFee  Int
   coolDown     Int
 
-  additionalFeatures  Json[]
+  additionalFeatures Json[]
 
-  disabled  Boolean @default(false)
+  disabled Boolean @default(false)
 
   pickupLocations  Location[] @relation("PickupLocations")
   dropoffLocations Location[] @relation("DropoffLocations")
@@ -142,10 +144,10 @@ model Car {
   dropoffSubLocations SubLocation[] @relation("DropoffSubLocations")
 
   companyId String
-  company Company @relation(fields: [companyId],references: [id])
+  company   Company @relation(fields: [companyId], references: [id])
 
-  carModelId  String
-  carModel    CarModel  @relation(fields: [carModelId],references: [id])
+  carModelId String
+  carModel   CarModel @relation(fields: [carModelId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

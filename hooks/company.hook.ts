@@ -8,6 +8,8 @@ import { Category, Company } from "@prisma/client";
 import { useLogo } from "./logo.hook";
 import { useGallary } from "./gallary.hook";
 import { addCompany, editCompany } from "@/actions/company-actions";
+import { useEffect } from "react";
+import { transformSlug } from "@/lib/utils";
 
 type Props = {
   company?: Company;
@@ -70,6 +72,14 @@ router.refresh()
     setImagesFile,
     uploadImages,
   } = useGallary({ form });
+
+
+
+
+  useEffect(()=>{
+    const refinedSlug = transformSlug(form.watch('slug'))
+    form.setValue('slug',refinedSlug)
+  },[form.watch('slug')])
 
   return { form, onSubmit,file,setFile,uploadImage,ImagePlaceholder ,imagesFile,setImagesFile,ImagesPlaceholder,uploadImages};
 };

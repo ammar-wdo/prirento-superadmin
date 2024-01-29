@@ -12,6 +12,9 @@ import {  carSchema } from "@/schemas";
 import { Car } from "@prisma/client";
 import { useGallary } from "./gallary.hook";
 import { addCar, editCar } from "@/actions/car-actions";
+import { useEffect } from "react";
+import { transformSlug } from "@/lib/utils";
+
 
 export const useCar = (
   car : Car & {
@@ -91,6 +94,13 @@ export const useCar = (
       toast.error("Something went wrong");
     }
   }
+
+
+
+  useEffect(()=>{
+    const refinedSlug = transformSlug(form.watch('slug'))
+    form.setValue('slug',refinedSlug)
+  },[form.watch('slug')])
 
   return { form, onSubmit,ImagesPlaceholder,imagesFile,setImagesFile,uploadImages };
 };

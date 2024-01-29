@@ -37,3 +37,8 @@ export async function isIdValid(id:string,model:'company'){
     }
   }
 }
+
+
+export   const transformSlug = (slug:string) => {
+  return slug.toLowerCase().replace(/\s+/g, '-');
+};
