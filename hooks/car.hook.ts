@@ -2,15 +2,16 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { useModal } from "./modals.hook";
+
 import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
-import { addCategory, editCategory } from "@/actions/category-actions";
-import { carModelSchema, carSchema } from "@/schemas";
-import { addCarModel, editCarModel } from "@/actions/carModel-actions";
+
+import {  carSchema } from "@/schemas";
+
 import { Car } from "@prisma/client";
 import { useGallary } from "./gallary.hook";
+import { addCar, editCar } from "@/actions/car-actions";
 
 export const useCar = (
   car : Car & {
@@ -58,7 +59,7 @@ export const useCar = (
       reservationPercentage: car?.reservationPercentage || undefined,
       seats: car?.seats || undefined,
       transmition: car?.transmition || "",
-      years: car?.year || "",
+      year: car?.year || "",
       pickupLocations: usedPickups || [],
       dropoffLocations: usedDropoffs || [],
       pickupSubLocations:usedSubPickups || [],
@@ -67,28 +68,28 @@ export const useCar = (
     },
   });
 
-  const {ImagesPlaceholder,deleteImagesLoader,deleteanImage,imagesFile,imagesLoader,setImagesFile,uploadImages} = useGallary({form})
+  const {ImagesPlaceholder,imagesFile,setImagesFile,uploadImages} = useGallary({form})
 
   async function onSubmit(values: z.infer<typeof carSchema>) {
-    alert(JSON.stringify(values))
-    // try {
-    //   let res;
-    //   if (car) {
-    //     res = await editCarModel(values, car.id);
-    //   } else {
-    //     res = await addCarModel(values);
-    //   }
+    try {
+      let res;
+      if (car) {
+        res = await editCar(values, car.id);
+      } else {
+        res = await addCar(values);
+      }
 
-    //   if (res.error) {
-    //     toast.error(res.error);
-    //   } else {
-    //     router.push("/dashboard/car");
-    //     router.refresh();
-    //     toast.success(res.success);
-    //   }
-    // } catch (error) {
-    //   toast.error("Something went wrong");
-    // }
+      if (res.error) {
+        console.log(res.error)
+        toast.error(res.error);
+      } else {
+        router.push("/dashboard/car");
+        router.refresh();
+        toast.success(res.success);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   }
 
   return { form, onSubmit,ImagesPlaceholder,imagesFile,setImagesFile,uploadImages };

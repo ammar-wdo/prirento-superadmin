@@ -14,20 +14,24 @@ type Props = {
   modalInputs: ModalInputs;
   small?: boolean;
   destructive?: boolean;
+  type?:'submit'|'button'
+  
 
 } & React.HtmlHTMLAttributes<HTMLButtonElement>
 
 const ClientModalButton = ({
   children,
-
+type,
   small,
   destructive,
   modalInputs,
   className,
+  ...rest
 }: Props) => {
   const { setOpen } = useModal();
   return (
     <Button
+  type={type}
       className={cn(className || "")}
       variant={destructive ? "destructive" : "default"}
       size={small ? "sm" : "default"}

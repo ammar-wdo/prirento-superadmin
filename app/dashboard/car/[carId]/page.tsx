@@ -18,6 +18,7 @@ const page = async ({ params }: Props) => {
       dropoffLocations: { select: { id: true } },
       pickupSubLocations: { select: { id: true } },
       dropoffSubLocations: { select: { id: true } },
+      carModel:{include:{carBrand:{select:{brand:true}}}}
     },
   });
 
@@ -25,7 +26,7 @@ const page = async ({ params }: Props) => {
     include: { subLocations: { select: { id: true, name: true } } },
   });
 
-  const modelsRes = prisma.carModel.findMany({select:{id:true,name:true}})
+  const modelsRes = prisma.carModel.findMany({include:{carBrand:{select:{logo:true,brand:true}}}})
   const companiesRes = prisma.company.findMany({select:{id:true,name:true}})
 
   const [car,locations,models,companies] = await Promise.all([carRes,locationsRes,modelsRes,companiesRes])
@@ -33,7 +34,7 @@ const page = async ({ params }: Props) => {
   if (!car && params.carId !== "new") return notFound();
   return (
     <div>
-      <Heading title="Car" description="Create new car" />
+      <Heading title={car ? car.carModel.name +' ' +  car.carModel.carBrand.brand : 'Car' } description={car ? `Update ${car.carModel.name +" " + car.carModel.carBrand.brand}` : 'Create new car'} />
       <div className="mt-16 max-w-5xl">
       <CarForm car={car} locations={locations} companies={companies} models={models}/>
       </div>

@@ -36,10 +36,11 @@ const DeleteModal = (props: Props) => {
     try {
       setIsLoading(true);
       const res = await deleteFunction(deleteId);
-      if (res.message) {
-        toast.error(res.message);
+      if (res.error) {
+        toast.error(res.error);
       } else {
         toast.success(res.success);
+        modalInputs.url && router.push(modalInputs.url)
         router.refresh()
         setClose()
       }

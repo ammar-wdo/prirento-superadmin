@@ -138,7 +138,7 @@ const carTypeSchema = z
   });
 
 
-  
+
 const transmitionSchema = z
   .object({
     transmition: requiredString,
@@ -190,8 +190,8 @@ const numericValues = z
     commession: requiredNumber
       .refine((val) => val, "Required field")
       .refine((val) => val > 0, "Enter positive value"),
-    reservationFlatFee: requiredNumber.optional(),
-    reservationPercentage: requiredNumber.optional(),
+    reservationFlatFee: z.coerce.number().optional().or(z.literal(undefined)),
+    reservationPercentage: z.coerce.number().optional().or(z.literal(undefined)),
     kmIncluded: requiredNumber
       .refine((val) => val, "Required field")
       .refine((val) => val > 0, "Enter positive value"),
@@ -236,7 +236,7 @@ const numericValues = z
 export const carSchema = z
   .object({
     description: requiredString,
-    years: requiredString
+    year: requiredString
       .refine((data) => /^\d+$/.test(data), {
         message: "Year must be a number.",
       })

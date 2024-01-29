@@ -4,12 +4,13 @@ import { create } from "zustand";
 export type DeleteFunction = (
   id: string
 ) => Promise<
-  | { message: string; success?: undefined }
-  | { success: string; message?: undefined }
+  | { error: string; success?: undefined }
+  | { success: string; error?: undefined }
 >;
 export type ModalInputs =
   | {
       toDelete: true;
+      url?:string
       modal: "delete";
       deleteId: string;
       deleteFunction: DeleteFunction;

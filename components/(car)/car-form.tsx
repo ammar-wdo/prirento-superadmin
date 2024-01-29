@@ -1,7 +1,7 @@
 "use client";
 
 import { useCar } from "@/hooks/car.hook";
-import { Car, Location } from "@prisma/client";
+import { Car, CarModel, Location } from "@prisma/client";
 import React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -34,6 +34,9 @@ import {
 import { SingleImageDropzone } from "../single-image-dropezone";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
+import Image from "next/image";
+import ClientModalButton from "../client-modal-button";
+import { deleteCar } from "@/actions/car-actions";
 
 type Props = {
   car:
@@ -46,7 +49,7 @@ type Props = {
     | null;
 
   locations: (Location & { subLocations: { id: string; name: string }[] })[];
-  models: { id: string; name: string }[];
+  models: (CarModel & { carBrand: { brand: string; logo: string } })[];
   companies: { id: string; name: string }[];
 };
 
@@ -61,7 +64,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
   } = useCar(car);
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
         <FormField
           control={form.control}
           name="companyId"
@@ -70,7 +73,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car Company (owner)*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car company" />
                   </SelectTrigger>
                 </FormControl>
@@ -100,8 +103,8 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car Model*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose car model" />
+                <SelectTrigger className="capitalize">
+                    <SelectValue className="" placeholder="Choose car model" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -111,7 +114,13 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                       value={model.id}
                       className=" cursor-pointer capitalize"
                     >
-                      {model.name}
+                      <div className="flex items-center  gap-3 p-1 capitalize">
+                        <span>{model.carBrand.brand}, </span>
+                        <span>{model.name}</span>
+                        <span className="w-10 h-10 rounded-full relative">
+                          <Image src={model.carBrand.logo} alt="logo" fill  className="object-contain"/>
+                        </span>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -139,7 +148,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
 
         <FormField
           control={form.control}
-          name="years"
+          name="year"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Year*</FormLabel>
@@ -160,7 +169,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car color*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car color" />
                   </SelectTrigger>
                 </FormControl>
@@ -207,7 +216,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car interior color*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car interior color" />
                   </SelectTrigger>
                 </FormControl>
@@ -314,7 +323,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car type*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car type" />
                   </SelectTrigger>
                 </FormControl>
@@ -376,7 +385,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Transmition*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose transmition" />
                   </SelectTrigger>
                 </FormControl>
@@ -398,7 +407,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
           )}
         />
 
-<FormField
+        <FormField
           control={form.control}
           name="electric"
           render={({ field }) => (
@@ -406,7 +415,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Electric*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose electric satus" />
                   </SelectTrigger>
                 </FormControl>
@@ -436,7 +445,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Status*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="capitalize">
+                <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                 </FormControl>
@@ -614,106 +623,119 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
             </FormItem>
           )}
         />
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <FormField
-          control={form.control}
-          name="pickupLocations"
-          render={() => (
-            <FormItem>
-              <div className="mb-4">
-                <FormLabel className="text-base">Pickup locations*</FormLabel>
-              </div>
-              {locations.map((location) => (
-                <FormField
-                  key={location.id}
-                  control={form.control}
-                  name="pickupLocations"
-                  render={({ field }) => {
-                    return (
-                      <FormItem
-                        key={location.id}
-                        className="flex flex-row items-start space-x-3 space-y-0"
-                      >
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(location.id)}
-                            onCheckedChange={(checked) => {
-                              return checked
-                                ? field.onChange([...field.value, location.id])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== location.id
-                                    )
-                                  );
-                            }}
-                          />
-                        </FormControl>
-                        <FormLabel className="text-sm font-normal capitalize">
-                          {location.name}
-                        </FormLabel>
-                      </FormItem>
-                    );
-                  }}
-                />
-              ))}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <FormField
+            control={form.control}
+            name="pickupLocations"
+            render={() => (
+              <FormItem>
+                <div className="mb-4">
+                  <FormLabel className="text-base">Pickup locations*</FormLabel>
+                </div>
+                {locations.map((location) => (
+                  <FormField
+                    key={location.id}
+                    control={form.control}
+                    name="pickupLocations"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={location.id}
+                          className="flex flex-row items-start space-x-3 space-y-0"
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(location.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      location.id,
+                                    ])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== location.id
+                                      )
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className="text-sm font-normal capitalize">
+                            {location.name}
+                          </FormLabel>
+                        </FormItem>
+                      );
+                    }}
+                  />
+                ))}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-<FormField
-          control={form.control}
-          name="dropoffLocations"
-          render={() => (
-            <FormItem>
-              <div className="mb-4">
-                <FormLabel className="text-base">Dropoff locations*</FormLabel>
-              </div>
-              {locations.map((location) => {
-
-
-               return <FormField
-                  key={location.id}
-                  control={form.control}
-                  name="dropoffLocations"
-                  render={({ field }) => {
-                    return (
-                      <FormItem
-                        key={location.id}
-                        className="flex flex-row items-start space-x-3 space-y-0"
-                      >
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(location.id) || form.watch('pickupLocations').includes(location.id)}
-                            onCheckedChange={(checked) => {
-                              return checked
-                                ? field.onChange([...field.value, location.id])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== location.id
-                                    )
-                                  );
-                            }}
-                          />
-                        </FormControl>
-                        <FormLabel className="text-sm font-normal capitalize">
-                          {location.name}
-                        </FormLabel>
-                      </FormItem>
-                    );
-                  }}
-                />
-              })}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="dropoffLocations"
+            render={() => (
+              <FormItem>
+                <div className="mb-4">
+                  <FormLabel className="text-base">
+                    Dropoff locations*
+                  </FormLabel>
+                </div>
+                {locations.map((location) => {
+                  return (
+                    <FormField
+                      key={location.id}
+                      control={form.control}
+                      name="dropoffLocations"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={location.id}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={
+                                  field.value?.includes(location.id) 
+                                
+                                }
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([
+                                        ...field.value,
+                                        location.id,
+                                      ])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== location.id
+                                        )
+                                      );
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="text-sm font-normal capitalize">
+                              {location.name}
+                            </FormLabel>
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  );
+                })}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-
-        <ActionLoaderButton isLoading={form.formState.isSubmitting}>
-          Submit
+<div className="w-full flex flex-col gap-1">
+<ActionLoaderButton className=" w-full" isLoading={form.formState.isSubmitting}>
+          {car ? "Update" : "Submit"}
         </ActionLoaderButton>
-    
+        {car && <ClientModalButton type="button"  modalInputs={{toDelete:true,deleteFunction:deleteCar,deleteId:car.id,modal:'delete',url:'/dashboard/car'}} destructive>Delete</ClientModalButton>}
+</div>
+      
       </form>
     </Form>
   );

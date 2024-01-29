@@ -4,6 +4,8 @@ import NavigatorButton from "../navigator-button";
 import prisma from "@/lib/prisma";
 import NoResult from "../no-result";
 import Image from "next/image";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 type Props = {};
 
@@ -13,6 +15,7 @@ const CarFeed = async (props: Props) => {
       carModel: {
         include: { carBrand: { select: { brand: true, logo: true } } },
       },
+      company:{select:{name:true}}
     },
   });
 
@@ -26,24 +29,7 @@ const CarFeed = async (props: Props) => {
       </div>
 
       <div className="mt-6">
-        {!cars.length && <NoResult title="No cars" />}
-        {!!cars.length && (
-          <div className="flex flex-wrap gap-2">
-            {cars.map((car) => (
-              <div key={car.id} className="p-3 rounded-md border min-w-[350px]">
-                <div className="aspect-video relative w-full">
-                  <Image
-                    src={car.carModel.carBrand.logo}
-                    alt="logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <h3 className="font-medium text-lg py-3">{car.carModel.name}</h3>
-              </div>
-            ))}
-          </div>
-        )}
+      <DataTable columns={columns} data={cars} />
       </div>
     </div>
   );
