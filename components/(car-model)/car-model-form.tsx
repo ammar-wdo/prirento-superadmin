@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import ActionLoaderButton from "../action-loader-button";
-import { useModal } from "@/hooks/modals-hook/modals.hook";
+import { useModal } from "@/hooks/modals.hook";
 
-import { useCarModel } from "@/hooks/(car-model)/car-model.hook";
+import { useCarModel } from "@/hooks/car-model.hook";
 
 import {
   Select,

@@ -2,7 +2,7 @@
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import prisma from "@/lib/prisma";
-import { categorySchema, companySchema, locationSchema } from "@/schemas";
+import { companySchema } from "@/schemas";
 import { getServerSession } from "next-auth";
 import bcrypt from 'bcryptjs';
 
@@ -20,10 +20,10 @@ import bcrypt from 'bcryptjs';
 export const addCompany = async (data: any) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
     const validData = companySchema.safeParse(data);
-    if (!validData.success) return { message: "Invalid inputs" };
+    if (!validData.success) return { error: "Invalid inputs" };
 
     const {newPassword,...values} = validData.data
     
@@ -31,7 +31,7 @@ export const addCompany = async (data: any) => {
         email:values.email
     }})
 
-    if(exist)  return { message: "This E-mail already exists" };
+    if(exist)  return { error: "This E-mail already exists" };
 
     const hashedPassword = await bcrypt.hash(values.password, 10);
 
@@ -45,7 +45,7 @@ export const addCompany = async (data: any) => {
     return { success: "Successfully added" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };
 
@@ -65,12 +65,12 @@ export const addCompany = async (data: any) => {
 export const editCompany = async (data: any, id: string) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
-    if (!id || typeof id !== "string") return { message: "Invalid Id " };
+    if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
     const validData = companySchema.safeParse(data);
-    if (!validData.success) return { message: "Invalid inputs" };
+    if (!validData.success) return { error: "Invalid inputs" };
 
 
     const { newPassword, password, ...rest } = validData.data;
@@ -98,7 +98,7 @@ export const editCompany = async (data: any, id: string) => {
     return { success: "Successfully updated" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };
 
@@ -115,9 +115,9 @@ export const editCompany = async (data: any, id: string) => {
 export const deleteCompany = async (id: string) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
-    if (!id || typeof id !== "string") return { message: "Invalid Id " };
+    if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
    
 
@@ -131,6 +131,6 @@ export const deleteCompany = async (id: string) => {
     return { success: "Successfully deleted" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };

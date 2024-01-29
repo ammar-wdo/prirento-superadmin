@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import ActionLoaderButton from "../action-loader-button";
-import { useModal } from "@/hooks/modals-hook/modals.hook";
+import { useModal } from "@/hooks/modals.hook";
 
 
-import { useCarBrand } from "@/hooks/(car-brand)/car-brand.hook";
+import { useCarBrand } from "@/hooks/car-brand.hook";
 import { SingleImageDropzone } from "../single-image-dropezone";
 import { Button } from "../ui/button";
 

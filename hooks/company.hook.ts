@@ -5,8 +5,8 @@ import { companySchema, locationSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Category, Company } from "@prisma/client";
-import { useLogo } from "../logo.hook";
-import { useGallary } from "../gallary.hook";
+import { useLogo } from "./logo.hook";
+import { useGallary } from "./gallary.hook";
 import { addCompany, editCompany } from "@/actions/company-actions";
 
 type Props = {
@@ -47,8 +47,8 @@ res = await editCompany(values,company.id)
          
         }
 
-        if(res.message){
-            toast.error(res.message)
+        if(res.error){
+            toast.error(res.error)
         }else{
             toast.success(res.success)
 router.push('/dashboard/company')

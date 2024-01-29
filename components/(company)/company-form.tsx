@@ -1,6 +1,6 @@
 "use client";
 
-import { useCompany } from "@/hooks/(company)/company.hook";
+import { useCompany } from "@/hooks/company.hook";
 import { Category, Company } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
@@ -339,6 +339,8 @@ const CompanyForm = ({ categories, company }: Props) => {
             </FormItem>
           )}
         />
+
+        
 
         <ActionLoaderButton   isLoading={form.formState.isSubmitting}>{company ? 'Update' : 'Submit'}</ActionLoaderButton>
  

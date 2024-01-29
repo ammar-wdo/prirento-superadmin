@@ -1,3 +1,4 @@
+import CarForm from "@/components/(car)/car-form";
 import Heading from "@/components/heading";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
@@ -8,22 +9,35 @@ type Props = {
 };
 
 const page = async ({ params }: Props) => {
-  const car = await prisma.car.findUnique({
+  const carRes = prisma.car.findUnique({
     where: {
       id: params.carId,
     },
     include: {
-      pickupLocations: { select: { id: true, name: true } },
-      dropoffLocations: { select: { id: true, name: true } },
-      pickupSubLocations: { select: { id: true, name: true } },
-      dropoffSubLocations: { select: { id: true, name: true } },
+      pickupLocations: { select: { id: true } },
+      dropoffLocations: { select: { id: true } },
+      pickupSubLocations: { select: { id: true } },
+      dropoffSubLocations: { select: { id: true } },
     },
   });
+
+  const locationsRes = prisma.location.findMany({
+    include: { subLocations: { select: { id: true, name: true } } },
+  });
+
+  const modelsRes = prisma.carModel.findMany({select:{id:true,name:true}})
+  const companiesRes = prisma.company.findMany({select:{id:true,name:true}})
+
+  const [car,locations,models,companies] = await Promise.all([carRes,locationsRes,modelsRes,companiesRes])
 
   if (!car && params.carId !== "new") return notFound();
   return (
     <div>
       <Heading title="Car" description="Create new car" />
+      <div className="mt-16 max-w-5xl">
+      <CarForm car={car} locations={locations} companies={companies} models={models}/>
+      </div>
+     
     </div>
   );
 };

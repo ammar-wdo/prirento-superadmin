@@ -8,10 +8,10 @@ import { getServerSession } from "next-auth";
 export const addCategory = async (data: any) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
     const validData = categorySchema.safeParse(data);
-    if (!validData.success) return { message: "Invalid inputs" };
+    if (!validData.success) return { error: "Invalid inputs" };
 
     await prisma.category.create({
       data: {
@@ -22,19 +22,19 @@ export const addCategory = async (data: any) => {
     return { success: "Successfully added" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };
 
 export const editCategory = async (data: any, id: string) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
-    if (!id || typeof id !== "string") return { message: "Invalid Id " };
+    if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
     const validData = categorySchema.safeParse(data);
-    if (!validData.success) return { message: "Invalid inputs" };
+    if (!validData.success) return { error: "Invalid inputs" };
 
     await prisma.category.update({
       where: {
@@ -48,7 +48,7 @@ export const editCategory = async (data: any, id: string) => {
     return { success: "Successfully updated" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };
 
@@ -56,9 +56,9 @@ export const editCategory = async (data: any, id: string) => {
 export const deleteCategory = async (id: string) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
-    if (!id || typeof id !== "string") return { message: "Invalid Id " };
+    if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
    
 
@@ -72,6 +72,6 @@ export const deleteCategory = async (id: string) => {
     return { success: "Successfully deleted" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };

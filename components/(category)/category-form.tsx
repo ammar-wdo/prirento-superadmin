@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import ActionLoaderButton from "../action-loader-button";
-import { useModal } from "@/hooks/modals-hook/modals.hook";
-import { useCategory } from "@/hooks/(category)/category.hook";
+import { useModal } from "@/hooks/modals.hook";
+import { useCategory } from "@/hooks/category.hook";
 
 type Props = {};
 

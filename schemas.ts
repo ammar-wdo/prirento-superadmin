@@ -2,6 +2,10 @@ import * as z from "zod";
 
 const requiredString = z.string().min(1, "Required field");
 
+const requiredNumber = z.preprocess((input) => {
+  return input === "" ? undefined : Number(input);
+}, z.number());
+
 export const loginSchema = z.object({
   username: requiredString.max(20, "maximum 20 characters"),
   password: z
@@ -13,6 +17,7 @@ export const loginSchema = z.object({
 export const locationSchema = z.object({
   name: requiredString.max(20, "maximum 20 characters"),
 });
+
 export const subLocationSchema = z.object({
   name: requiredString.max(100, "maximum 100 characters"),
   locationId: requiredString,
@@ -74,6 +79,55 @@ export const carTypes = [
 export const transmition = ["auto", "manual"];
 export const electric = ["fully electric", "hybrid"];
 export const carStatus = ["pending", "active"];
+export const carColors = [
+  "Black",
+  "White",
+  "Silver",
+  "Gray",
+  "Blue",
+  "Red",
+  "Brown",
+  "Green",
+  "Beige",
+  "Gold",
+  "Orange",
+  "Yellow",
+  "Purple",
+  "Maroon",
+  "Navy",
+  "Charcoal",
+  "Other",
+];
+
+export const carColorsMapper = {
+  Black: "#000000",
+  White: "#FFFFFF",
+  Silver: "#C0C0C0",
+  Gray: "#808080",
+  Blue: "#0000FF",
+  Red: "#FF0000",
+  Brown: "#A52A2A",
+  Green: "#008000",
+  Beige: "#F5F5DC",
+  Gold: "#FFD700",
+  Orange: "#FFA500",
+  Yellow: "#FFFF00",
+  Purple: "#800080",
+  Maroon: "#800000",
+  Navy: "#000080",
+  Charcoal: "#36454F",
+};
+
+const colorSchema = z.object({
+  colors: requiredString.refine(
+    (data) => carColors.includes(data),
+    "Invalid color input"
+  ),
+  interiorColor: requiredString.refine(
+    (data) => carColors.includes(data),
+    "Invalid color input"
+  ),
+});
 
 const carTypeSchema = z
   .object({
@@ -83,6 +137,8 @@ const carTypeSchema = z
     message: "Invalid car type",
   });
 
+
+  
 const transmitionSchema = z
   .object({
     transmition: requiredString,
@@ -90,6 +146,9 @@ const transmitionSchema = z
   .refine((data) => transmition.includes(data.transmition), {
     message: "Invalid transmition type",
   });
+
+
+
 
 const electricSchema = z
   .object({
@@ -99,73 +158,118 @@ const electricSchema = z
     message: "invalid electric option",
   });
 
+
+
+
 const carStatusSchema = z
   .object({
     carStatus: requiredString,
   })
   .refine((data) => carStatus.includes(data.carStatus));
 
-export const carSchema = z
+
+
+
+const numericValues = z
   .object({
-    description: requiredString,
-    years: requiredString,
-    colors: requiredString,
-    interiorColor: requiredString,
-    seats: z.coerce
-      .number()
-      .min(1, "Minimum of 1 seat")
-      .max(7, "Maximum of 7 seats"),
-    doors: z.coerce
-      .number()
-      .min(2, "Minimum of 2 doors")
-      .max(4, "Maximum of 4 doors"),
-    engine: requiredString,
-    kmIncluded: z.coerce.number(),
-    gallary: z
-      .array(requiredString)
-      .min(1, "Upload at least 1 image")
-      .max(6, "Maximum of 6 images allowed"),
-    deposite: z.coerce.number().positive({ message: "Enter positive value " }),
-    commession: z.coerce
-      .number()
-      .positive({ message: "Enter positive value " }),
-    reservationFlatFee: z.coerce
-      .number()
-      .positive({ message: "Enter positive value " })
-      .optional(),
-    reservationPercentage: z.coerce
-      .number()
-      .positive({ message: "Enter positive value " })
-      .optional(),
-    pricings: z.array(
-      z.coerce.number().positive({ message: "Enter positive value " })
-    ),
-    hourPrice: z.coerce.number().positive({ message: "Enter positive value " }),
+    seats: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine(
+        (value) => value >= 1 && value <= 7,
+        "Minimum of 1 and maximum of 7"
+      ),
+    doors: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine(
+        (value) => value >= 2 && value <= 4,
+        "Minimum of 2 and maximum of 4"
+      ),
+    deposite: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
+    commession: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
+    reservationFlatFee: requiredNumber.optional(),
+    reservationPercentage: requiredNumber.optional(),
+    kmIncluded: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
+    hourPrice: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
     minimumHours: z.coerce
       .number()
       .positive({ message: "Enter positive value " })
       .optional()
       .or(z.literal(undefined)),
-    deleviryFee: z.coerce
-      .number()
-      .positive({ message: "Enter positive value " }),
-    coolDown: z.coerce.number().positive({ message: "Enter positive value " }),
+    deleviryFee: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
+    coolDown: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
+  })
+  .refine((data) => data.reservationFlatFee || data.reservationPercentage, {
+    message: "Reservation flat fee or reservation percentage is required",
+    path: ["reservationFlatFee"],
+  })
+  .refine(
+    (val) =>
+      (val.reservationFlatFee && !val.reservationPercentage) ||
+      (!val.reservationFlatFee && val.reservationPercentage),
+    { message: "Enter either reservation flat fee or reservation percentage",path:['reservationFlatFee'] }
+  )
+  .refine((val) => !val.reservationFlatFee || val.reservationFlatFee > 0, {
+    message: "Enter positive value",
+    path: ["reservationFlatFee"],
+  })
+  .refine(
+    (val) => !val.reservationPercentage || val.reservationPercentage > 0,
+    {
+      message: "Enter positive value",
+      path: ["reservationPercentage"],
+    }
+  )
+  ;
+
+export const carSchema = z
+  .object({
+    description: requiredString,
+    years: requiredString
+      .refine((data) => /^\d+$/.test(data), {
+        message: "Year must be a number.",
+      })
+      .refine((data) => data.length === 4, {
+        message: "Year must be exactly 4 digits.",
+      }),
+
+    engine: requiredString,
+
+    gallary: z
+      .array(requiredString)
+      .min(1, "Upload at least 1 image")
+      .max(6, "Maximum of 6 images allowed"),
+
+    pricings: z.array(
+      z.coerce.number().positive({ message: "Enter positive value " })
+    ),
+
     additionalFeatures: z
       .array(z.object({ title: z.string(), icon: z.string() }))
       .optional(),
     disabled: z.boolean().optional(),
     pickupLocations: z.array(z.string()).min(1, "Pick at least one location"),
     dropoffLocations: z.array(z.string()).min(1, "Pick at least one location"),
-    pickupSubLocations:z.array(z.string()),
-    dropoffSubLocations:z.array(z.string()),
+    pickupSubLocations: z.array(z.string()),
+    dropoffSubLocations: z.array(z.string()),
     companyId: requiredString,
     carModelId: requiredString,
   })
-  .refine((data) => data.reservationFlatFee || data.reservationPercentage, {
-    message: "Reservation flat fee or reservation percentage is required",
-    path: ["reservationFlatFee"],
-  })
+
   .and(carTypeSchema)
   .and(transmitionSchema)
   .and(electricSchema)
-  .and(carStatusSchema);
+  .and(carStatusSchema)
+  .and(colorSchema)
+  .and(numericValues);

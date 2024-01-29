@@ -1,6 +1,6 @@
 "use client";
 
-import { useLogin } from "@/hooks/(login)/login.hook";
+import { useLogin } from "@/hooks/login.hook";
 import { Button } from "@/components/ui/button";
 import {
   Form,

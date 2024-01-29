@@ -6,7 +6,7 @@ import {
   DeleteFunction,
   ModalInputs,
   useModal,
-} from "@/hooks/modals-hook/modals.hook";
+} from "@/hooks/modals.hook";
 import { cn } from "@/lib/utils";
 
 type Props = {

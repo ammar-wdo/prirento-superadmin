@@ -8,10 +8,10 @@ import { getServerSession } from "next-auth";
 export const addSubLocation = async (data: any) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
     const validData = subLocationSchema.safeParse(data);
-    if (!validData.success) return { message: "Invalid inputs" };
+    if (!validData.success) return { error: "Invalid inputs" };
 
     await prisma.subLocation.create({
       data: {
@@ -22,7 +22,7 @@ export const addSubLocation = async (data: any) => {
     return { success: "Successfully added" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };
 
@@ -30,12 +30,12 @@ export const editSubLocation = async (data: any, id: string) => {
  
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
-    if (!id || typeof id !== "string") return { message: "Invalid Id " };
+    if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
     const validData = subLocationSchema.safeParse(data);
-    if (!validData.success) return { message: "Invalid inputs" };
+    if (!validData.success) return { error: "Invalid inputs" };
 
     await prisma.subLocation.update({
       where: {
@@ -49,7 +49,7 @@ export const editSubLocation = async (data: any, id: string) => {
     return { success: "Successfully updated" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };
 
@@ -57,9 +57,9 @@ export const editSubLocation = async (data: any, id: string) => {
 export const deleteSubLocation = async (id: string) => {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) return { message: "Unauthorized" };
+    if (!session) return { error: "Unauthorized" };
 
-    if (!id || typeof id !== "string") return { message: "Invalid Id " };
+    if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
    
 
@@ -73,6 +73,6 @@ export const deleteSubLocation = async (id: string) => {
     return { success: "Successfully deleted" };
   } catch (error) {
     console.log(error);
-    return { message: "Something went wrong" };
+    return { error: "Something went wrong" };
   }
 };

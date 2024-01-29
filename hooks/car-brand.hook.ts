@@ -2,7 +2,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { useModal } from "../modals-hook/modals.hook";
+import { useModal } from "./modals.hook";
 import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
@@ -11,7 +11,7 @@ import { carBrandSchema } from "@/schemas";
 
 import { CarBrand } from "@prisma/client";
 import { addCarBrand, editCarBrand } from "@/actions/carBrand-actions";
-import { useLogo } from "../logo.hook";
+import { useLogo } from "./logo.hook";
 
 export const useCarBrand = () => {
   const { setClose, modalInputs } = useModal();
@@ -41,8 +41,8 @@ export const useCarBrand = () => {
         res = await addCarBrand(values);
       }
 
-      if (res.message) {
-        toast.error(res.message);
+      if (res.error) {
+        toast.error(res.error);
       } else {
         router.refresh();
         toast.success(res.success);

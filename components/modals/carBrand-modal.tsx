@@ -8,7 +8,7 @@ import {
     DialogTitle,
   
   } from "@/components/ui/dialog"
-import { useModal } from "@/hooks/modals-hook/modals.hook"
+import { useModal } from "@/hooks/modals.hook"
 
 
 import CarBrandForm from "../(car-brand)/car-brand-form"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocation } from "@/hooks/(location)/location.hook";
+import { useLocation } from "@/hooks/location.hook";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import ActionLoaderButton from "../action-loader-button";
-import { useModal } from "@/hooks/modals-hook/modals.hook";
+import { useModal } from "@/hooks/modals.hook";
 
 type Props = {};
 
