@@ -2,7 +2,7 @@
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import prisma from "@/lib/prisma";
-import { areIdsValid, isIdValid } from "@/lib/utils";
+import { areIdsValid, checkSlug, isIdValid } from "@/lib/utils";
 import { carBrandSchema, carSchema } from "@/schemas";
 import { getServerSession } from "next-auth";
 
@@ -34,6 +34,8 @@ export const addCar = async (data: any) => {
     await areIdsValid(pickupSubLocations, "subLocation");
     await areIdsValid(dropoffSubLocations, "subLocation");
     await isIdValid(rest.companyId, "company");
+    await checkSlug(rest.slug,'car')
+
 
     await prisma.car.create({
       data: {
@@ -81,6 +83,7 @@ export const editCar = async (data: any, id: string) => {
     await areIdsValid(pickupSubLocations, "subLocation");
     await areIdsValid(dropoffSubLocations, "subLocation");
     await isIdValid(rest.companyId, "company");
+    await checkSlug(rest.slug,'car',id)
 
     await prisma.car.update({
       where: {

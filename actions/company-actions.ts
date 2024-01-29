@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { companySchema } from "@/schemas";
 import { getServerSession } from "next-auth";
 import bcrypt from 'bcryptjs';
+import { checkEmail, checkSlug, hashPassword } from "@/lib/utils";
 
 
 
@@ -27,13 +28,10 @@ export const addCompany = async (data: any) => {
 
     const {newPassword,...values} = validData.data
     
-    const exist = await  prisma.company.findUnique({where:{
-        email:values.email
-    }})
+    const hashedPassword = await hashPassword(values.password);
 
-    if(exist)  return { error: "This E-mail already exists" };
-
-    const hashedPassword = await bcrypt.hash(values.password, 10);
+    await checkEmail(validData.data.email,'company')
+    await checkSlug(validData.data.slug,'company')
 
     await prisma.company.create({
       data: {
@@ -44,8 +42,12 @@ export const addCompany = async (data: any) => {
 
     return { success: "Successfully added" };
   } catch (error) {
+    let message = "Something went wrong";
+    if (error instanceof Error) {
+      message = error.message;
+    }
     console.log(error);
-    return { error: "Something went wrong" };
+    return { error: message };
   }
 };
 
@@ -71,12 +73,15 @@ export const editCompany = async (data: any, id: string) => {
 
     const validData = companySchema.safeParse(data);
     if (!validData.success) return { error: "Invalid inputs" };
-
+    
+    await checkEmail(validData.data.email,'company',id)
+    await checkSlug(validData.data.slug,'company',id)
 
     const { newPassword, password, ...rest } = validData.data;
+    
     let thePassword;
     if (newPassword) {
-      thePassword = await await bcrypt.hash(newPassword, 10);
+      thePassword =  await hashPassword(newPassword);
     } else {
       thePassword = password;
     }
@@ -97,8 +102,12 @@ export const editCompany = async (data: any, id: string) => {
 
     return { success: "Successfully updated" };
   } catch (error) {
+    let message = "Something went wrong";
+    if (error instanceof Error) {
+      message = error.message;
+    }
     console.log(error);
-    return { error: "Something went wrong" };
+    return { error: message };
   }
 };
 
