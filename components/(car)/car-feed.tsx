@@ -17,6 +17,7 @@ const CarFeed = async (props: Props) => {
       },
       company:{select:{name:true}}
     },
+    orderBy:{createdAt:'desc'}
   });
 
   return (

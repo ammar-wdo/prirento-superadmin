@@ -6,6 +6,10 @@ import { areIdsValid, isIdValid } from "@/lib/utils";
 import { carBrandSchema, carSchema } from "@/schemas";
 import { getServerSession } from "next-auth";
 
+
+
+
+
 export const addCar = async (data: any) => {
   try {
     const session = await getServerSession(authOptions);
@@ -50,6 +54,10 @@ export const addCar = async (data: any) => {
   }
 };
 
+
+
+
+
 export const editCar = async (data: any, id: string) => {
   try {
     const session = await getServerSession(authOptions);
@@ -93,10 +101,19 @@ export const editCar = async (data: any, id: string) => {
 
     return { success: "Successfully updated" };
   } catch (error) {
+    let message = "Something went wrong";
+    if (error instanceof Error) {
+      message = error.message;
+    }
     console.log(error);
-    return { error: "Something went wrong" };
+    return { error: message };
   }
 };
+
+
+
+
+
 
 export const deleteCar = async (id: string) => {
   try {
