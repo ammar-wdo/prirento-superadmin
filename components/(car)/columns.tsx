@@ -19,9 +19,9 @@ export const columns: ColumnDef<FullCar>[] = [
     header: "Model",
     cell: ({ row }) => {
       return (
-        <div className="text-right font-medium flex items-center gap-4 capitalize">
-          <span>{row.original.carModel.carBrand.brand}</span>
-          <span>{row.original.carModel.name}</span>
+        <div className="text-right font-medium flex items-center justify-between capitalize w-full max-w-[200px]">
+          <span>{row.original.carModel.carBrand.brand}- {row.original.carModel.name}</span>
+       
           <span className="w-10 h-10 relative">
             <Image
               src={row.original.carModel.carBrand.logo}

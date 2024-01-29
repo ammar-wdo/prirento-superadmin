@@ -64,7 +64,10 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
   } = useCar(car);
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-8"
+      >
         <FormField
           control={form.control}
           name="companyId"
@@ -80,6 +83,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                 <SelectContent>
                   {companies.map((company) => (
                     <SelectItem
+                      key={company.id}
                       id={company.id}
                       value={company.id}
                       className=" cursor-pointer capitalize"
@@ -103,22 +107,28 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car Model*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <SelectTrigger className="capitalize">
+                  <SelectTrigger className="capitalize">
                     <SelectValue className="" placeholder="Choose car model" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   {models.map((model) => (
                     <SelectItem
+                      key={model.id}
                       id={model.id}
                       value={model.id}
-                      className=" cursor-pointer capitalize"
+                      className=" cursor-pointer capitalize "
                     >
-                      <div className="flex items-center  gap-3 p-1 capitalize">
-                        <span>{model.carBrand.brand}, </span>
-                        <span>{model.name}</span>
-                        <span className="w-10 h-10 rounded-full relative">
-                          <Image src={model.carBrand.logo} alt="logo" fill  className="object-contain"/>
+                      <div className="grid grid-cols-3 items-center  p-1 capitalize w-[400px]">
+                        <span className="">{model.carBrand.brand}</span>
+                        <span className="">{model.name}</span>
+                        <span className="w-10 h-10 rounded-full relative ">
+                          <Image
+                            src={model.carBrand.logo}
+                            alt="logo"
+                            fill
+                            className="object-contain"
+                          />
                         </span>
                       </div>
                     </SelectItem>
@@ -169,7 +179,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car color*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <SelectTrigger className="capitalize">
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car color" />
                   </SelectTrigger>
                 </FormControl>
@@ -177,6 +187,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                   {carColors.map((color) => (
                     <SelectItem
                       id={color}
+                      key={color}
                       value={color}
                       className=" cursor-pointer"
                     >
@@ -216,7 +227,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car interior color*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <SelectTrigger className="capitalize">
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car interior color" />
                   </SelectTrigger>
                 </FormControl>
@@ -224,6 +235,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                   {carColors.map((color) => (
                     <SelectItem
                       id={color}
+                      key={color}
                       value={color}
                       className=" cursor-pointer"
                     >
@@ -323,7 +335,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Car type*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <SelectTrigger className="capitalize">
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car type" />
                   </SelectTrigger>
                 </FormControl>
@@ -331,6 +343,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                   {carTypes.map((type) => (
                     <SelectItem
                       id={type}
+                      key={type}
                       value={type}
                       className=" cursor-pointer capitalize"
                     >
@@ -385,13 +398,14 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Transmition*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <SelectTrigger className="capitalize">
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose transmition" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   {transmition.map((el) => (
                     <SelectItem
+                      key={el}
                       id={el}
                       value={el}
                       className=" cursor-pointer capitalize"
@@ -415,13 +429,14 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Electric*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <SelectTrigger className="capitalize">
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose electric satus" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   {electric.map((el) => (
                     <SelectItem
+                      key={el}
                       id={el}
                       value={el}
                       className=" cursor-pointer capitalize"
@@ -445,13 +460,14 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               <FormLabel>Status*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <SelectTrigger className="capitalize">
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   {carStatus.map((el) => (
                     <SelectItem
+                      key={el}
                       id={el}
                       value={el}
                       className=" cursor-pointer capitalize"
@@ -697,10 +713,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                           >
                             <FormControl>
                               <Checkbox
-                                checked={
-                                  field.value?.includes(location.id) 
-                                
-                                }
+                                checked={field.value?.includes(location.id)}
                                 onCheckedChange={(checked) => {
                                   return checked
                                     ? field.onChange([
@@ -729,13 +742,29 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
             )}
           />
         </div>
-<div className="w-full flex flex-col gap-1">
-<ActionLoaderButton className=" w-full" isLoading={form.formState.isSubmitting}>
-          {car ? "Update" : "Submit"}
-        </ActionLoaderButton>
-        {car && <ClientModalButton type="button"  modalInputs={{toDelete:true,deleteFunction:deleteCar,deleteId:car.id,modal:'delete',url:'/dashboard/car'}} destructive>Delete</ClientModalButton>}
-</div>
-      
+        <div className="w-full flex flex-col gap-1">
+          <ActionLoaderButton
+            className=" w-full"
+            isLoading={form.formState.isSubmitting}
+          >
+            {car ? "Update" : "Submit"}
+          </ActionLoaderButton>
+          {car && (
+            <ClientModalButton
+              type="button"
+              modalInputs={{
+                toDelete: true,
+                deleteFunction: deleteCar,
+                deleteId: car.id,
+                modal: "delete",
+                url: "/dashboard/car",
+              }}
+              destructive
+            >
+              Delete
+            </ClientModalButton>
+          )}
+        </div>
       </form>
     </Form>
   );
