@@ -29,7 +29,7 @@ export const addCar = async (data: any) => {
     await areIdsValid(dropoffLocations, "location");
     await areIdsValid(pickupSubLocations, "subLocation");
     await areIdsValid(dropoffSubLocations, "subLocation");
-    await isIdValid(rest.companyId,'company')
+    await isIdValid(rest.companyId, "company");
 
     await prisma.car.create({
       data: {
@@ -72,7 +72,7 @@ export const editCar = async (data: any, id: string) => {
     await areIdsValid(dropoffLocations, "location");
     await areIdsValid(pickupSubLocations, "subLocation");
     await areIdsValid(dropoffSubLocations, "subLocation");
-    await isIdValid(rest.companyId,'company')
+    await isIdValid(rest.companyId, "company");
 
     await prisma.car.update({
       where: {
@@ -80,8 +80,14 @@ export const editCar = async (data: any, id: string) => {
       },
       data: {
         ...rest,
-        pickupLocations: { connect: pickupLocations.map((id) => ({ id })) },
-        dropoffLocations: { connect: dropoffLocations.map((id) => ({ id })) },
+        pickupLocations: {
+          set: [],
+          connect: pickupLocations.map((id) => ({ id })),
+        },
+        dropoffLocations: {
+          set: [],
+          connect: dropoffLocations.map((id) => ({ id })),
+        },
       },
     });
 
