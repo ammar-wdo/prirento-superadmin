@@ -69,7 +69,7 @@ export const checkSlug = async (
   id?: string
 ) => {
   if (model === "car") {
-    const car = await prisma.car.findUnique({ where: { slug } });
+    const car = await prisma.car.findUnique({ where: { slug ,...(id && { NOT: { id } })} });
     if (car) {
       throw new Error("Slug already exists");
     }
