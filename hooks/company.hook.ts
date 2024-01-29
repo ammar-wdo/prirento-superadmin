@@ -24,6 +24,7 @@ export const useCompany = ({ company }: Props) => {
       name: company?.name || "",
       email: company?.email || "",
       password: company?.password || "",
+      slug:company?.slug || "",
       newPassword: "",
       address:company?.address || "",
       phoneNumber: company?.phoneNumber || "",

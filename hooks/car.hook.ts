@@ -42,6 +42,7 @@ export const useCar = (
       carStatus: car?.carStatus || "",
       carType: car?.carType || "",
       colors: car?.colors || "",
+      slug:car?.slug || "",
       commession: car?.commession! || undefined,
       companyId: car?.companyId || "",
       coolDown: car?.coolDown || undefined,
