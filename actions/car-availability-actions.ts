@@ -16,6 +16,14 @@ export const addCarAvailability = async (data: any,carId:string) => {
     const validData = carAvailabilitySchema.safeParse(data);
     if (!validData.success) return { error: "Invalid inputs" };
 
+    const carExist = await prisma.car.findUnique({
+      where:{
+        id:carId,
+        
+      },select:{id:true}
+    })
+    if(!carExist) return {error:'Car does not exist'}
+
     const {startDate,endDate,startTime,endTime} = validData.data
     const startDateObject = combineDateAndTimeToUTC(startDate,startTime)
     const endDateObject = combineDateAndTimeToUTC(endDate,endTime)
@@ -47,6 +55,13 @@ export const editCarAvailability = async (data: any,id:string, carId: string) =>
   
       const validData = carAvailabilitySchema.safeParse(data);
       if (!validData.success) return { error: "Invalid inputs" };
+
+      const carExist = await prisma.car.findUnique({
+        where:{
+          id:carId
+        },select:{id:true}
+      })
+      if(!carExist) return {error:'Car does not exist'}
   
       const {startDate,endDate,startTime,endTime} = validData.data
       const startDateObject = combineDateAndTimeToUTC(startDate,startTime)
