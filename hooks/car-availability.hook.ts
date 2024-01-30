@@ -47,6 +47,7 @@ export const useCarAvailability = () => {
 
   const router = useRouter();
   const params = useParams();
+  console.log(params.carId)
 
   async function onSubmit(values: z.infer<typeof carAvailabilitySchema>) {
     try {
@@ -55,7 +56,7 @@ export const useCarAvailability = () => {
         res = await editCarAvailability(
           values,
           carAvailability.id,
-          params.id as string
+          params.carId as string
         );
       } else {
         res = await addCarAvailability(values, params.carId as string);
