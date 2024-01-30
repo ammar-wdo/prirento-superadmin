@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   pricings: number[];
-  hourPrice: number | undefined;
+  hourPrice: number | null;
   id: string;
 };
 

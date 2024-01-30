@@ -17,7 +17,7 @@ import ActionLoaderButton from "../action-loader-button";
 
 type Props = {
   pricings: number[];
-  hourPrice: number | undefined;
+  hourPrice: number | null;
   id:string
 };
 
