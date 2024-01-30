@@ -70,5 +70,12 @@ export const usePricings = ({ pricings, hourPrice, id }: Props) => {
     form.setValue("pricings", newArray);
   };
 
-  return { form, onSubmit, setValue, addRow };
+   const deleteRow=(index:number)=>{
+    const array = form.getValues('pricings')
+    const newArray = array.filter((el,i)=>i!==index)
+    form.setValue('pricings',newArray)
+
+  }
+
+  return { form, onSubmit, setValue, addRow ,deleteRow};
 };

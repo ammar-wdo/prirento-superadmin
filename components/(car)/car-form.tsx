@@ -69,496 +69,455 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-8"
       >
-        <FormSectionsWrapper title="basic information">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="flex w-full h-full gap-6 flex-col">
-              <FormField
-                control={form.control}
-                name="carModelId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Car Model*</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="capitalize">
-                          <SelectValue
-                            className=""
-                            placeholder="Choose car model"
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {models.map((model) => (
-                          <SelectItem
-                            key={model.id}
-                            id={model.id}
-                            value={model.id}
-                            className=" cursor-pointer capitalize "
-                          >
-                            <div className="grid grid-cols-3 items-center  p-1 capitalize w-[300px]">
-                              <span className="text-start">
-                                {model.carBrand.brand}
-                              </span>
-                              <span className="text-start">{model.name}</span>
-                              <span className="w-8 h-8 rounded-full relative ">
-                                <Image
-                                  src={model.carBrand.logo}
-                                  alt="logo"
-                                  fill
-                                  className="object-contain"
-                                />
-                              </span>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+        <FormSectionsWrapper title="superadmin actions">
+          <FormField
+            control={form.control}
+            name="companyId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Car Company (owner)*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue placeholder="Choose car company" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {companies.map((company) => (
+                      <SelectItem
+                        key={company.id}
+                        id={company.id}
+                        value={company.id}
+                        className=" cursor-pointer capitalize"
+                      >
+                        {company.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="year"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Year*</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Year, YYYY" {...field} />
-                    </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="commession"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Commession*</FormLabel>
+                <FormControl>
+                  <Input placeholder="commession" type="number" {...field} />
+                </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-                 <FormField
-          control={form.control}
-          name="slug"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Slug*</FormLabel>
-              <FormControl>
-                <Input placeholder="slug" {...field} />
-              </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex flex-col  lg:flex-row gap-1 lg:gap-4 lg:col-span-2">
+            <FormField
+              control={form.control}
+              name="reservationFlatFee"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Reservation Flat Fee</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Reservation Flat Fee"
+                      type="number"
+                      {...field}
+                    />
+                  </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-            </div>
-            <div className="h-full">
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Descrition*</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="description"
-                        className="min-h-[150px]"
-                        {...field}
-                      />
-                    </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <span className=" self-center lg:mt-6">or</span>
+            <FormField
+              control={form.control}
+              name="reservationPercentage"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Reservation Percentage</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Reservation Percentage"
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                        form.trigger("reservationFlatFee");
+                      }}
+                      type="number"
+                      value={field.value}
+                    />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
+          <FormField
+            control={form.control}
+            name="carStatus"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {carStatus.map((el) => (
+                      <SelectItem
+                        key={el}
+                        id={el}
+                        value={el}
+                        className=" cursor-pointer capitalize"
+                      >
+                        {el}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </FormSectionsWrapper>
+
+        <FormSectionsWrapper title="basic information">
+          <FormField
+            control={form.control}
+            name="carModelId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Car Model*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue
+                        className=""
+                        placeholder="Choose car model"
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {models.map((model) => (
+                      <SelectItem
+                        key={model.id}
+                        id={model.id}
+                        value={model.id}
+                        className=" cursor-pointer capitalize "
+                      >
+                        <div className="grid grid-cols-3 items-center  p-1 capitalize w-[300px]">
+                          <span className="text-start">
+                            {model.carBrand.brand}
+                          </span>
+                          <span className="text-start">{model.name}</span>
+                          <span className="w-8 h-8 rounded-full relative ">
+                            <Image
+                              src={model.carBrand.logo}
+                              alt="logo"
+                              fill
+                              className="object-contain"
+                            />
+                          </span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="year"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Year*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Year, YYYY" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug*</FormLabel>
+                <FormControl>
+                  <Input placeholder="slug" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description*</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="description"
+                    className="min-h-[150px]"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </FormSectionsWrapper>
 
         <FormSectionsWrapper title="apperance">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="flex w-full h-full gap-6 flex-col">
-              <FormField
-                control={form.control}
-                name="colors"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Car color*</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="capitalize">
-                          <SelectValue placeholder="Choose car color" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {carColors.map((color) => (
-                          <SelectItem
-                            id={color}
-                            key={color}
-                            value={color}
-                            className=" cursor-pointer"
-                          >
-                            <div className="flex items-center justify-between w-[200px]">
-                              <span>
-                                {color}
-                                {}
-                              </span>
-                              {color !== "Other" && (
-                                <span
-                                  style={{
-                                    backgroundColor: `${
-                                      (
-                                        carColorsMapper as {
-                                          [key: string]: string;
-                                        }
-                                      )[color]
-                                    }`,
-                                  }}
-                                  className="w-6 h-6 border rounded-full  "
-                                />
-                              )}
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="interiorColor"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Car interior color*</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="capitalize">
-                          <SelectValue placeholder="Choose car interior color" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {carColors.map((color) => (
-                          <SelectItem
-                            id={color}
-                            key={color}
-                            value={color}
-                            className=" cursor-pointer"
-                          >
-                            <div className="flex items-center justify-between w-[200px]">
-                              <span>
-                                {color}
-                                {}
-                              </span>
-                              {color !== "Other" && (
-                                <span
-                                  style={{
-                                    backgroundColor: `${
-                                      (
-                                        carColorsMapper as {
-                                          [key: string]: string;
-                                        }
-                                      )[color]
-                                    }`,
-                                  }}
-                                  className="w-6 h-6 border rounded-full  "
-                                />
-                              )}
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-            <FormField
-          control={form.control}
-          name="gallary"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Gallary*</FormLabel>
-              <div className="flex items-center gap-3 w-full flex-wrap">
-                <FormControl>
-                  <SingleImageDropzone
-                    width={200}
-                    height={200}
-                    value={imagesFile}
-                    onChange={(imagesFile) => {
-                      setImagesFile(imagesFile);
-                    }}
-                  />
-                </FormControl>
-                <Button
-                  disabled={!imagesFile}
-                  type="button"
-                  onClick={uploadImages}
+          <FormField
+            control={form.control}
+            name="colors"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Car color*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
                 >
-                  Upload
-                </Button>
-              </div>
-              <ImagesPlaceholder />
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue placeholder="Choose car color" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {carColors.map((color) => (
+                      <SelectItem
+                        id={color}
+                        key={color}
+                        value={color}
+                        className=" cursor-pointer"
+                      >
+                        <div className="flex items-center justify-between w-[200px]">
+                          <span>
+                            {color}
+                            {}
+                          </span>
+                          {color !== "Other" && (
+                            <span
+                              style={{
+                                backgroundColor: `${
+                                  (
+                                    carColorsMapper as {
+                                      [key: string]: string;
+                                    }
+                                  )[color]
+                                }`,
+                              }}
+                              className="w-6 h-6 border rounded-full  "
+                            />
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-            </div>
-          </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="interiorColor"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Car interior color*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue placeholder="Choose car interior color" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {carColors.map((color) => (
+                      <SelectItem
+                        id={color}
+                        key={color}
+                        value={color}
+                        className=" cursor-pointer"
+                      >
+                        <div className="flex items-center justify-between w-[200px]">
+                          <span>
+                            {color}
+                            {}
+                          </span>
+                          {color !== "Other" && (
+                            <span
+                              style={{
+                                backgroundColor: `${
+                                  (
+                                    carColorsMapper as {
+                                      [key: string]: string;
+                                    }
+                                  )[color]
+                                }`,
+                              }}
+                              className="w-6 h-6 border rounded-full  "
+                            />
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="gallary"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gallery*</FormLabel>
+                <div className="flex items-center gap-3 w-full flex-wrap">
+                  <FormControl>
+                    <SingleImageDropzone
+                      width={200}
+                      height={200}
+                      value={imagesFile}
+                      onChange={(imagesFile) => {
+                        setImagesFile(imagesFile);
+                      }}
+                    />
+                  </FormControl>
+                  <Button
+                    disabled={!imagesFile}
+                    type="button"
+                    onClick={uploadImages}
+                  >
+                    Upload
+                  </Button>
+                </div>
+                <ImagesPlaceholder />
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </FormSectionsWrapper>
 
-<FormSectionsWrapper title="specifications">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <div className="space-y-3">
-    <FormField
-          control={form.control}
-          name="engine"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Engine*</FormLabel>
-              <FormControl>
-                <Input placeholder="car engine" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-<FormField
-          control={form.control}
-          name="transmition"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Transmition*</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="capitalize">
-                    <SelectValue placeholder="Choose transmition" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {transmition.map((el) => (
-                    <SelectItem
-                      key={el}
-                      id={el}
-                      value={el}
-                      className=" cursor-pointer capitalize"
-                    >
-                      {el}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-<FormField
-          control={form.control}
-          name="electric"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Electric*</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="capitalize">
-                    <SelectValue placeholder="Choose electric satus" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {electric.map((el) => (
-                    <SelectItem
-                      key={el}
-                      id={el}
-                      value={el}
-                      className=" cursor-pointer capitalize"
-                    >
-                      {el}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-    </div>
-    <div className="space-y-3">
-    <FormField
-          control={form.control}
-          name="seats"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Seats*</FormLabel>
-              <FormControl>
-                <Input placeholder="car seats" type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="doors"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Doors*</FormLabel>
-              <FormControl>
-                <Input placeholder="car doors" type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-    </div>
-  </div>
-
-</FormSectionsWrapper>
-
-<FormSectionsWrapper title="rental details">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <div className="space-y-3">
-    <FormField
-          control={form.control}
-          name="kmIncluded"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>km Included*</FormLabel>
-              <FormControl>
-                <Input placeholder="km Included" type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-         <FormField
-          control={form.control}
-          name="minimumHours"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>Minimum rental hours</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Minimum rental hours"
-                  type="number"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormSectionsWrapper title="specifications">
           <FormField
-          control={form.control}
-          name="deposite"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Deposite*</FormLabel>
-              <FormControl>
-                <Input placeholder="deposite" type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-    </div>
-    <div className="space-y-3">
-    <FormField
-          control={form.control}
-          name="commession"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Commession*</FormLabel>
-              <FormControl>
-                <Input placeholder="commession" type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-           <FormField
-          control={form.control}
-          name="coolDown"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>Cool Down time (hours)*</FormLabel>
-              <FormControl>
-                <Input placeholder="Cool Down" type="number" {...field} />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-    </div>
-  </div>
-
-</FormSectionsWrapper>
-
-
-        <FormField
-          control={form.control}
-          name="companyId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Car Company (owner)*</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+            control={form.control}
+            name="engine"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Engine*</FormLabel>
                 <FormControl>
-                  <SelectTrigger className="capitalize">
-                    <SelectValue placeholder="Choose car company" />
-                  </SelectTrigger>
+                  <Input placeholder="car engine" {...field} />
                 </FormControl>
-                <SelectContent>
-                  {companies.map((company) => (
-                    <SelectItem
-                      key={company.id}
-                      id={company.id}
-                      value={company.id}
-                      className=" cursor-pointer capitalize"
-                    >
-                      {company.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-     
+          <FormField
+            control={form.control}
+            name="transmition"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Transmission*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue placeholder="Choose transmission" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {transmition.map((el) => (
+                      <SelectItem
+                        key={el}
+                        id={el}
+                        value={el}
+                        className=" cursor-pointer capitalize"
+                      >
+                        {el}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-  
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      
+          <FormField
+            control={form.control}
+            name="electric"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Electric*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue placeholder="Choose electric satus" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {electric.map((el) => (
+                      <SelectItem
+                        key={el}
+                        id={el}
+                        value={el}
+                        className=" cursor-pointer capitalize"
+                      >
+                        {el}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-     
-
-        <FormField
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+    <FormField
           control={form.control}
           name="carType"
           render={({ field }) => (
@@ -588,121 +547,140 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
             </FormItem>
           )}
         />
-
-    
-
-        
-
-      
-
-        <FormField
-          control={form.control}
-          name="carStatus"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Status*</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="capitalize">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {carStatus.map((el) => (
-                    <SelectItem
-                      key={el}
-                      id={el}
-                      value={el}
-                      className=" cursor-pointer capitalize"
-                    >
-                      {el}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-      
-    
-        <div className="flex flex-col  lg:flex-row gap-4">
           <FormField
             control={form.control}
-            name="reservationFlatFee"
+            name="seats"
             render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Reservation Flat Fee</FormLabel>
+              <FormItem>
+                <FormLabel>Seats*</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Reservation Flat Fee"
-                    type="number"
-                    {...field}
-                  />
+                  <Input placeholder="car seats" type="number" {...field} />
                 </FormControl>
 
                 <FormMessage />
               </FormItem>
             )}
           />
-          <span className=" self-center mt-6">or</span>
+
           <FormField
             control={form.control}
-            name="reservationPercentage"
+            name="doors"
             render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Reservation Percentage</FormLabel>
+              <FormItem>
+                <FormLabel>Doors*</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Reservation Percentage"
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      form.trigger("reservationFlatFee");
-                    }}
-                    type="number"
-                    value={field.value}
-                  />
+                  <Input placeholder="car doors" type="number" {...field} />
                 </FormControl>
 
                 <FormMessage />
               </FormItem>
             )}
           />
-        </div>
+        </FormSectionsWrapper>
 
-        <FormField
+        <FormSectionsWrapper title="rental details">
+       
+         
+              <FormField
+                control={form.control}
+                name="kmIncluded"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>km Included*</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="km Included"
+                        type="number"
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="minimumHours"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Minimum rental hours</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Minimum rental hours"
+                        type="number"
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="deposite"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Deposit*</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Deposit" type="number" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            
+     
+              <FormField
+                control={form.control}
+                name="coolDown"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Cool Down time (hours)*</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Cool Down" type="number" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+                <FormField
           control={form.control}
           name="deleviryFee"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <FormLabel>Deleviry Fee*</FormLabel>
+              <FormLabel>Delivery Fee*</FormLabel>
               <FormControl>
-                <Input placeholder="Deleviry Fee" type="number" {...field} />
+                <Input placeholder="Delivery Fee" type="number" {...field} />
               </FormControl>
 
               <FormMessage />
             </FormItem>
           )}
         />
+        
+   
+        </FormSectionsWrapper>
 
-       
+    
 
-     
+      
 
         <FormField
           control={form.control}
           name="disabled"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 ">
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 bg-white">
               <FormControl>
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
-              <div className="space-y-1 leading-none">
+              <div className="space-y-1 leading-none ">
                 <FormLabel>Disable your car</FormLabel>
                 <FormDescription>
                   If checked, the car will not show on the website.
@@ -711,7 +689,11 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
             </FormItem>
           )}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <FormSectionsWrapper title="locations">
+      
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:col-span-2">
           <FormField
             control={form.control}
             name="pickupLocations"
@@ -814,6 +796,8 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
             )}
           />
         </div>
+        </FormSectionsWrapper>
+       
         <div className="w-full flex flex-col gap-1">
           <ActionLoaderButton
             className=" w-full"

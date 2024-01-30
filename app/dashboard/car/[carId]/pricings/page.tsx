@@ -1,4 +1,4 @@
-import CarPricingsForm from "@/components/(car)/car-pricings-form";
+import CarPricingsForm from "@/components/(car pricings)/car-pricings-form";
 import Heading from "@/components/heading";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";

@@ -279,3 +279,23 @@ export const carPricingsSchema = z.object({
   .refine((val) => val > 0, "Enter positive value")
    
 });
+
+
+
+export const availabilitySchema = z.object({
+  label: z.string().optional(),
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().min(1, "End date is required"),
+  startTime: z.string().min(1, "Start time is required"),
+  endTime: z.string().min(1, "End time is required"),
+}).refine((data) => {
+
+  const startDateTime = new Date(`${data.startDate}T${data.startTime}`);
+  const endDateTime = new Date(`${data.endDate}T${data.endTime}`);
+
+
+  return startDateTime < endDateTime;
+}, {
+  message: "Start date and time must be before end date and time",
+  path: ["endDate", "endTime"], 
+})

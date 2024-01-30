@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Trash } from "lucide-react";
 import ToolTip from "../tool-tip";
 import ActionLoaderButton from "../action-loader-button";
 
@@ -22,7 +22,7 @@ type Props = {
 };
 
 const CarPricingsForm = ({ pricings, hourPrice ,id}: Props) => {
-  const { form, onSubmit, setValue, addRow } = usePricings({
+  const { form, onSubmit, setValue, addRow ,deleteRow} = usePricings({
     pricings,
     hourPrice,
     id
@@ -69,17 +69,21 @@ const CarPricingsForm = ({ pricings, hourPrice ,id}: Props) => {
               <FormControl>
                 <div className="space-y-2">
                   {form.watch("pricings").map((el, i) => (
-                    <div className="flex items-center justify-between">
+                    <div    key={i} className="flex items-center justify-between gap-2">
                       <span className="shrink-0 text-xs font-medium">Day {i+1}</span>
+                      <div className="flex items-center w-[90%] gap-2">
                       <Input
-                        key={i}
+                     
                         placeholder="0"
                         type="number"
-                        className="w-[95%]"
+                        className="flex-1"
                         {...field}
                         value={el || ""}
                         onChange={(e) => setValue(+e.target.value, i)}
                       />
+                     <ToolTip side="right" title="Delete row"><Button type="button" onClick={()=>deleteRow(i)} variant={'secondary'}><Trash className="w-3 h-3"/></Button></ToolTip> 
+                      </div>
+                   
                     </div>
                   ))}
                 </div>
