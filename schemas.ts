@@ -281,21 +281,31 @@ export const carPricingsSchema = z.object({
 });
 
 
-
-export const availabilitySchema = z.object({
-  label: z.string().optional(),
-  startDate: z.string().min(1, "Start date is required"),
-  endDate: z.string().min(1, "End date is required"),
+const timeSchema = z.object({
   startTime: z.string().min(1, "Start time is required"),
   endTime: z.string().min(1, "End time is required"),
-}).refine((data) => {
+})
 
-  const startDateTime = new Date(`${data.startDate}T${data.startTime}`);
-  const endDateTime = new Date(`${data.endDate}T${data.endTime}`);
+const dateSchema = z.object({
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().min(1, "End date is required"),
+})
+
+export const carAvailabilitySchema = z.object({
+  label: z.string().optional(),
+  
+ 
+}).and(timeSchema).and(dateSchema).refine((data) => {
+  const { startDate, endDate, startTime, endTime } = data;
+
+
+  const startDateTime = new Date(`${startDate}T${startTime}`);
+  const endDateTime = new Date(`${endDate}T${endTime}`);
 
 
   return startDateTime < endDateTime;
 }, {
   message: "Start date and time must be before end date and time",
-  path: ["endDate", "endTime"], 
-})
+  path: ["endTime"]
+});
+  

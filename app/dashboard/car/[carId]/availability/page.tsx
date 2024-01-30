@@ -1,11 +1,24 @@
-import React from 'react'
+import CarAvailabilityFeed from "@/components/(car availability)/car-availability-feed";
+import ClientModalButton from "@/components/client-modal-button";
+import Heading from "@/components/heading";
+import React from "react";
 
-type Props = {}
+type Props = {
+  params:{carId:string}
+};
 
-const page = (props: Props) => {
+const page = ({params}: Props) => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <div className="flex items-center justify-between">
+        <Heading title="Availability" description="Manage avaliability" />
+        <ClientModalButton modalInputs={{toDelete:false,modal:'carAvailability'}}>Add date</ClientModalButton>
+      </div>
+      <div className="">
+        <CarAvailabilityFeed carId={params.carId}/>
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default page;

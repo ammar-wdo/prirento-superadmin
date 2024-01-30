@@ -149,14 +149,14 @@ model Car {
   carModelId String
   carModel   CarModel @relation(fields: [carModelId], references: [id])
 
-  availabilities Availability[]
+  availabilities CarAvailability[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 
-model Availability {
+model CarAvailability {
   id String @id @default(uuid())
 
   label   String?
