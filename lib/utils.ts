@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import prisma from "./prisma";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,12 +11,23 @@ export function cn(...inputs: ClassValue[]) {
 
 
 
+export const newPasswordCheck = async(newPassword:string | undefined,password:string)=>{
 
-export const hashPassword = async(password:string)=>{
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  return   hashedPassword
+  let thePassword;
+    if (newPassword) {
+      thePassword =  await hashPassword(newPassword);
+    } else {
+      thePassword = password;
+    }
+
+    return newPassword
 }
+
+export const hashPassword = async (password: string) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+  return hashedPassword;
+};
 
 export async function areIdsValid(
   ids: string[],
@@ -55,21 +66,15 @@ export const transformSlug = (slug: string) => {
   return slug?.toLowerCase().replace(/\s+/g, "-");
 };
 
-
-
-
-
-
-
-
-
 export const checkSlug = async (
   slug: string,
   model: "company" | "car",
   id?: string
 ) => {
   if (model === "car") {
-    const car = await prisma.car.findUnique({ where: { slug ,...(id && { NOT: { id } })} });
+    const car = await prisma.car.findUnique({
+      where: { slug, ...(id && { NOT: { id } }) },
+    });
     if (car) {
       throw new Error("Slug already exists");
     }
@@ -83,11 +88,6 @@ export const checkSlug = async (
     }
   }
 };
-
-
-
-
-
 
 export const checkEmail = async (
   email: string,

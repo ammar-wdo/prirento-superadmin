@@ -11,7 +11,7 @@ type Props = {
 
 const CarBrandCard = ({carBrand}: Props) => {
   return (
-    <div key={carBrand.id} className="p-3 border rounded-md flex flex-col min-w-[250px]">
+    <div key={carBrand.id} className="p-3 border rounded-md flex flex-col min-w-[250px] bg-white">
     <div className="relative aspect-video">
         <Image src={carBrand.logo} fill alt="logo"  className='object-contain'/>
     </div>

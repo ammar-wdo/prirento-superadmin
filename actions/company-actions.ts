@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import { companySchema } from "@/schemas";
 import { getServerSession } from "next-auth";
 import bcrypt from 'bcryptjs';
-import { checkEmail, checkSlug, hashPassword } from "@/lib/utils";
+import { checkEmail, checkSlug, hashPassword, newPasswordCheck } from "@/lib/utils";
 
 
 
@@ -78,13 +78,9 @@ export const editCompany = async (data: any, id: string) => {
     await checkSlug(validData.data.slug,'company',id)
 
     const { newPassword, password, ...rest } = validData.data;
+
+    const thePassword = await newPasswordCheck(newPassword,password)
     
-    let thePassword;
-    if (newPassword) {
-      thePassword =  await hashPassword(newPassword);
-    } else {
-      thePassword = password;
-    }
 
 
 

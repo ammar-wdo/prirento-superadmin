@@ -7,7 +7,7 @@ const requiredNumber = z.preprocess((input) => {
 }, z.number());
 
 const slugSchema = requiredString
-  .max(200, "Slug is too long") // 
+  .max(200, "Slug is too long") //
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Invalid slug format");
 
 export const loginSchema = z.object({
@@ -36,7 +36,7 @@ export const companySchema = z.object({
   name: requiredString.max(20, "maximum 20 characters"),
   categoryId: requiredString,
   email: requiredString.min(2, "E-mail is required").email(),
-  slug:slugSchema,
+  slug: slugSchema,
   password: z.string().min(8, "Password should be at least 8 chars"),
   newPassword: z
     .union([z.string(), z.undefined()])
@@ -142,8 +142,6 @@ const carTypeSchema = z
     message: "Invalid car type",
   });
 
-
-
 const transmitionSchema = z
   .object({
     transmition: requiredString,
@@ -151,9 +149,6 @@ const transmitionSchema = z
   .refine((data) => transmition.includes(data.transmition), {
     message: "Invalid transmition type",
   });
-
-
-
 
 const electricSchema = z
   .object({
@@ -163,17 +158,11 @@ const electricSchema = z
     message: "invalid electric option",
   });
 
-
-
-
 const carStatusSchema = z
   .object({
     carStatus: requiredString,
   })
   .refine((data) => carStatus.includes(data.carStatus));
-
-
-
 
 const numericValues = z
   .object({
@@ -196,13 +185,14 @@ const numericValues = z
       .refine((val) => val, "Required field")
       .refine((val) => val > 0, "Enter positive value"),
     reservationFlatFee: z.coerce.number().optional().or(z.literal(undefined)),
-    reservationPercentage: z.coerce.number().optional().or(z.literal(undefined)),
+    reservationPercentage: z.coerce
+      .number()
+      .optional()
+      .or(z.literal(undefined)),
     kmIncluded: requiredNumber
       .refine((val) => val, "Required field")
       .refine((val) => val > 0, "Enter positive value"),
-    hourPrice: requiredNumber
-      .refine((val) => val, "Required field")
-      .refine((val) => val > 0, "Enter positive value"),
+
     minimumHours: z.coerce
       .number()
       .positive({ message: "Enter positive value " })
@@ -223,7 +213,10 @@ const numericValues = z
     (val) =>
       (val.reservationFlatFee && !val.reservationPercentage) ||
       (!val.reservationFlatFee && val.reservationPercentage),
-    { message: "Enter either reservation flat fee or reservation percentage",path:['reservationFlatFee'] }
+    {
+      message: "Enter either reservation flat fee or reservation percentage",
+      path: ["reservationFlatFee"],
+    }
   )
   .refine((val) => !val.reservationFlatFee || val.reservationFlatFee > 0, {
     message: "Enter positive value",
@@ -235,9 +228,7 @@ const numericValues = z
       message: "Enter positive value",
       path: ["reservationPercentage"],
     }
-  )
-  ;
-
+  );
 export const carSchema = z
   .object({
     description: requiredString,
@@ -248,7 +239,7 @@ export const carSchema = z
       .refine((data) => data.length === 4, {
         message: "Year must be exactly 4 digits.",
       }),
-      slug:slugSchema,
+    slug: slugSchema,
 
     engine: requiredString,
 
@@ -256,10 +247,6 @@ export const carSchema = z
       .array(requiredString)
       .min(1, "Upload at least 1 image")
       .max(6, "Maximum of 6 images allowed"),
-
-    pricings: z.array(
-      z.coerce.number().positive({ message: "Enter positive value " })
-    ),
 
     additionalFeatures: z
       .array(z.object({ title: z.string(), icon: z.string() }))
@@ -279,3 +266,16 @@ export const carSchema = z
   .and(carStatusSchema)
   .and(colorSchema)
   .and(numericValues);
+
+export const carPricingsSchema = z.object({
+  pricings: z
+    .array(
+      z.coerce.number()
+    )
+    .refine((pricings) => !pricings.includes(0), {
+      message: "Pricings cannot include zero",
+    }).refine(pricings=>!pricings.some(val=>val<0),{message:'Negative values not allowed'}),
+  hourPrice: requiredNumber
+  .refine((val) => val > 0, "Enter positive value")
+   
+});

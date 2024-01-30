@@ -9,7 +9,7 @@ const layout = ({ children }: Props) => {
   return (
     <div>
         <SideBar />
-      <main className="pl-80 p-20">{children}</main>
+      <main className="pl-80 p-20 bg-muted min-h-screen">{children}</main>
     </div>
   );
 };

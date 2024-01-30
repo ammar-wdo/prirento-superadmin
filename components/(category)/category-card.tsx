@@ -10,7 +10,7 @@ type Props = {
 
 const CategoryCard = ({ category }: Props) => {
   return (
-    <div className="flex items-center gap-2 border p-3 rounded-md">
+    <div className="flex items-center gap-2 border p-3 rounded-md bg-white">
       <div className="flex items-center gap-1">
         <ClientModalButton
         

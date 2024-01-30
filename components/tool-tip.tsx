@@ -19,7 +19,7 @@ import {
     return (
         <TooltipProvider>
         <Tooltip delayDuration={40} >
-          <TooltipTrigger >{children}</TooltipTrigger>
+          <TooltipTrigger type="button" >{children}</TooltipTrigger>
           <TooltipContent side={side || 'left'} >
            <p >{title}</p>
           </TooltipContent>

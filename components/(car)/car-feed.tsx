@@ -29,7 +29,7 @@ const CarFeed = async (props: Props) => {
         </NavigatorButton>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 bg-white">
       <DataTable columns={columns} data={cars} />
       </div>
     </div>

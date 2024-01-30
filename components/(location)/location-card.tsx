@@ -13,7 +13,7 @@ type Props = {
 
 const LocationCard = ({ location }: Props) => {
   return (
-    <div className="flex flex-col min-w-[250px] max-w-[400px]  gap-2 border p-3 rounded-md">
+    <div className="flex flex-col min-w-[250px] max-w-[400px]  gap-2 border p-3 rounded-md bg-white">
       <div className="text-sm font-medium capitalize pb-3 mb-6 border-b flex items-center justify-between">
         <p>{location.name}</p>
         <ToolTip side="top" title="Add Sub-location">

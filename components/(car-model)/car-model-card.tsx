@@ -11,7 +11,7 @@ type Props = {
 
 const CarModelCard = ({ carModel, carsBrands }: Props) => {
   return (
-    <div className="flex flex-col gap-2 border p-3 rounded-md min-w-[150px]">
+    <div className="flex flex-col gap-2 border p-3 rounded-md min-w-[150px] bg-white">
       <h3 className="text-sm font-medium capitalize">{carModel.name}</h3>
       <p className="text-xs capitalize text-muted-foreground mt-1">
         {carModel.carBrand.brand}

@@ -21,7 +21,7 @@ const page = async({params}: Props) => {
  <Heading title="Company" description={company ? `Update ${company.name}` : 'Create new company'} />
 
 
- <div className='mt-12 max-w-5xl'>
+ <div className='mt-12 max-w-5xl bg-white p-6 border rounded-md'>
 <CompanyForm company={company! } categories={categories} />
  </div>
 

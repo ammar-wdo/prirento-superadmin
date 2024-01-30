@@ -11,7 +11,7 @@ type Props = {
 
 const CompanyCard = ({ company }: Props) => {
   return (
-    <div className="p-3 border rounded-md max-w-[400px] w-full">
+    <div className="p-3 border rounded-md max-w-[400px] w-full bg-white">
       <div className="w-full aspect-video relative">
         <Image
           src={company.logo}
