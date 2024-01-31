@@ -14,7 +14,7 @@ model Company {
   id   String @id @default(uuid())
   name String
 
-  slug String @unique 
+  slug String @unique
 
   email       String @unique
   password    String
@@ -104,7 +104,7 @@ model CarModel {
 }
 
 model Car {
-  id            String   @id @default(uuid())
+  id            String       @id @default(uuid())
   description   String
   year          String
   colors        CarColors
@@ -119,7 +119,7 @@ model Car {
   electric      Electric
   carStatus     CarStatus
 
-  slug String @unique 
+  slug String @unique
 
   deposite              Int
   commession            Int
@@ -157,57 +157,52 @@ model Car {
   updatedAt DateTime @updatedAt
 }
 
-
 model CarAvailability {
   id String @id @default(uuid())
 
-  label   String?
+  label String?
 
   startDate DateTime
   endDate   DateTime
 
- 
-
   carId String
-  car Car @relation(fields: [carId],references: [id])
-
+  car   Car    @relation(fields: [carId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
 model CarDiscount {
-  id String @id @default(uuid())
-  label String
+  id        String @id @default(uuid())
+  label     String
+  promocode String
 
   type  DiscountType @default(fixed)
   value Int
 
-  mandatory Boolean
+
 
   carId String
-  car Car @relation(fields: [carId],references: [id])
+  car   Car    @relation(fields: [carId], references: [id])
+
+  discountApplyType DiscountApplyType @default(created)
+
+  startDate DateTime
+  endDate  DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }
-
-
-
-
-
 
 //ENUMS
 
 enum Transmission {
   auto
- manual
+  manual
 }
 
 enum CarTypes {
-   SUV
+  SUV
   super_cars
   sports
   convertable
@@ -217,16 +212,16 @@ enum CarTypes {
 
 enum Electric {
   fully_electric
-   hybrid
+  hybrid
 }
 
 enum CarStatus {
   pending
-   active
+  active
 }
 
 enum CarColors {
-    Black
+  Black
   White
   Silver
   Gray
@@ -245,8 +240,12 @@ enum CarColors {
   Other
 }
 
-
 enum DiscountType {
   fixed
   percentage
+}
+
+enum DiscountApplyType {
+  created
+  booked
 }

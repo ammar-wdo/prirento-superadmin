@@ -74,34 +74,34 @@ export const carModelSchema = z.object({
 //car schema
 
 export const carTypes = [
-  'SUV',
-  'super_cars',
-  'sports',
-  'convertable',
-  'classics',
-  'business'
+  "SUV",
+  "super_cars",
+  "sports",
+  "convertable",
+  "classics",
+  "business",
 ] as const;
-export const transmition = ['auto', 'manual'] as const ;
-export const electric = ['fully_electric', 'hybrid'] as const;
-export const carStatus = ['pending', 'active'] as const;
-export const carColors =  [
-  'Black',
-  'White',
-  'Silver',
-  'Gray',
-  'Blue',
-  'Red',
-  'Brown',
-  'Green',
-  'Beige',
-  'Gold',
-  'Orange',
-  'Yellow',
-  'Purple',
-  'Maroon',
-  'Navy',
-  'Charcoal',
-  'Other'
+export const transmition = ["auto", "manual"] as const;
+export const electric = ["fully_electric", "hybrid"] as const;
+export const carStatus = ["pending", "active"] as const;
+export const carColors = [
+  "Black",
+  "White",
+  "Silver",
+  "Gray",
+  "Blue",
+  "Red",
+  "Brown",
+  "Green",
+  "Beige",
+  "Gold",
+  "Orange",
+  "Yellow",
+  "Purple",
+  "Maroon",
+  "Navy",
+  "Charcoal",
+  "Other",
 ] as const;
 
 export const carColorsMapper = {
@@ -127,27 +127,25 @@ const colorSchema = z.object({
   colors: z.enum(carColors).refine((data) => carColors.includes(data), {
     message: "invalid electric option",
   }),
-  interiorColor: z.enum(carColors) .refine((data) => carColors.includes(data), {
+  interiorColor: z.enum(carColors).refine((data) => carColors.includes(data), {
     message: "invalid electric option",
-  })
+  }),
 });
 
 const carTypeSchema = z
   .object({
     carType: z.enum(carTypes),
-  }) .refine((data) => carTypes.includes(data.carType), {
-    message: "invalid electric option",
   })
- ;
-
+  .refine((data) => carTypes.includes(data.carType), {
+    message: "invalid electric option",
+  });
 const transmitionSchema = z
   .object({
     transmition: z.enum(transmition),
-  }) .refine((data) => transmition.includes(data.transmition), {
-    message: "invalid electric option",
   })
-;
-
+  .refine((data) => transmition.includes(data.transmition), {
+    message: "invalid electric option",
+  });
 const electricSchema = z
   .object({
     electric: z.enum(electric),
@@ -267,43 +265,78 @@ export const carSchema = z
 
 export const carPricingsSchema = z.object({
   pricings: z
-    .array(
-      z.coerce.number()
-    )
+    .array(z.coerce.number())
     .refine((pricings) => !pricings.includes(0), {
       message: "Pricings cannot include zero",
-    }).refine(pricings=>!pricings.some(val=>val<0),{message:'Negative values not allowed'}),
-  hourPrice: requiredNumber
-  .refine((val) => val > 0, "Enter positive value")
-   
+    })
+    .refine((pricings) => !pricings.some((val) => val < 0), {
+      message: "Negative values not allowed",
+    }),
+  hourPrice: requiredNumber.refine((val) => val > 0, "Enter positive value"),
 });
-
 
 const timeSchema = z.object({
   startTime: z.string().min(1, "Start time is required"),
   endTime: z.string().min(1, "End time is required"),
-})
+});
 
 const dateSchema = z.object({
   startDate: z.string().min(1, "Start date is required"),
   endDate: z.string().min(1, "End date is required"),
-})
-
-export const carAvailabilitySchema = z.object({
-  label: z.string().optional(),
-  
- 
-}).and(timeSchema).and(dateSchema).refine((data) => {
-  const { startDate, endDate, startTime, endTime } = data;
-
-
-  const startDateTime = new Date(`${startDate}T${startTime}`);
-  const endDateTime = new Date(`${endDate}T${endTime}`);
-
-
-  return startDateTime < endDateTime;
-}, {
-  message: "Start date and time must be before end date and time",
-  path: ["endTime"]
 });
-  
+
+export const carAvailabilitySchema = z
+  .object({
+    label: z.string().optional(),
+  })
+  .and(timeSchema)
+  .and(dateSchema)
+  .refine(
+    (data) => {
+      const { startDate, endDate, startTime, endTime } = data;
+
+      const startDateTime = new Date(`${startDate}T${startTime}`);
+      const endDateTime = new Date(`${endDate}T${endTime}`);
+
+      return startDateTime < endDateTime;
+    },
+    {
+      message: "Start date must be before end date",
+      path: ["endTime"],
+    }
+  );
+
+export const discountType = ["fixed", "percentage"] as const;
+export const discountApplyType = ["created", "booked"] as const;
+
+export const carDiscountSchema = z
+  .object({
+    label: requiredString,
+    promocode: requiredString,
+    type: z
+      .enum(discountType)
+      .refine((val) => discountType.includes(val), "Invalid input "),
+    value: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
+
+    discountApplyType: z
+      .enum(discountApplyType)
+      .refine((val) => discountApplyType.includes(val), "Invalid input"),
+  })
+  .and(timeSchema)
+  .and(dateSchema)
+  .refine(
+    (data) => {
+      const { startDate, endDate, startTime, endTime } = data;
+
+      const startDateTime = new Date(`${startDate}T${startTime}`);
+      const endDateTime = new Date(`${endDate}T${endTime}`);
+
+      return startDateTime < endDateTime;
+    },
+    {
+      message: "Start date and time must be before end date and time",
+      path: ["endTime"],
+    }
+  ).refine(data=>data.type==='fixed' || data.value<=20,{message:'Percentage should not be greater than 20%',path:['value']});

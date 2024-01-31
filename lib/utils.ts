@@ -177,3 +177,15 @@ export function getTime(date: Date | undefined) {
   return `${hours}:${minutes}`;
 }
 
+export function generatePromoCode(length = 8) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let promoCode = '';
+
+  for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      promoCode += characters[randomIndex];
+  }
+
+  return promoCode;
+}
+
