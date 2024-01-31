@@ -46,6 +46,11 @@ export type ModalInputs =
       modal: "carAvailability";
       carAvailability?: CarAvailability;
     }
+  | {
+      toDelete: false;
+      modal: "c";
+      carAvailability?: CarAvailability;
+    }
 
 type Store = {
   open: boolean;

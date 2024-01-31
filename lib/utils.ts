@@ -21,7 +21,7 @@ export const newPasswordCheck = async(newPassword:string | undefined,password:st
       thePassword = password;
     }
 
-    return newPassword
+    return thePassword
 }
 
 export const hashPassword = async (password: string) => {

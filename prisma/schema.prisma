@@ -149,7 +149,7 @@ model Car {
   carModelId String
   carModel   CarModel @relation(fields: [carModelId], references: [id])
 
-  discounts Discount[]
+  discounts CarDiscount[]
 
   availabilities CarAvailability[]
 
@@ -177,7 +177,7 @@ model CarAvailability {
 }
 
 
-model Discount {
+model CarDiscount {
   id String @id @default(uuid())
   label String
 

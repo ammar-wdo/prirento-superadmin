@@ -358,6 +358,7 @@ const CompanyForm = ({ categories, company }: Props) => {
         
 
         <ActionLoaderButton   isLoading={form.formState.isSubmitting}>{company ? 'Update' : 'Submit'}</ActionLoaderButton>
+       
  
       </form>
     </Form>

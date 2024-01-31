@@ -33,7 +33,7 @@ export const categorySchema = z.object({
 
 const newPassword = z.string().min(8, { message: "Enter at least 8 chars" });
 export const companySchema = z.object({
-  name: requiredString.max(20, "maximum 20 characters"),
+  name: requiredString.max(100, "maximum 100 characters"),
   categoryId: requiredString,
   email: requiredString.min(2, "E-mail is required").email(),
   slug: slugSchema,
