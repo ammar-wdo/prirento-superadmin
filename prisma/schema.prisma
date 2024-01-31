@@ -107,17 +107,17 @@ model Car {
   id            String   @id @default(uuid())
   description   String
   year          String
-  colors        String
-  interiorColor String
+  colors        CarColors
+  interiorColor CarColors
   seats         Int
   doors         Int
   engine        String
   kmIncluded    Int
-  carType       String
+  carType       CarTypes
   gallary       String[]
-  transmition   String
-  electric      String
-  carStatus     String
+  transmition   Transmission
+  electric      Electric
+  carStatus     CarStatus
 
   slug String @unique 
 
@@ -149,6 +149,8 @@ model Car {
   carModelId String
   carModel   CarModel @relation(fields: [carModelId], references: [id])
 
+  discounts Discount[]
+
   availabilities CarAvailability[]
 
   createdAt DateTime @default(now())
@@ -174,6 +176,23 @@ model CarAvailability {
   updatedAt DateTime @updatedAt
 }
 
+
+model Discount {
+  id String @id @default(uuid())
+  label String
+
+  type  DiscountType @default(fixed)
+  value Int
+
+  mandatory Boolean
+
+  carId String
+  car Car @relation(fields: [carId],references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
 
 
 
@@ -224,4 +243,10 @@ enum CarColors {
   Navy
   Charcoal
   Other
+}
+
+
+enum DiscountType {
+  fixed
+  percentage
 }

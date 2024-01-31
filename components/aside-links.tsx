@@ -72,14 +72,14 @@ const AsideLinks = (props: Props) => {
       elements: [
         {
           label: "Discount",
-          href: "/dashboard/car",
-          active: pathname === "/dashboard/car",
+          href: "/dashboard/discount",
+          active: pathname === "/dashboard/discount",
           icon: <Coins className="h-4 w-4" />,
         },
         {
           label: "Admin rules",
-          href: "/dashboard/yacht",
-          active: pathname === "/dashboard/yacht",
+          href: "/dashboard/admin-rules",
+          active: pathname === "/dashboard/admin-rules",
           icon: <Gavel className="h-4 w-4" />,
         },
       ],
