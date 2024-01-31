@@ -164,8 +164,7 @@ model CarAvailability {
   startDate DateTime
   endDate   DateTime
 
-  startTime String
-  endTime   String
+ 
 
   carId String
   car Car @relation(fields: [carId],references: [id])

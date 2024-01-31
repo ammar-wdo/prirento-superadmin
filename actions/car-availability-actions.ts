@@ -30,10 +30,9 @@ export const addCarAvailability = async (data: any,carId:string) => {
 
     await prisma.carAvailability.create({
       data: {
-       ...validData.data,
+      label: validData.data.label,
        carId,
-       startTime,
-       endTime,
+ 
        startDate:startDateObject,
        endDate:endDateObject
       },
@@ -74,10 +73,9 @@ export const editCarAvailability = async (data: any,id:string, carId: string) =>
             carId
         },
         data: {
-         ...validData.data,
+          label: validData.data.label,
          
-         startTime,
-         endTime,
+       
          startDate:startDateObject,
          endDate:endDateObject
         },
