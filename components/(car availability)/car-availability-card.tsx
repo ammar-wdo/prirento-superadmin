@@ -50,7 +50,7 @@ const CarAvailabilityCard = ({ carAvailability }: Props) => {
           modal: "carAvailability",
         }}
       >
-        edit
+        Edit
       </ClientModalButton>
       <ClientModalButton
       className="w-full"
