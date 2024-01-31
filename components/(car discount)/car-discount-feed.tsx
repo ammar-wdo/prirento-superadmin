@@ -61,7 +61,7 @@ const CarDiscountFeed = async (props: Props) => {
             </TableHeader>
             <TableBody>
               {carDiscounts.map((discount) => (
-                <TableRow>
+                <TableRow key={discount.id}>
                   <TableHead className="">{discount.promocode}</TableHead>
                   <TableHead>{discount.label}</TableHead>
                   <TableHead>{discount.type}</TableHead>
