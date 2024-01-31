@@ -19,6 +19,8 @@ const CarDiscountModal = (props: Props) => {
 
     const {open,modalInputs,setClose} = useModal()
     const isOpen = open && modalInputs?.modal==='carDiscount'
+
+    const cars = modalInputs?.modal==='carDiscount' ? modalInputs.cars :[]
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
  
@@ -29,7 +31,7 @@ const CarDiscountModal = (props: Props) => {
           Manage Cars discounts
         </DialogDescription>
       </DialogHeader>
-    <CarDiscountForm/>
+    <CarDiscountForm cars={cars}/>
     </DialogContent>
   </Dialog>
   )

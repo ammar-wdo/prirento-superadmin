@@ -24,14 +24,14 @@ export const addCarAvailability = async (data: any,carId:string) => {
     })
     if(!carExist) return {error:'Car does not exist'}
 
-    const {startDate,endDate,startTime,endTime} = validData.data
+    const {startDate,endDate,startTime,endTime,...rest} = validData.data
     const startDateObject = combineDateAndTimeToUTC(startDate,startTime)
     const endDateObject = combineDateAndTimeToUTC(endDate,endTime)
 
     await prisma.carAvailability.create({
       data: {
-      label: validData.data.label,
-       carId,
+      ...rest,
+      carId,
  
        startDate:startDateObject,
        endDate:endDateObject
@@ -63,7 +63,7 @@ export const editCarAvailability = async (data: any,id:string, carId: string) =>
       })
       if(!carExist) return {error:'Car does not exist'}
   
-      const {startDate,endDate,startTime,endTime} = validData.data
+      const {startDate,endDate,startTime,endTime,...rest} = validData.data
       const startDateObject = combineDateAndTimeToUTC(startDate,startTime)
       const endDateObject = combineDateAndTimeToUTC(endDate,endTime)
   
@@ -73,7 +73,7 @@ export const editCarAvailability = async (data: any,id:string, carId: string) =>
             carId
         },
         data: {
-          label: validData.data.label,
+        ...rest,
          
        
          startDate:startDateObject,

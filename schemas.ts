@@ -313,6 +313,7 @@ export const carDiscountSchema = z
   .object({
     label: requiredString,
     promocode: requiredString,
+    carId:z.string().optional().or(z.literal(undefined)),
     type: z
       .enum(discountType)
       .refine((val) => discountType.includes(val), "Invalid input "),

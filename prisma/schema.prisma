@@ -182,8 +182,8 @@ model CarDiscount {
 
 
 
-  carId String
-  car   Car    @relation(fields: [carId], references: [id])
+  carId String?
+  car   Car?    @relation(fields: [carId], references: [id])
 
   discountApplyType DiscountApplyType @default(created)
 

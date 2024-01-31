@@ -13,6 +13,7 @@ import {
   addCarAvailability,
   editCarAvailability,
 } from "@/actions/car-availability-actions";
+import { addCarDiscount, editCarDiscount } from "@/actions/car-discount-actions";
 
 export const useCarDiscount = () => {
   const [startDateOpen, setStartDateOpen] = useState(false);
@@ -29,6 +30,7 @@ export const useCarDiscount = () => {
     resolver: zodResolver(carDiscountSchema),
     defaultValues: {
       label: carDiscount?.label || "",
+      carId:carDiscount?.carId || "all",
       startDate: carDiscount?.startDate.toISOString().slice(0,10) || "",
       endDate: carDiscount?.endDate.toISOString().slice(0,10) || "",
       startTime: getTime(carDiscount?.startDate) || "",
@@ -44,20 +46,20 @@ export const useCarDiscount = () => {
 
 
   const router = useRouter();
-  const params = useParams();
+  
  
 
   async function onSubmit(values: z.infer<typeof carDiscountSchema>) {
     try {
       let res;
       if (carDiscount) {
-        res = await editCarAvailability(
+        res = await editCarDiscount(
           values,
           carDiscount.id,
-          params.carId as string
+         
         );
       } else {
-        res = await addCarAvailability(values, params.carId as string);
+        res = await addCarDiscount(values);
       }
       if (res.error) {
         toast.error(res.error);
@@ -78,6 +80,14 @@ export const useCarDiscount = () => {
     const code = generatePromoCode(9)
     form.setValue('promocode',code)
   }
+
+
+  useEffect(()=>{
+
+    if(form.watch('carId')==='all'){
+        form.setValue('carId','')
+    }
+  },[form.watch('carId')])
 
   return {
     form,
