@@ -29,12 +29,14 @@ export const addCar = async (data: any) => {
       ...rest
     } = validData.data;
 
-    await areIdsValid(pickupLocations, "location");
-    await areIdsValid(dropoffLocations, "location");
-    await areIdsValid(pickupSubLocations, "subLocation");
-    await areIdsValid(dropoffSubLocations, "subLocation");
-    await isIdValid(rest.companyId, "company");
-    await checkSlug(rest.slug,'car')
+    Promise.all([
+      areIdsValid(pickupLocations, "location"),
+     areIdsValid(dropoffLocations, "location"),
+     areIdsValid(pickupSubLocations, "subLocation"),
+     areIdsValid(dropoffSubLocations, "subLocation"),
+     isIdValid(rest.companyId, "company"),
+     checkSlug(rest.slug,'car')
+    ]) 
 
 
     await prisma.car.create({
@@ -78,12 +80,14 @@ export const editCar = async (data: any, id: string) => {
       ...rest
     } = validData.data;
 
-    await areIdsValid(pickupLocations, "location");
-    await areIdsValid(dropoffLocations, "location");
-    await areIdsValid(pickupSubLocations, "subLocation");
-    await areIdsValid(dropoffSubLocations, "subLocation");
-    await isIdValid(rest.companyId, "company");
-    await checkSlug(rest.slug,'car',id)
+    await Promise.all([
+      areIdsValid(pickupLocations, "location"),
+      areIdsValid(dropoffLocations, "location"),
+      areIdsValid(pickupSubLocations, "subLocation"),
+      areIdsValid(dropoffSubLocations, "subLocation"),
+      isIdValid(rest.companyId, "company"),
+      checkSlug(rest.slug, 'car', id)
+    ])
 
     await prisma.car.update({
       where: {
