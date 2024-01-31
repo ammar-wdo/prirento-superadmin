@@ -161,7 +161,7 @@ export function formatDate(date:Date, locale = 'en-US', options = {}) {
 
 export function getTime(date: Date | undefined) {
   if (!date) {
-    return '--:--';
+    return '';
   }
 
   const hours = date.getUTCHours().toString().padStart(2, '0');

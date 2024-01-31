@@ -57,7 +57,9 @@ const CarAvailabilityForm = (props: Props) => {
             </FormItem>
           )}
         />
+        <div className="flex  gap-3 items-start">
 
+        <div className="grid flex-1 grid-cols-1 gap-3 w-fit">
         <FormField
           control={form.control}
           name="startDate"
@@ -70,7 +72,7 @@ const CarAvailabilityForm = (props: Props) => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
+                        "w-full pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -88,6 +90,7 @@ const CarAvailabilityForm = (props: Props) => {
                     defaultMonth={
                       new Date(form.watch("startDate") || new Date())
                     }
+                  
                     mode="single"
                     selected={new Date(field.value)}
                     onSelect={(date) => {
@@ -135,7 +138,8 @@ const CarAvailabilityForm = (props: Props) => {
             </FormItem>
           )}
         />
-
+        </div>
+        <div className="grid grid-cols-1 gap-3 w-fit flex-1">
         <FormField
           control={form.control}
           name="endDate"
@@ -148,7 +152,7 @@ const CarAvailabilityForm = (props: Props) => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
+                        "w-full pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -163,6 +167,7 @@ const CarAvailabilityForm = (props: Props) => {
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
+                
                     defaultMonth={new Date(form.watch("endDate") || new Date())}
                     mode="single"
                     selected={new Date(field.value)}
@@ -215,6 +220,9 @@ const CarAvailabilityForm = (props: Props) => {
           )}
         />
 
+</div>
+</div>
+      
         <ActionLoaderButton isLoading={form.formState.isSubmitting}>
           {modalInputs?.modal === "carAvailability" &&
           modalInputs.carAvailability
