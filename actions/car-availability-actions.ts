@@ -46,7 +46,7 @@ export const addCarAvailability = async (data: any,carId:string) => {
 };
 
 export const editCarAvailability = async (data: any,id:string, carId: string) => {
-  console.log('carId',carId)
+
     try {
       const session = await getServerSession(authOptions);
       if (!session) return { error: "Unauthorized" };

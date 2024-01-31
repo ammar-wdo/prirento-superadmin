@@ -4,7 +4,9 @@ import { cn } from "@/lib/utils";
 import {
   Building2,
   Car,
+  Coins,
   Component,
+  Gavel,
   Grid3X3,
   LayoutDashboard,
   Navigation,
@@ -62,6 +64,23 @@ const AsideLinks = (props: Props) => {
           href: "/dashboard/yacht",
           active: pathname === "/dashboard/yacht",
           icon: <ShipWheel className="h-4 w-4" />,
+        },
+      ],
+    },
+    {
+      label: "Actions",
+      elements: [
+        {
+          label: "Discount",
+          href: "/dashboard/car",
+          active: pathname === "/dashboard/car",
+          icon: <Coins className="h-4 w-4" />,
+        },
+        {
+          label: "Admin rules",
+          href: "/dashboard/yacht",
+          active: pathname === "/dashboard/yacht",
+          icon: <Gavel className="h-4 w-4" />,
         },
       ],
     },

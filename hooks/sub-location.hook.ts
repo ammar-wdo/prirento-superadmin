@@ -34,7 +34,7 @@ if(modalInputs?.modal==='sub-location'){
 
   async function onSubmit(values: z.infer<typeof subLocationSchema>) {
     try {
-        console.log('try')
+       
       let res;
       if (subLocation) {
       

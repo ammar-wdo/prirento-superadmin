@@ -134,7 +134,7 @@ export function convertDateToISOString(date:Date | undefined) {
   if (!date) {
     return undefined;
   }
-console.log(date)
+
 
 
   // Manually construct the ISO string in YYYY-MM-DD format
@@ -150,7 +150,9 @@ console.log(date)
 
 }
 
-
+export function delay(ms:number=3000) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 

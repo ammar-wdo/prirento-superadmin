@@ -36,18 +36,11 @@ export const useCarAvailability = () => {
     },
   });
 
-  useEffect(() => {
-    console.log(
-      "startDate",
-      form.watch("startDate"),
-      "end date",
-      form.watch("endDate")
-    );
-  }, [form.watch("startDate"), form.watch("endDate")]);
+
 
   const router = useRouter();
   const params = useParams();
-  console.log(params.carId)
+ 
 
   async function onSubmit(values: z.infer<typeof carAvailabilitySchema>) {
     try {
