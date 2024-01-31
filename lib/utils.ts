@@ -134,6 +134,8 @@ export function convertDateToISOString(date:Date | undefined) {
   if (!date) {
     return undefined;
   }
+console.log(date)
+
 
   // Manually construct the ISO string in YYYY-MM-DD format
   const year = date.getFullYear();
@@ -147,6 +149,10 @@ export function convertDateToISOString(date:Date | undefined) {
   return `${year}-${paddedMonth}-${paddedDay}`;
 
 }
+
+
+
+
 
 
 export function formatDate(date:Date, locale = 'en-US', options = {}) {

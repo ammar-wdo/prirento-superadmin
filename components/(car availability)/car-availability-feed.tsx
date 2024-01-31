@@ -11,7 +11,7 @@ const CarAvailabilityFeed = async({carId}: Props) => {
     const availabilities = await prisma.carAvailability.findMany({
         where:{
             carId
-        }
+        },orderBy:{createdAt:'desc'}
     })
   return (
     <div>

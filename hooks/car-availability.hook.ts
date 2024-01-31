@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { carAvailabilitySchema } from "@/schemas";
-import { convertDateToISOString, generateHourlyTimes, getTime } from "@/lib/utils";
+import { generateHourlyTimes, getTime } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useModal } from "./modals.hook";
@@ -29,8 +29,8 @@ export const useCarAvailability = () => {
     resolver: zodResolver(carAvailabilitySchema),
     defaultValues: {
       label: carAvailability?.label || "",
-      startDate: convertDateToISOString(carAvailability?.startDate) || "",
-      endDate: convertDateToISOString(carAvailability?.endDate) || "",
+      startDate: carAvailability?.startDate.toISOString().slice(0,10) || "",
+      endDate: carAvailability?.endDate.toISOString().slice(0,10) || "",
       startTime: getTime(carAvailability?.startDate) || "",
       endTime: getTime(carAvailability?.endDate) || "",
     },
