@@ -179,7 +179,7 @@ const CarAvailabilityForm = (props: Props) => {
                       date <
                       new Date(
                         new Date(form.watch("startDate")).setHours(0, 0, 0, 0)
-                      )
+                      ) || date < new Date(new Date().setHours(0, 0, 0, 0))
                     }
                     initialFocus
                   />

@@ -173,3 +173,55 @@ model CarAvailability {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+
+
+
+
+
+//ENUMS
+
+enum Transmission {
+  auto
+ manual
+}
+
+enum CarTypes {
+   SUV
+  super_cars
+  sports
+  convertable
+  classics
+  business
+}
+
+enum Electric {
+  fully_electric
+   hybrid
+}
+
+enum CarStatus {
+  pending
+   active
+}
+
+enum CarColors {
+    Black
+  White
+  Silver
+  Gray
+  Blue
+  Red
+  Brown
+  Green
+  Beige
+  Gold
+  Orange
+  Yellow
+  Purple
+  Maroon
+  Navy
+  Charcoal
+  Other
+}

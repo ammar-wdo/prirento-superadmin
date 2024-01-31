@@ -74,35 +74,35 @@ export const carModelSchema = z.object({
 //car schema
 
 export const carTypes = [
-  "SUV",
-  "super cars",
-  "sports",
-  "convertable",
-  "classics",
-  "business",
-];
-export const transmition = ["auto", "manual"];
-export const electric = ["fully electric", "hybrid"];
-export const carStatus = ["pending", "active"];
-export const carColors = [
-  "Black",
-  "White",
-  "Silver",
-  "Gray",
-  "Blue",
-  "Red",
-  "Brown",
-  "Green",
-  "Beige",
-  "Gold",
-  "Orange",
-  "Yellow",
-  "Purple",
-  "Maroon",
-  "Navy",
-  "Charcoal",
-  "Other",
-];
+  'SUV',
+  'super_cars',
+  'sports',
+  'convertable',
+  'classics',
+  'business'
+] as const;
+export const transmition = ['auto', 'manual'] as const ;
+export const electric = ['fully_electric', 'hybrid'] as const;
+export const carStatus = ['pending', 'active'] as const;
+export const carColors =  [
+  'Black',
+  'White',
+  'Silver',
+  'Gray',
+  'Blue',
+  'Red',
+  'Brown',
+  'Green',
+  'Beige',
+  'Gold',
+  'Orange',
+  'Yellow',
+  'Purple',
+  'Maroon',
+  'Navy',
+  'Charcoal',
+  'Other'
+] as const;
 
 export const carColorsMapper = {
   Black: "#000000",
@@ -124,35 +124,33 @@ export const carColorsMapper = {
 };
 
 const colorSchema = z.object({
-  colors: requiredString.refine(
-    (data) => carColors.includes(data),
-    "Invalid color input"
-  ),
-  interiorColor: requiredString.refine(
-    (data) => carColors.includes(data),
-    "Invalid color input"
-  ),
+  colors: z.enum(carColors).refine((data) => carColors.includes(data), {
+    message: "invalid electric option",
+  }),
+  interiorColor: z.enum(carColors) .refine((data) => carColors.includes(data), {
+    message: "invalid electric option",
+  })
 });
 
 const carTypeSchema = z
   .object({
-    carType: requiredString,
+    carType: z.enum(carTypes),
+  }) .refine((data) => carTypes.includes(data.carType), {
+    message: "invalid electric option",
   })
-  .refine((data) => carTypes.includes(data.carType), {
-    message: "Invalid car type",
-  });
+ ;
 
 const transmitionSchema = z
   .object({
-    transmition: requiredString,
+    transmition: z.enum(transmition),
+  }) .refine((data) => transmition.includes(data.transmition), {
+    message: "invalid electric option",
   })
-  .refine((data) => transmition.includes(data.transmition), {
-    message: "Invalid transmition type",
-  });
+;
 
 const electricSchema = z
   .object({
-    electric: requiredString,
+    electric: z.enum(electric),
   })
   .refine((data) => electric.includes(data.electric), {
     message: "invalid electric option",
@@ -160,7 +158,7 @@ const electricSchema = z
 
 const carStatusSchema = z
   .object({
-    carStatus: requiredString,
+    carStatus: z.enum(carStatus),
   })
   .refine((data) => carStatus.includes(data.carStatus));
 
