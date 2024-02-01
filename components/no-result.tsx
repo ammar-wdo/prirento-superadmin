@@ -1,12 +1,14 @@
+import { cn } from '@/lib/utils'
 import React from 'react'
 
 type Props = {
-    title?:string
+    title?:string,
+    className?:string
 }
 
-const NoResult = ({title}: Props) => {
+const NoResult = ({title,className}: Props) => {
   return (
-    <p className='text-2xl font-semibold capitalize text-center text-muted-foreground'>{title ? title : "No result"}</p>
+    <p className={cn('text-2xl font-semibold capitalize text-center text-muted-foreground',className)}>{title ? title : "No result"}</p>
   )
 }
 

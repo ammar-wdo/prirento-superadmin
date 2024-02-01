@@ -4,31 +4,49 @@ import Heading from "../heading";
 import NoResult from "../no-result";
 import ClientModalButton from "../client-modal-button";
 import CarModelCard from "./car-model-card";
+import CarBrandWraperCard from "./car-brand-wrapper-card";
 
 type Props = {};
 
 const CarModelFeed = async (props: Props) => {
-  const carModelsRes =  prisma.carModel.findMany({
-    orderBy: { createdAt: "desc" },include:{carBrand:{select:{brand:true}}}
+  const allBrandsWithModels = await prisma.carBrand.findMany({
+    include: {
+      carModels: {
+        orderBy: { createdAt: "desc" },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
-  const carsBrandsRes =  prisma.carBrand.findMany({select:{id:true,brand:true}})
+  const carsBrands = allBrandsWithModels.map(({ carModels, ...rest }) => rest);
 
-  const [carModels,carsBrands] = await Promise.all([carModelsRes,carsBrandsRes])
   return (
     <div className="mt-12">
-        <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <Heading small title="Models" description="Manage Models" />
-        <ClientModalButton modalInputs={{toDelete:false,modal:'carModel',carsBrands:carsBrands}}>Create model</ClientModalButton>
-        </div>
-     
+        <ClientModalButton
+          modalInputs={{
+            toDelete: false,
+            modal: "carModel",
+            carsBrands: carsBrands,
+          }}
+        >
+          Create model
+        </ClientModalButton>
+      </div>
 
-      <div className="mt-6">
-        {!carModels.length && <NoResult title="No models" />}
-        {!!carModels.length && (
-          <div className="flex flex-wrap gap-2">
-            {carModels.map((carModel) => (
-              <CarModelCard carsBrands={carsBrands} key={carModel.id} carModel={carModel} />
+      <div className="mt-12">
+        {!allBrandsWithModels.length && <NoResult title="No Brands" />}
+        {!!allBrandsWithModels.length && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+            {allBrandsWithModels.map((brand) => (
+              <CarBrandWraperCard
+                carsBrands={carsBrands}
+                brand={brand}
+                key={brand.id}
+              />
             ))}
           </div>
         )}
