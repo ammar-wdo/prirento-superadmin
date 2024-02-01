@@ -63,6 +63,22 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
     uploadImages,
     ImagesPlaceholder,
   } = useCar(car);
+
+
+  const sortedModels = models
+  .sort((a, b) => {
+    const brandA = a.carBrand.brand.toLowerCase();
+    const brandB = b.carBrand.brand.toLowerCase();
+
+    if (brandA < brandB) {
+      return -1;
+    }
+    if (brandA > brandB) {
+      return 1;
+    }
+    return 0;
+  })
+
   return (
     <Form {...form}>
       <form
@@ -215,29 +231,30 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {models.map((model) => (
-                      <SelectItem
-                        key={model.id}
-                        id={model.id}
-                        value={model.id}
-                        className=" cursor-pointer capitalize "
-                      >
-                        <div className="grid grid-cols-3 items-center  p-1 capitalize w-[300px]">
-                          <span className="text-start">
-                            {model.carBrand.brand}
-                          </span>
-                          <span className="text-start">{model.name}</span>
-                          <span className="w-8 h-8 rounded-full relative ">
-                            <Image
-                              src={model.carBrand.logo}
-                              alt="logo"
-                              fill
-                              className="object-contain"
-                            />
-                          </span>
-                        </div>
-                      </SelectItem>
-                    ))}
+                    {
+                      sortedModels.map((model) => (
+                        <SelectItem
+                          key={model.id}
+                          id={model.id}
+                          value={model.id}
+                          className=" cursor-pointer capitalize "
+                        >
+                          <div className="grid grid-cols-3 items-center  p-1 capitalize w-[450px]">
+                            <span className="text-start">
+                              {model.carBrand.brand}
+                            </span>
+                            <span className="text-start">{model.name}</span>
+                            <span className="w-8 h-8 rounded-full relative ">
+                              <Image
+                                src={model.carBrand.logo}
+                                alt="logo"
+                                fill
+                                className="object-contain"
+                              />
+                            </span>
+                          </div>
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
 
@@ -517,36 +534,39 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               </FormItem>
             )}
           />
-    <FormField
-          control={form.control}
-          name="carType"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Car type*</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="capitalize">
-                    <SelectValue placeholder="Choose car type" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {carTypes.map((type) => (
-                    <SelectItem
-                      id={type}
-                      key={type}
-                      value={type}
-                      className=" cursor-pointer capitalize"
-                    >
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <FormField
+            control={form.control}
+            name="carType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Car type*</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="capitalize">
+                      <SelectValue placeholder="Choose car type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {carTypes.map((type) => (
+                      <SelectItem
+                        id={type}
+                        key={type}
+                        value={type}
+                        className=" cursor-pointer capitalize"
+                      >
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="seats"
@@ -579,95 +599,82 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
         </FormSectionsWrapper>
 
         <FormSectionsWrapper title="rental details">
-       
-         
-              <FormField
-                control={form.control}
-                name="kmIncluded"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>km Included*</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="km Included"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
+          <FormField
+            control={form.control}
+            name="kmIncluded"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>km Included*</FormLabel>
+                <FormControl>
+                  <Input placeholder="km Included" type="number" {...field} />
+                </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="minimumHours"
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>Minimum rental hours</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Minimum rental hours"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="minimumHours"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Minimum rental hours</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Minimum rental hours"
+                    type="number"
+                    {...field}
+                  />
+                </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="deposite"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Deposit*</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Deposit" type="number" {...field} />
-                    </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="deposite"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Deposit*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Deposit" type="number" {...field} />
+                </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            
-     
-              <FormField
-                control={form.control}
-                name="coolDown"
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel>Cool Down time (hours)*</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Cool Down" type="number" {...field} />
-                    </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-                <FormField
-          control={form.control}
-          name="deleviryFee"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>Delivery Fee*</FormLabel>
-              <FormControl>
-                <Input placeholder="Delivery Fee" type="number" {...field} />
-              </FormControl>
+          <FormField
+            control={form.control}
+            name="coolDown"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Cool Down time (hours)*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Cool Down" type="number" {...field} />
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-   
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="deleviryFee"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Delivery Fee*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Delivery Fee" type="number" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </FormSectionsWrapper>
-
-    
-
-      
 
         <FormField
           control={form.control}
@@ -691,74 +698,22 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
         />
 
         <FormSectionsWrapper title="locations">
-      
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:col-span-2">
-          <FormField
-            control={form.control}
-            name="pickupLocations"
-            render={() => (
-              <FormItem>
-                <div className="mb-4">
-                  <FormLabel className="text-base">Pickup locations*</FormLabel>
-                </div>
-                {locations.map((location) => (
-                  <FormField
-                    key={location.id}
-                    control={form.control}
-                    name="pickupLocations"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={location.id}
-                          className="flex flex-row items-start space-x-3 space-y-0"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(location.id)}
-                              onCheckedChange={(checked) => {
-                                return checked
-                                  ? field.onChange([
-                                      ...field.value,
-                                      location.id,
-                                    ])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== location.id
-                                      )
-                                    );
-                              }}
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm font-normal capitalize">
-                            {location.name}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="dropoffLocations"
-            render={() => (
-              <FormItem>
-                <div className="mb-4">
-                  <FormLabel className="text-base">
-                    Dropoff locations*
-                  </FormLabel>
-                </div>
-                {locations.map((location) => {
-                  return (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:col-span-2">
+            <FormField
+              control={form.control}
+              name="pickupLocations"
+              render={() => (
+                <FormItem>
+                  <div className="mb-4">
+                    <FormLabel className="text-base">
+                      Pickup locations*
+                    </FormLabel>
+                  </div>
+                  {locations.map((location) => (
                     <FormField
                       key={location.id}
                       control={form.control}
-                      name="dropoffLocations"
+                      name="pickupLocations"
                       render={({ field }) => {
                         return (
                           <FormItem
@@ -789,15 +744,67 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
                         );
                       }}
                     />
-                  );
-                })}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+                  ))}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="dropoffLocations"
+              render={() => (
+                <FormItem>
+                  <div className="mb-4">
+                    <FormLabel className="text-base">
+                      Dropoff locations*
+                    </FormLabel>
+                  </div>
+                  {locations.map((location) => {
+                    return (
+                      <FormField
+                        key={location.id}
+                        control={form.control}
+                        name="dropoffLocations"
+                        render={({ field }) => {
+                          return (
+                            <FormItem
+                              key={location.id}
+                              className="flex flex-row items-start space-x-3 space-y-0"
+                            >
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value?.includes(location.id)}
+                                  onCheckedChange={(checked) => {
+                                    return checked
+                                      ? field.onChange([
+                                          ...field.value,
+                                          location.id,
+                                        ])
+                                      : field.onChange(
+                                          field.value?.filter(
+                                            (value) => value !== location.id
+                                          )
+                                        );
+                                  }}
+                                />
+                              </FormControl>
+                              <FormLabel className="text-sm font-normal capitalize">
+                                {location.name}
+                              </FormLabel>
+                            </FormItem>
+                          );
+                        }}
+                      />
+                    );
+                  })}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </FormSectionsWrapper>
-       
+
         <div className="w-full flex flex-col gap-1">
           <ActionLoaderButton
             className=" w-full"

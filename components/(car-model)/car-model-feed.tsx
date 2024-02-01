@@ -27,7 +27,7 @@ const CarModelFeed = async (props: Props) => {
       <div className="mt-12">
         {!allBrandsWithModels.length && <NoResult title="No Brands" />}
         {!!allBrandsWithModels.length && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {allBrandsWithModels.map((brand) => (
               <CarBrandWraperCard
                 carsBrands={carsBrands}

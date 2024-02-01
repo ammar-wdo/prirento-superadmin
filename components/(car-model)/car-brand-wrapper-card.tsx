@@ -49,7 +49,7 @@ const CarBrandWraperCard = ({ brand, carsBrands }: Props) => {
             <TableHeader>
               <TableRow>
                 <TableHead className="">Car model</TableHead>
-                <TableHead className="">Actions</TableHead>
+                <TableHead className="text-end">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

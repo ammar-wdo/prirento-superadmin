@@ -19,9 +19,9 @@ const CarModelCard = ({ carModel, carsBrands }: Props) => {
   return (
     <TableRow>
       <TableCell className="font-medium">{carModel.name}</TableCell>
-      <TableCell>
+      <TableCell className="">
         {" "}
-        <div className="flex items-center gap-1">
+        <div className="flex justify-end items-center gap-1">
           <ClientModalButton
             className=" p-1 w-7 h-7"
             modalInputs={{

@@ -5,9 +5,9 @@ import NoResult from "../no-result";
 import ClientModalButton from "../client-modal-button";
 import Image from "next/image";
 import { deleteCarBrand } from "@/actions/carBrand-actions";
-import { Edit2, Trash } from "lucide-react";
+import { Edit2, PlusCircle, Trash } from "lucide-react";
 import CarBrandCard from "./car-brand-card";
-
+import ToolTip from "../tool-tip";
 
 type Props = {};
 
@@ -17,18 +17,24 @@ const CarBrandFeed = async (props: Props) => {
   });
   return (
     <div className="mt-12">
-        <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <Heading small title="Brands" description="Manage brands" />
-        <ClientModalButton modalInputs={{toDelete:false,modal:'carBrand'}}>Create new brand</ClientModalButton>
-        </div>
-     
+      </div>
 
       <div className="mt-6">
         {!carBrands.length && <NoResult title="No brands" />}
         {!!carBrands.length && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mt-12">
+            <ToolTip side="top" title="Create brand">
+              <ClientModalButton
+                className="bg-white min-w-[100px] p-0 h-full flex items-center justify-center hover:bg-white border"
+                modalInputs={{ toDelete: false, modal: "carBrand" }}
+              >
+                <PlusCircle className="text-muted-foreground" />
+              </ClientModalButton>
+            </ToolTip>
             {carBrands.map((carBrand) => (
-       <CarBrandCard key={carBrand.id} carBrand={carBrand}/>
+              <CarBrandCard key={carBrand.id} carBrand={carBrand} />
             ))}
           </div>
         )}
