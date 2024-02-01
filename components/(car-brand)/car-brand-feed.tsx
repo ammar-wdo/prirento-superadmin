@@ -24,14 +24,15 @@ const CarBrandFeed = async (props: Props) => {
         {!carBrands.length && <NoResult title="No brands" />}
         {!!carBrands.length && (
           <div className="flex flex-wrap gap-2 mt-12">
-            <ToolTip side="top" title="Create brand">
+            
               <ClientModalButton
-                className="bg-white min-w-[200px] p-0 h-full flex items-center justify-center hover:bg-white border"
+                className="bg-white min-w-[200px] p-0 h-auto flex items-center justify-center hover:bg-white border  flex-col  gap-3"
                 modalInputs={{ toDelete: false, modal: "carBrand" }}
               >
+                <span className="text-muted-foreground">Create Brand</span>
                 <PlusCircle className="text-muted-foreground " />
               </ClientModalButton>
-            </ToolTip>
+         
             {carBrands.map((carBrand) => (
               <CarBrandCard key={carBrand.id} carBrand={carBrand} />
             ))}

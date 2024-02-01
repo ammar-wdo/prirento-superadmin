@@ -34,7 +34,7 @@ const CarBrandForm = (props: Props) => {
             <FormItem>
               <FormLabel>Brand*</FormLabel>
               <FormControl>
-                <Input placeholder="model" {...field} />
+                <Input placeholder="brand" {...field} />
               </FormControl>
 
               <FormMessage />
