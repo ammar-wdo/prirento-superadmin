@@ -94,22 +94,10 @@ const CarDiscountFeed = async (props: Props) => {
                   </TableHead>
 
                   <TableHead className="">
-                    {formatDate(discount.startDate, "en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {formatDate(discount.startDate)}
                   </TableHead>
                   <TableHead className="">
-                    {formatDate(discount.endDate, "en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {formatDate(discount.endDate)}
                   </TableHead>
                   <TableHead className="">
                     <div className="flex items-center gap-2">

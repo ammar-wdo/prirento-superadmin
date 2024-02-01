@@ -157,15 +157,23 @@ export function delay(ms:number=3000) {
 
 
 
-export function formatDate(date:Date, locale = 'en-US', options = {}) {
-  // Default options include displaying date and time in UTC
-  const defaultOptions = {
-    timeZone: 'UTC',
-    
-    ...options
-  };
+export function formatDate(
+  date: Date,
+  locale: string = 'en-GB',
+  options: Intl.DateTimeFormatOptions & { timeZone: string } = {
+    timeZone: 'UTC', // Ensuring timezone is always included in the options
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false, // Use 24-hour format
+  }
+): string {
+  // Merge default options with any user-provided options
+  const mergedOptions: Intl.DateTimeFormatOptions = { ...options };
 
-  return date.toLocaleString(locale, defaultOptions);
+  return new Intl.DateTimeFormat(locale, mergedOptions).format(date);
 }
 
 export function getTime(date: Date | undefined) {

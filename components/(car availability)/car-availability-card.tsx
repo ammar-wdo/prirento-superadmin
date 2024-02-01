@@ -16,27 +16,13 @@ const CarAvailabilityCard = ({ carAvailability }: Props) => {
       <div className="flex items-center justify-between">
         <p>Start date</p>
         <p className="text-xs">
-          {formatDate(carAvailability.startDate,'en-US',{ 
-  year: 'numeric', 
-  month: 'long', 
-  day: 'numeric', 
-  hour: '2-digit', 
-  minute: '2-digit', 
-
-})}
+          {formatDate(carAvailability.startDate)}
         </p>
       </div>
       <div className="flex items-center justify-between">
         <p>End date</p>
         <p className="text-xs">
-          {formatDate(carAvailability.endDate,'en-US',{ 
-  year: 'numeric', 
-  month: 'long', 
-  day: 'numeric', 
-  hour: '2-digit', 
-  minute: '2-digit', 
-
-})}
+          {formatDate(carAvailability.endDate)}
         </p>
       </div>
       </div>
