@@ -20,11 +20,12 @@ type Props = {
 
 const CarBrandWraperCard = ({ brand, carsBrands }: Props) => {
   return (
-    <div className=" p-6 border rounded-md bg-white">
-      <div className="flex items-center justify-between">
-        <h3 className="capitalize text-xl font-medium">{brand.brand}</h3>
-        <ToolTip side="top" title="Create model">
+    <div className="  bg-white">
+     
+       
+        <ToolTip className="w-full" side="top" title="Create model" >
           <ClientModalButton
+          className="w-full"
             modalInputs={{
               toDelete: false,
               modal: "carModel",
@@ -35,7 +36,7 @@ const CarBrandWraperCard = ({ brand, carsBrands }: Props) => {
             <PlusCircle />
           </ClientModalButton>
         </ToolTip>
-      </div>
+  
 
       <div className="space-y-1 mt-2">
         {!brand.carModels.length && (

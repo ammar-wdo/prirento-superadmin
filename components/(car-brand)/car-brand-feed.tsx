@@ -3,9 +3,8 @@ import React from "react";
 import Heading from "../heading";
 import NoResult from "../no-result";
 import ClientModalButton from "../client-modal-button";
-import Image from "next/image";
-import { deleteCarBrand } from "@/actions/carBrand-actions";
-import { Edit2, PlusCircle, Trash } from "lucide-react";
+
+import { PlusCircle } from "lucide-react";
 import CarBrandCard from "./car-brand-card";
 import ToolTip from "../tool-tip";
 
@@ -30,7 +29,7 @@ const CarBrandFeed = async (props: Props) => {
                 className="bg-white min-w-[200px] p-0 h-full flex items-center justify-center hover:bg-white border"
                 modalInputs={{ toDelete: false, modal: "carBrand" }}
               >
-                <PlusCircle className="text-muted-foreground" />
+                <PlusCircle className="text-muted-foreground " />
               </ClientModalButton>
             </ToolTip>
             {carBrands.map((carBrand) => (
