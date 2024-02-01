@@ -1,3 +1,4 @@
+import { SuperadminType } from "@prisma/client";
 import * as z from "zod";
 
 const requiredString = z.string().min(1, "Required field");
@@ -313,7 +314,7 @@ export const carDiscountSchema = z
   .object({
     label: requiredString,
     promocode: requiredString,
-    carId:z.string().optional().or(z.literal(undefined)),
+    carId: z.string().optional().or(z.literal(undefined)),
     type: z
       .enum(discountType)
       .refine((val) => discountType.includes(val), "Invalid input "),
@@ -324,6 +325,7 @@ export const carDiscountSchema = z
     discountApplyType: z
       .enum(discountApplyType)
       .refine((val) => discountApplyType.includes(val), "Invalid input"),
+    applyToAll: z.coerce.boolean().default(true),
   })
   .and(timeSchema)
   .and(dateSchema)
@@ -340,4 +342,39 @@ export const carDiscountSchema = z
       message: "Start date and time must be before end date and time",
       path: ["endTime"],
     }
-  ).refine(data=>data.type==='fixed' || data.value<=20,{message:'Percentage should not be greater than 20%',path:['value']});
+  )
+  .refine((data) => data.type === "fixed" || data.value <= 20, {
+    message: "Percentage should not be greater than 20%",
+    path: ["value"],
+  })
+  .refine(
+    (data) =>
+      (!data.carId && data.applyToAll) || (data.carId && !data.applyToAll),
+    { message: "Either to all cars or one car is allowed", path: ["carId"] }
+  );
+
+export const superAdmintype = ["fixed", "percentage"] as const;
+
+export const superAdminSchema = z
+  .object({
+    label: requiredString,
+    description: requiredString,
+    type: z
+      .enum(superAdmintype)
+      .refine((val) => superAdmintype.includes(val), "Invalid value"),
+    value: requiredNumber
+      .refine((val) => val, "Required field")
+      .refine((val) => val > 0, "Enter positive value"),
+    mandatory: z.coerce.boolean().default(false),
+    applyToAll: z.coerce.boolean().default(true),
+    carId: z.string().optional().or(z.literal(undefined)),
+  })
+  .refine((data) => data.type === "fixed" || data.value <= 20, {
+    message: "Percentage should not be greater than 20%",
+    path: ["value"],
+  })
+  .refine(
+    (data) =>
+      (!data.carId && data.applyToAll) || (data.carId && !data.applyToAll),
+    { message: "Either to all cars or one car is allowed", path: ["carId"] }
+  );

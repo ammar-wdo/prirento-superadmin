@@ -10,14 +10,15 @@ import {
 } from "@/components/ui/table";
 import NoResult from "../no-result";
 import ClientModalButton from "../client-modal-button";
-import { deleteCarDiscount } from "@/actions/car-discount-actions";
-import { formatDate } from "@/lib/utils";
-import { DollarSign, Percent } from "lucide-react";
+
+
+import { Percent } from "lucide-react";
+import { deleteSuperadminRule } from "@/actions/superadmin-rules-actions";
 
 type Props = {};
 
-const CarDiscountFeed = async (props: Props) => {
-  const carDiscountsRes = prisma.carDiscount.findMany({
+const SuperadminRulesFeed = async (props: Props) => {
+  const superadminRulesRes = prisma.superadminRule.findMany({
     orderBy: { createdAt: "desc" },
     include: {
       car: {
@@ -42,7 +43,7 @@ const CarDiscountFeed = async (props: Props) => {
     },
   });
 
-  const [carDiscounts, cars] = await Promise.all([carDiscountsRes, carsRes]);
+  const [superadminRules, cars] = await Promise.all([superadminRulesRes, carsRes]);
   const icon = (value: "fixed" | "percentage") => {
     if (value === "fixed")
       return <span className="text-sm font-mono uppercase mr-1  ">aed</span>;
@@ -51,73 +52,55 @@ const CarDiscountFeed = async (props: Props) => {
 
   return (
     <div>
-      {!carDiscounts.length && <NoResult />}
-      {!!carDiscounts.length && (
+      {!superadminRules.length && <NoResult />}
+      {!!superadminRules.length && (
         <div className="bg-white border rounded-md p-1">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="">Promocode</TableHead>
+             
                 <TableHead>Label</TableHead>
+                <TableHead>Description</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead className="">Value</TableHead>
                 <TableHead className="">Car</TableHead>
-                <TableHead className="">Discount apply type</TableHead>
-
-                <TableHead className="">Start date</TableHead>
-                <TableHead className="">End date</TableHead>
+                <TableHead className="">Mandatory</TableHead>
+                
                 <TableHead className="">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {carDiscounts.map((discount) => (
-                <TableRow key={discount.id} className="capitalize">
-                  <TableHead className="">{discount.promocode}</TableHead>
-                  <TableHead className="">{discount.label}</TableHead>
-                  <TableHead>{discount.type}</TableHead>
+              {superadminRules.map((rule) => (
+                <TableRow key={rule.id} className="capitalize">
+             
+                  <TableHead className="">{rule.label}</TableHead>
+                  <TableHead className="">{rule.description}</TableHead>
+                  <TableHead>{rule.type}</TableHead>
                   <TableHead className="flex items-center">
-                    {icon(discount.type)}
-                    {discount.value}
+                    {icon(rule.type)}
+                    {rule.value}
                   </TableHead>
                   <TableHead className="">
-                    {discount.car ? (
+                    {rule.car ? (
                       <div className="w-[300px] flex items-center justify-between">
-                        <span>{discount.car.carModel.name}</span>
-                        <span>{discount.car.company.name}-Company</span>
+                        <span>{rule.car.carModel.name}</span>
+                        <span>{rule.car.company.name}-Company</span>
                       </div>
                     ) : (
                       "All cars"
                     )}
                   </TableHead>
-                  <TableHead className="">
-                    {discount.discountApplyType}
-                  </TableHead>
+                  <TableHead>{rule.mandatory ? 'true'  : 'false'}</TableHead>
+                
 
-                  <TableHead className="">
-                    {formatDate(discount.startDate, "en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </TableHead>
-                  <TableHead className="">
-                    {formatDate(discount.endDate, "en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </TableHead>
+                
                   <TableHead className="">
                     <div className="flex items-center gap-2">
                       <ClientModalButton
                         modalInputs={{
                           toDelete: false,
-                          modal: "carDiscount",
-                          carDiscount: discount,
+                          modal: "superadminRule",
+                          superadminRule: rule,
                           cars,
                         }}
                       >
@@ -127,8 +110,8 @@ const CarDiscountFeed = async (props: Props) => {
                         destructive
                         modalInputs={{
                           toDelete: true,
-                          deleteFunction: deleteCarDiscount,
-                          deleteId: discount.id,
+                          deleteFunction: deleteSuperadminRule,
+                          deleteId: rule.id,
                           modal: "delete",
                         }}
                       >
@@ -146,4 +129,4 @@ const CarDiscountFeed = async (props: Props) => {
   );
 };
 
-export default CarDiscountFeed;
+export default SuperadminRulesFeed;

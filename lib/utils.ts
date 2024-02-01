@@ -161,6 +161,7 @@ export function formatDate(date:Date, locale = 'en-US', options = {}) {
   // Default options include displaying date and time in UTC
   const defaultOptions = {
     timeZone: 'UTC',
+    
     ...options
   };
 

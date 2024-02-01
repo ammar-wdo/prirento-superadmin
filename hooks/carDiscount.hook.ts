@@ -36,7 +36,7 @@ export const useCarDiscount = () => {
       startTime: getTime(carDiscount?.startDate) || "",
       endTime: getTime(carDiscount?.endDate) || "",
       discountApplyType:carDiscount?.discountApplyType || 'booked',
-    
+    applyToAll:carDiscount?.applyToAll,
       promocode:carDiscount?.promocode || '',
       type:carDiscount?.type || 'fixed',
       value:carDiscount?.value || undefined
@@ -83,11 +83,23 @@ export const useCarDiscount = () => {
 
 
   useEffect(()=>{
-
-    if(form.watch('carId')==='all'){
+if(form.getValues('carId'))
+   { if(form.getValues('carId')==='all'){
         form.setValue('carId','')
-    }
+        form.setValue('applyToAll',true)
+        console.log('carId',form.watch('carId'),'apply to all',form.watch('applyToAll'))
+        
+    }else{
+      form.setValue('applyToAll',false)
+      console.log('carId',form.watch('carId'),'apply to all',form.watch('applyToAll'))
+    }}
   },[form.watch('carId')])
+
+  useEffect(()=>{
+    const value = form.watch('promocode')
+    const transformed = value.toUpperCase().replace(/\s+/g, '_')
+    form.setValue('promocode',transformed)
+  },[form.watch('promocode')])
 
   return {
     form,

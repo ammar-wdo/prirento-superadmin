@@ -149,6 +149,8 @@ model Car {
   carModelId String
   carModel   CarModel @relation(fields: [carModelId], references: [id])
 
+
+  superAdminRules SuperadminRule[]
   discounts CarDiscount[]
 
   availabilities CarAvailability[]
@@ -180,7 +182,7 @@ model CarDiscount {
   type  DiscountType @default(fixed)
   value Int
 
-
+  applyToAll Boolean @default(true)
 
   carId String?
   car   Car?    @relation(fields: [carId], references: [id])
@@ -193,6 +195,33 @@ model CarDiscount {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+
+model SuperadminRule {
+  id String @id @default(uuid())
+
+  label String
+  description String
+
+  type SuperadminType @default(fixed)
+  value Int
+
+  mandatory Boolean @default(false)
+  applyToAll Boolean @default(true)
+
+  carId String?
+  car Car? @relation(fields: [carId],references: [id])
+
+
+
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
 
 //ENUMS
 
@@ -248,4 +277,9 @@ enum DiscountType {
 enum DiscountApplyType {
   created
   booked
+}
+
+enum SuperadminType {
+  fixed
+  percentage
 }

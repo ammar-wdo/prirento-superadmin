@@ -2,28 +2,22 @@
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import prisma from "@/lib/prisma";
-import { combineDateAndTimeToUTC } from "@/lib/utils";
-import { carAvailabilitySchema, carDiscountSchema } from "@/schemas";
+
+import { superAdminSchema } from "@/schemas";
 import { getServerSession } from "next-auth";
 
-export const addCarDiscount = async (data: any) => {
+export const addSuperadminRule = async (data: any) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { error: "Unauthorized" };
 
-    const validData = carDiscountSchema.safeParse(data);
+    const validData = superAdminSchema.safeParse(data);
     if (!validData.success) return { error: "Invalid inputs" };
 
-    const { startDate, endDate, startTime, endTime, ...rest } = validData.data;
-    const startDateObject = combineDateAndTimeToUTC(startDate, startTime);
-    const endDateObject = combineDateAndTimeToUTC(endDate, endTime);
-
-    await prisma.carDiscount.create({
+    await prisma.superadminRule.create({
       data: {
-        ...rest,
-        carId: rest.carId ? rest.carId : null, 
-        startDate: startDateObject,
-        endDate: endDateObject,
+        ...validData.data,
+        carId: validData.data.carId ? validData.data.carId : null,
       },
     });
 
@@ -34,38 +28,23 @@ export const addCarDiscount = async (data: any) => {
   }
 };
 
-export const editCarDiscount = async (
-  data: any,
-  id: string,
- 
-) => {
+export const editSuperadminRule = async (data: any, id: string) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { error: "Unauthorized" };
 
     if (!id || typeof id !== "string") return { error: "car ID is required" };
 
-    const validData = carDiscountSchema.safeParse(data);
+    const validData = superAdminSchema.safeParse(data);
     if (!validData.success) return { error: "Invalid inputs" };
 
-  
-
-    const { startDate, endDate, startTime, endTime,...rest } = validData.data;
-    const startDateObject = combineDateAndTimeToUTC(startDate, startTime);
-    const endDateObject = combineDateAndTimeToUTC(endDate, endTime);
-    console.log("carId",rest.carId || 'undefiend')
-
-    await prisma.carDiscount.update({
+    await prisma.superadminRule.update({
       where: {
         id,
-   
       },
       data: {
-        ...rest,
-        carId: rest.carId ? rest.carId : null, 
-
-        startDate: startDateObject,
-        endDate: endDateObject,
+        ...validData.data,
+        carId: validData.data.carId ? validData.data.carId : null,
       },
     });
 
@@ -76,14 +55,14 @@ export const editCarDiscount = async (
   }
 };
 
-export const deleteCarDiscount = async (id: string) => {
+export const deleteSuperadminRule = async (id: string) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { error: "Unauthorized" };
 
     if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
-    await prisma.carDiscount.delete({
+    await prisma.superadminRule.delete({
       where: {
         id,
       },
