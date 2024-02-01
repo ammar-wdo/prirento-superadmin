@@ -2,8 +2,6 @@ import prisma from "@/lib/prisma";
 import React from "react";
 import Heading from "../heading";
 import NoResult from "../no-result";
-import ClientModalButton from "../client-modal-button";
-import CarModelCard from "./car-model-card";
 import CarBrandWraperCard from "./car-brand-wrapper-card";
 
 type Props = {};
@@ -24,10 +22,7 @@ const CarModelFeed = async (props: Props) => {
 
   return (
     <div className="mt-12">
-   
-        <Heading small title="Models" description="Manage Models" />
-     
- 
+      <Heading small title="Models" description="Manage Models" />
 
       <div className="mt-12">
         {!allBrandsWithModels.length && <NoResult title="No Brands" />}
