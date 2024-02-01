@@ -17,7 +17,7 @@ type Props = {
 
 const CarModelCard = ({ carModel, carsBrands }: Props) => {
   return (
-    <TableRow>
+    <TableRow className="capitalize">
       <TableCell className="font-medium">{carModel.name}</TableCell>
       <TableCell className="">
         {" "}

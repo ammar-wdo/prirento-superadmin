@@ -25,7 +25,7 @@ const page = async ({ params }: Props) => {
     <div>
       <Heading
         title={`${car.carModel.carBrand.brand} ${car.carModel.name} Pricings`}
-        description={`Manage pricings table - ${car.company.name}`}
+        description={`Manage pricings table - ${car.company.name} company`}
       />
 
       <div className="mt-16 max-w-5xl bg-white p-6 border rounded-md">

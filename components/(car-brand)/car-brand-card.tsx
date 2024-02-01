@@ -11,11 +11,11 @@ type Props = {
 
 const CarBrandCard = ({carBrand}: Props) => {
   return (
-    <div key={carBrand.id} className="p-3 border rounded-md flex flex-col min-w-[100px] bg-white">
+    <div key={carBrand.id} className="p-3 border rounded-md flex flex-col min-w-[200px] bg-white">
     <div className="relative aspect-video">
         <Image src={carBrand.logo} fill alt="logo"  className='object-contain'/>
     </div>
-    <h3 className='py-2 font-medium capitalize'>{carBrand.brand}</h3>
+    <h3 className='py-2 font-medium capitalize text-sm text-muted-foreground'>{carBrand.brand}</h3>
     <div className="flex items-center gap-1 mt-auto">
 <ClientModalButton
 className='w-full'

@@ -18,7 +18,7 @@ const page = async({params}: Props) => {
 
   return (
     <div>
- <Heading title="Company" description={company ? `Update ${company.name}` : 'Create new company'} />
+ <Heading title={!company ? 'Company' : `${company.name} - company`} description={company ? `Update ${company.name}` : 'Create new company'} />
 
 
  <div className='mt-12 max-w-5xl bg-white p-6 border rounded-md'>

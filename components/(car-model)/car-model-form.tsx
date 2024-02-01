@@ -38,7 +38,7 @@ const CarModelForm = ({ carsBrands }: Props) => {
             <FormItem>
               <FormLabel>Model*</FormLabel>
               <FormControl>
-                <Input placeholder="model" {...field} />
+                <Input placeholder="model" {...field} className="capitalize"/>
               </FormControl>
 
               <FormMessage />
@@ -54,7 +54,7 @@ const CarModelForm = ({ carsBrands }: Props) => {
               <FormLabel>Brand*</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Choose car brand" />
                   </SelectTrigger>
                 </FormControl>

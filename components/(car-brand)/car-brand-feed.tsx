@@ -27,7 +27,7 @@ const CarBrandFeed = async (props: Props) => {
           <div className="flex flex-wrap gap-2 mt-12">
             <ToolTip side="top" title="Create brand">
               <ClientModalButton
-                className="bg-white min-w-[100px] p-0 h-full flex items-center justify-center hover:bg-white border"
+                className="bg-white min-w-[200px] p-0 h-full flex items-center justify-center hover:bg-white border"
                 modalInputs={{ toDelete: false, modal: "carBrand" }}
               >
                 <PlusCircle className="text-muted-foreground" />

@@ -34,7 +34,7 @@ const page = async ({ params }: Props) => {
   if (!car && params.carId !== "new") return notFound();
   return (
     <div>
-      <Heading title={car ? car.carModel.name +' ' +  car.carModel.carBrand.brand : 'Car' } description={car ? `Update ${car.carModel.name +" " + car.carModel.carBrand.brand}` : 'Create new car'} />
+      <Heading title={car ? car.carModel.carBrand.brand  + ' ' + car.carModel.name : 'Car' } description={car ? `Update ${car.carModel.carBrand.brand +" " + car.carModel.name }` : 'Create new car'} />
       <div className="mt-16 max-w-5xl">
       <CarForm car={car} locations={locations} companies={companies} models={models}/>
       </div>
