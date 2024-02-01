@@ -181,7 +181,7 @@ const SuperadminRulesForm = ({ cars }: Props) => {
                   Mandatory rule
                 </FormLabel>
                 <FormDescription>
-                  If checked, it will appear in all car's checkout.
+                  If checked, it will appear in all car&apos;s checkout.
              
                 </FormDescription>
               </div>
