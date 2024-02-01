@@ -8,29 +8,28 @@ import Heading from "@/components/heading";
 import React, { Suspense } from "react";
 
 type Props = {};
-export const revalidate = 0
-const page = async(props: Props) => {
-
+export const revalidate = 0;
+const page = async (props: Props) => {
   return (
     <div>
       <Heading title="Cars" description="Manage car's Brands & Models" />
-      <Suspense fallback={<FallbackLoader title="Loading Brands List.."/>}>
-      <CarBrandFeed/>
-      </Suspense>
-     
-      <div className="mt-32">
-        <Suspense fallback={<FallbackLoader title="Loading Models List.."/>}>
-        <CarModelFeed/>
+
+      <div>
+        <Suspense fallback={<FallbackLoader title="Loading Cars Table.." />}>
+          <CarFeed />
         </Suspense>
-    
       </div>
       <div className="mt-32">
-        <Suspense fallback={<FallbackLoader title="Loading Cars Table.."/>} >
-        <CarFeed/>
+        <Suspense fallback={<FallbackLoader title="Loading Brands List.." />}>
+          <CarBrandFeed />
         </Suspense>
-     
       </div>
-     
+
+      <div className="mt-32">
+        <Suspense fallback={<FallbackLoader title="Loading Models List.." />}>
+          <CarModelFeed />
+        </Suspense>
+      </div>
     </div>
   );
 };
