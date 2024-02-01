@@ -10,11 +10,17 @@ import { addCategory, editCategory } from "@/actions/category-actions";
 import { carModelSchema } from "@/schemas";
 import { addCarModel, editCarModel } from "@/actions/carModel-actions";
 import { CarModel } from "@prisma/client";
+import { useEffect } from "react";
 
 export const useCarModel = () => {
   const { setClose, modalInputs } = useModal();
   let carModel: CarModel | undefined = undefined;
   if (modalInputs?.modal === "carModel") carModel = modalInputs.carModel;
+
+  let brandId
+  if (modalInputs?.modal === "carModel") brandId = modalInputs.brandId;
+
+
 
   const router = useRouter();
 
@@ -22,7 +28,7 @@ export const useCarModel = () => {
     resolver: zodResolver(carModelSchema),
     defaultValues: {
       name: carModel?.name || "",
-      carBrandId:carModel?.carBrandId || ""
+      carBrandId:carModel?.carBrandId || brandId || ""
     },
   });
 

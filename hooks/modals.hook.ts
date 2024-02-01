@@ -34,7 +34,8 @@ export type ModalInputs =
       toDelete: false;
       modal: "carModel";
       carModel?: CarModel;
-      carsBrands:{id:string,brand:string}[]
+      carsBrands:{id:string,brand:string}[],
+      brandId?:string
     }
   | {
       toDelete: false;

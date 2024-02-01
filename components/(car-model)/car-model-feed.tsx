@@ -24,18 +24,10 @@ const CarModelFeed = async (props: Props) => {
 
   return (
     <div className="mt-12">
-      <div className="flex items-center justify-between">
+   
         <Heading small title="Models" description="Manage Models" />
-        <ClientModalButton
-          modalInputs={{
-            toDelete: false,
-            modal: "carModel",
-            carsBrands: carsBrands,
-          }}
-        >
-          Create model
-        </ClientModalButton>
-      </div>
+     
+ 
 
       <div className="mt-12">
         {!allBrandsWithModels.length && <NoResult title="No Brands" />}
