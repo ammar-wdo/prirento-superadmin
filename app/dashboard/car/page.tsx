@@ -19,17 +19,7 @@ const page = async (props: Props) => {
           <CarFeed />
         </Suspense>
       </div>
-      <div className="mt-32">
-        <Suspense fallback={<FallbackLoader title="Loading Brands List.." />}>
-          <CarBrandFeed />
-        </Suspense>
-      </div>
-
-      <div className="mt-32">
-        <Suspense fallback={<FallbackLoader title="Loading Models List.." />}>
-          <CarModelFeed />
-        </Suspense>
-      </div>
+     
     </div>
   );
 };

@@ -6,6 +6,7 @@ import NoResult from "../no-result";
 import Image from "next/image";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import { ChevronsRight } from "lucide-react";
 
 type Props = {};
 
@@ -22,10 +23,13 @@ const CarFeed = async (props: Props) => {
 
   return (
     <div className="mt-12">
-      <div className="flex items-center justify-between">
-        <Heading small title="Cars" description="Manage Cars" />
+      <div className="flex items-center gap-2">
+       
         <NavigatorButton href="/dashboard/car/new">
           Create new car
+        </NavigatorButton>
+        <NavigatorButton href="/dashboard/brand" variant={'link'} >
+          Manage Brands & Models <ChevronsRight className="w-6 h-6  ml-2" />
         </NavigatorButton>
       </div>
 
