@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation'
 type Props = {
     title?:string,
     href:string,
+    variant?:"default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined
     
 } & React.HtmlHTMLAttributes<HTMLButtonElement>
 
-const NavigatorButton = ({title,href,className,children}: Props) => {
+const NavigatorButton = ({title,href,className,children,variant}: Props) => {
     const router = useRouter()
   return (
-    <Button className={className} onClick={()=>router.push(href)}>{title || children}</Button>
+    <Button variant={variant} className={className} onClick={()=>router.push(href)}>{title || children}</Button>
   )
 }
 

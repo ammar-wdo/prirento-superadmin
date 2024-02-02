@@ -14,6 +14,7 @@ import {
   editCarAvailability,
 } from "@/actions/car-availability-actions";
 import { useLogo } from "./logo.hook";
+import { addCarExtraOptions, editCarExtraOption } from "@/actions/car-extraOptions-actions";
 
 export const useCarExtraOptions = () => {
 
@@ -32,7 +33,7 @@ export const useCarExtraOptions = () => {
       description:carExtraOption?.description || "",
       price:carExtraOption?.price || undefined,
       status:carExtraOption?.status,
-      logo:carExtraOption?.label || "",
+      logo:carExtraOption?.logo || "",
 
    
     },
@@ -48,13 +49,13 @@ export const useCarExtraOptions = () => {
     try {
       let res;
       if (carExtraOption) {
-        res = await editCarAvailability(
+        res = await editCarExtraOption(
           values,
           carExtraOption.id,
           params.carId as string
         );
       } else {
-        res = await addCarAvailability(values, params.carId as string);
+        res = await addCarExtraOptions(values, params.carId as string);
       }
       if (res.error) {
         toast.error(res.error);

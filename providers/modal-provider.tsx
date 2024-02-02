@@ -1,10 +1,10 @@
 'use client'
 
-import CarAvailabilityForm from "@/components/(car availability)/car-availability-form"
-import SubLocationForm from "@/components/(sub-location)/sublocation-form"
+
 import CarAvailabilityModal from "@/components/modals/carAvailabilityModal"
 import CarBrandModal from "@/components/modals/carBrand-modal"
 import CarDiscountModal from "@/components/modals/carDiscount-modal"
+import CarExtraOptionsModal from "@/components/modals/carExtraOptions-modal"
 import CarModelModal from "@/components/modals/carModel-modal"
 import CategoryModal from "@/components/modals/category-modal"
 import DeleteModal from "@/components/modals/delete-modal"
@@ -31,6 +31,7 @@ const ModalProvider = (props: Props) => {
     <CarAvailabilityModal/>
     <CarDiscountModal/>
     <SuperadminRulesModal/>
+    <CarExtraOptionsModal/>
     </>
   )
 }

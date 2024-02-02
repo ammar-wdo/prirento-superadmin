@@ -84,7 +84,7 @@ const CarExtraOptionsForm = (props: Props) => {
               <FormLabel>Status</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="capitalize">
                     <SelectValue placeholder="Toggle status" />
                   </SelectTrigger>
                 </FormControl>

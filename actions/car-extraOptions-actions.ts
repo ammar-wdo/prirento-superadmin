@@ -3,17 +3,17 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import prisma from "@/lib/prisma";
 import { combineDateAndTimeToUTC } from "@/lib/utils";
-import { carAvailabilitySchema, carModelSchema, categorySchema,  } from "@/schemas";
+import { carAvailabilitySchema, carExtraOptionsSchema, carModelSchema, categorySchema,  } from "@/schemas";
 import { getServerSession } from "next-auth";
 
-export const addCarAvailability = async (data: any,carId:string) => {
+export const addCarExtraOptions = async (data: any,carId:string) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { error: "Unauthorized" };
 
-    if(!carId || typeof carId !== 'string') return {error:'Car ID is required'}
+    if(!carId || typeof carId !== 'string') return {error:'car ID is required'}
 
-    const validData = carAvailabilitySchema.safeParse(data);
+    const validData = carExtraOptionsSchema.safeParse(data);
     if (!validData.success) return { error: "Invalid inputs" };
 
     const carExist = await prisma.car.findUnique({
@@ -24,17 +24,15 @@ export const addCarAvailability = async (data: any,carId:string) => {
     })
     if(!carExist) return {error:'Car does not exist'}
 
-    const {startDate,endDate,startTime,endTime,...rest} = validData.data
-    const startDateObject = combineDateAndTimeToUTC(startDate,startTime)
-    const endDateObject = combineDateAndTimeToUTC(endDate,endTime)
 
-    await prisma.carAvailability.create({
+ 
+
+    await prisma.carExtraOption.create({
       data: {
-      ...rest,
+     ...validData.data,
       carId,
  
-       startDate:startDateObject,
-       endDate:endDateObject
+    
       },
     });
 
@@ -45,16 +43,16 @@ export const addCarAvailability = async (data: any,carId:string) => {
   }
 };
 
-export const editCarAvailability = async (data: any,id:string, carId: string) => {
+export const editCarExtraOption = async (data: any,id:string, carId: string) => {
 
     try {
       const session = await getServerSession(authOptions);
       if (!session) return { error: "Unauthorized" };
   
-      if(!id || typeof id !== 'string') return {error:'Availability ID is required'}
-      if(!carId || typeof carId !== 'string') return {error:'Car ID is required'}
+      if(!id || typeof id !== 'string') return {error:'Extra option  ID is required'}
+      if(!carId || typeof carId !== 'string') return {error:'car ID is required'}
   
-      const validData = carAvailabilitySchema.safeParse(data);
+      const validData = carExtraOptionsSchema.safeParse(data);
       if (!validData.success) return { error: "Invalid inputs" };
 
       const carExist = await prisma.car.findUnique({
@@ -63,22 +61,18 @@ export const editCarAvailability = async (data: any,id:string, carId: string) =>
         },select:{id:true}
       })
       if(!carExist) return {error:'Car does not exist'}
+
   
-      const {startDate,endDate,startTime,endTime,...rest} = validData.data
-      const startDateObject = combineDateAndTimeToUTC(startDate,startTime)
-      const endDateObject = combineDateAndTimeToUTC(endDate,endTime)
-  
-      await prisma.carAvailability.update({
+      await prisma.carExtraOption.update({
         where:{
             id,
             carId
         },
         data: {
-        ...rest,
+       ...validData.data
          
        
-         startDate:startDateObject,
-         endDate:endDateObject
+    
         },
       });
   
@@ -90,7 +84,7 @@ export const editCarAvailability = async (data: any,id:string, carId: string) =>
   };
 
 
-export const deleteCarAvailability = async (id: string) => {
+export const deleteCarExtraOption = async (id: string) => {
   try {
     const session = await getServerSession(authOptions);
     if (!session) return { error: "Unauthorized" };
@@ -99,7 +93,7 @@ export const deleteCarAvailability = async (id: string) => {
 
    
 
-    await prisma.carAvailability.delete({
+    await prisma.carExtraOption.delete({
       where: {
         id,
       },

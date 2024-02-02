@@ -20,10 +20,10 @@ const CarBrandFeed = async (props: Props) => {
         <Heading small title="Brands" description="Manage brands" />
       </div>
 
-      <div className="mt-6">
+      <div className="mt-3">
         {!carBrands.length && <NoResult title="No brands" />}
         {!!carBrands.length && (
-          <div className="flex flex-wrap gap-2 mt-12">
+          <div className="flex flex-wrap gap-2 ">
             
               <ClientModalButton
                 className="bg-white min-w-[200px] p-0 h-auto flex items-center justify-center hover:bg-white border  flex-col  gap-3"

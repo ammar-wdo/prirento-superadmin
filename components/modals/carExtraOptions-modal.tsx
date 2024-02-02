@@ -11,7 +11,8 @@ import {
 import { useModal } from "@/hooks/modals.hook"
 
 
-import CarBrandForm from "../(car-brand)/car-brand-form"
+
+import CarExtraOptionsForm from "../(car extra-options)/carExtraOptions-form"
 type Props = {}
 
 const CarExtraOptionsModal = (props: Props) => {
@@ -28,7 +29,7 @@ const CarExtraOptionsModal = (props: Props) => {
           Manage Car extra options
         </DialogDescription>
       </DialogHeader>
-      <CarBrandForm />
+      <CarExtraOptionsForm />
     </DialogContent>
   </Dialog>
   )

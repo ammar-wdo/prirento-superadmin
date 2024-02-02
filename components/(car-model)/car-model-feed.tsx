@@ -31,7 +31,7 @@ const CarModelFeed = async (props: Props) => {
     <div className="mt-12">
       <Heading small title="Models" description="Manage Models" />
 
-      <div className="mt-12">
+      <div className="mt-3">
         {!allBrandsWithModels.length && <NoResult title="No Brands" />}
         {!!allBrandsWithModels.length && (
           <Accordion type="multiple" >
