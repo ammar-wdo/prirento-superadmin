@@ -1,4 +1,4 @@
-import { Car, CarAvailability, CarBrand, CarDiscount, CarModel, Category, Location, SubLocation, SuperadminRule } from "@prisma/client";
+import { Car, CarAvailability, CarBrand, CarDiscount, CarExtraOption, CarModel, Category, Location, SubLocation, SuperadminRule } from "@prisma/client";
 import { create } from "zustand";
 
 export type DeleteFunction = (
@@ -58,6 +58,12 @@ export type ModalInputs =
       modal: "superadminRule";
       superadminRule?: SuperadminRule;
       cars:(Car & {company:{name:string},carModel:{name:string}})[]
+    }
+  | {
+      toDelete: false;
+      modal: "carExtraOptions";
+      carExtraOption?: CarExtraOption;
+   
     }
 
 type Store = {

@@ -4,7 +4,7 @@ import { Car, CarModel } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import NavigatorButton from "../navigator-button";
-import { CheckCircle, CircleDollarSign, Edit } from "lucide-react";
+import { CheckCircle, CircleDollarSign, Cog, Edit } from "lucide-react";
 
 type FullCar = Car & {
   carModel: CarModel & {
@@ -56,6 +56,9 @@ export const columns: ColumnDef<FullCar>[] = [
         </NavigatorButton>
         <NavigatorButton className="text-xs font-medium" href={`/dashboard/car/${row.getValue("id")}/availability`}>
           Availability <CheckCircle className="ml-3 h-3 w-3" />
+        </NavigatorButton>
+        <NavigatorButton className="text-xs font-medium" href={`/dashboard/car/${row.getValue("id")}/extra-options`}>
+          Extra options <Cog className="ml-3 h-3 w-3" />
         </NavigatorButton>
       </div>
     ),

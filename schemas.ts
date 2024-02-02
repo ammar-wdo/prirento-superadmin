@@ -378,3 +378,17 @@ export const superAdminSchema = z
       (!data.carId && data.applyToAll) || (data.carId && !data.applyToAll),
     { message: "Either to all cars or one car is allowed", path: ["carId"] }
   );
+
+export const carExtraOptionStatus = ['pending', 'active'] as const
+
+
+  export const carExtraOptionsSchema = z.object({
+    label:requiredString,
+    description:requiredString,
+    price:requiredNumber .refine((val) => val, "Required field")
+    .refine((val) => val > 0, "Enter positive value"),
+    status:z.enum(carExtraOptionStatus).refine(val=>carExtraOptionStatus.includes(val),'Invalid input'),
+    logo:requiredString,
+   
+
+  })
