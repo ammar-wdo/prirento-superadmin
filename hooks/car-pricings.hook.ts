@@ -26,7 +26,7 @@ export const usePricings = ({ pricings, hourPrice, id }: Props) => {
 
   useEffect(() => {
     if (pricings) {
-      const requiredLength = 7;
+      const requiredLength = 14;
       const arrayLength = form.getValues("pricings").length;
 
       if (arrayLength >= requiredLength) return;

@@ -133,6 +133,8 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               </FormItem>
             )}
           />
+
+
           <div className="flex flex-col  lg:flex-row gap-1 lg:gap-4 lg:col-span-2">
             <FormField
               control={form.control}
@@ -209,6 +211,20 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug*</FormLabel>
+                <FormControl>
+                  <Input placeholder="slug" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </FormSectionsWrapper>
 
         <FormSectionsWrapper title="basic information">
@@ -276,20 +292,7 @@ const CarForm = ({ car, locations, models, companies }: Props) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Slug*</FormLabel>
-                <FormControl>
-                  <Input placeholder="slug" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+     
 
           <FormField
             control={form.control}
