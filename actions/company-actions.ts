@@ -36,7 +36,8 @@ export const addCompany = async (data: any) => {
     await prisma.company.create({
       data: {
         ...values,
-        password:hashedPassword
+        password:hashedPassword,
+        email:validData.data.email.toLocaleLowerCase()
       },
     });
 
@@ -92,7 +93,8 @@ export const editCompany = async (data: any, id: string) => {
       },
       data: {
        ...rest,
-       password:thePassword
+       password:thePassword,
+       email:rest.email.toLocaleLowerCase()
       },
     });
 
