@@ -92,7 +92,8 @@ export const useCompany = ({ company }: Props) => {
       categoryId: company?.categoryId || "",
       openingTime: company?.openingTime as unknown as OpeneingsTime  || defaultOpeningTimes,
       promoted: company?.promoted,
-      terms:company?.terms || ""
+      terms:company?.terms || "",
+      away:company?.away || false
     },
   });
 

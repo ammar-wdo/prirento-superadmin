@@ -63,6 +63,7 @@ export const companySchema = z.object({
   gallary: z.array(requiredString),
   content: requiredString,
   promoted: z.coerce.boolean().default(false),
+  away:z.coerce.boolean(),
   openingTime:z.object({
     Monday: dayOpeningTimeSchema,
     Tuesday: dayOpeningTimeSchema,
