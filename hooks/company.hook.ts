@@ -24,8 +24,14 @@ type DayOpeningTimes = {
 // Define the overall structure for the default opening times
 type OpeningTimes ={
   [key: string]: DayOpeningTimes;
+
+  
 }
-export type Day = "Monday"|"Tuesday"|"Wednesday"|"Thursday"|"Friday"|"Saturday"|"Saturday"
+
+export const daysOrder: Day[] = [
+  "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+]
+export type Day = "Monday"|"Tuesday"|"Wednesday"|"Thursday"|"Friday"|"Saturday"|"Sunday"
 // Define the structure for the dropdown status state
 export type DropdownStatus= {
   [day: string]: {
