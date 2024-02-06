@@ -198,3 +198,14 @@ export function generatePromoCode(length = 8) {
   return promoCode;
 }
 
+
+export const generateTimeSlots = (stepMinutes = 15) => {
+  const slots = [];
+  const totalMinutes = 24 * 60;
+  for (let minute = 0; minute < totalMinutes; minute += stepMinutes) {
+    const hours = Math.floor(minute / 60);
+    const minutes = minute % 60;
+    slots.push(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);
+  }
+  return slots;
+}

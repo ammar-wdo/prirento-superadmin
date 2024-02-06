@@ -32,7 +32,15 @@ export const categorySchema = z.object({
   name: requiredString.max(20, "maximum 20 characters"),
 });
 
+
+
 const newPassword = z.string().min(8, { message: "Enter at least 8 chars" });
+
+const dayOpeningTimeSchema = z.object({
+  openTime: z.string().min(1, "Open time is required"),
+  closeTime: z.string().min(1, "Close time is required"),
+  closed: z.boolean(),
+});
 export const companySchema = z.object({
   name: requiredString.max(100, "maximum 100 characters"),
   categoryId: requiredString,
@@ -55,7 +63,15 @@ export const companySchema = z.object({
   gallary: z.array(requiredString),
   content: requiredString,
   promoted: z.coerce.boolean().default(false),
-  openingTime: z.array(z.string()).optional(),
+  openingTime:z.object({
+    Monday: dayOpeningTimeSchema,
+    Tuesday: dayOpeningTimeSchema,
+    Wednesday: dayOpeningTimeSchema,
+    Thursday: dayOpeningTimeSchema,
+    Friday: dayOpeningTimeSchema,
+    Saturday: dayOpeningTimeSchema,
+    Sunday: dayOpeningTimeSchema,
+  }),
   terms: requiredString,
 });
 

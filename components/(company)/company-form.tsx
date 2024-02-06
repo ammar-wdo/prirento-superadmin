@@ -1,6 +1,6 @@
 "use client";
 
-import { useCompany } from "@/hooks/company.hook";
+import { Day, useCompany } from "@/hooks/company.hook";
 import { Category, Company } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,9 @@ import { SingleImageDropzone } from "../single-image-dropezone";
 import dynamic from "next/dynamic";
 import { Checkbox } from "../ui/checkbox";
 import ActionLoaderButton from "../action-loader-button";
+import { cn, generateTimeSlots } from "@/lib/utils";
+import TimeSelect from "../time-select";
+import OpentimeComponent from "../opentime-component";
 
 const Editor = dynamic(() => import("../editor"), { ssr: false });
 
@@ -47,6 +50,9 @@ const CompanyForm = ({ categories, company }: Props) => {
     setImagesFile,
     ImagesPlaceholder,
     uploadImages,
+    toggleDropdown,setter,
+    dropdownStatus,
+    toggleClose
   } = useCompany({ company });
   return (
     <Form {...form}>
@@ -165,6 +171,45 @@ const CompanyForm = ({ categories, company }: Props) => {
               <FormLabel>Address*</FormLabel>
               <FormControl>
                 <Input placeholder="address" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+           <FormField
+          control={form.control}
+          name="openingTime"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Opening times*</FormLabel>
+              <FormControl>
+                <ul className="flex flex-col gap-2 w-full mt-3">
+                  <li className="grid grid-cols-4 gap-4 font-medium">
+                    <span className="text-xs md:text-base">Day</span>
+                    <span className="text-xs md:text-base">Open time</span>
+                    <span className="text-xs md:text-base">Close time</span>
+                    <span className="text-xs md:text-base justify-self-center">Closed</span>
+                  </li>
+                  {Object.entries(form.watch("openingTime")).map(
+                    ([day, { openTime, closeTime }]) => (
+                      <OpentimeComponent
+                      key={day}
+                        closeTime={closeTime}
+                        openTime={openTime}
+                        day={day as Day}
+                        dropdownStatus={dropdownStatus}
+                        setter={setter}
+                        toggleClose={toggleClose}
+                        toggleDropdown={toggleDropdown}
+                        isClosed={form.watch(
+                          `openingTime.${day as Day}.closed`
+                        )}
+                        isChecked={form.watch(`openingTime.${day as Day}.closed`)}
+                      />
+                    )
+                  )}
+                </ul>
               </FormControl>
 
               <FormMessage />
