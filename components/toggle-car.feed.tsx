@@ -44,7 +44,7 @@ const ToggleCarsFeed = async (props: Props) => {
               <TableHead>Company</TableHead>
               <TableHead>Year</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Toggle</TableHead>
+            
               <TableHead className="">Link</TableHead>
             </TableRow>
           </TableHeader>
@@ -57,13 +57,14 @@ const ToggleCarsFeed = async (props: Props) => {
                 <TableHead>{car.company.name}</TableHead>
                 <TableHead>{car.year}</TableHead>
                 <TableHead ><span className={`${statusMap[car.carStatus]} w-fit p-1`}>{car.carStatus}</span></TableHead>
-                <TableHead className=""><ToggleButon id={car.id} type="car"/></TableHead>
+            
                 <TableHead className="">
                   <NavigatorButton
                     variant={"link"}
+                    className="p-0"
                     href={`/dashboard/car/${car.id}`}
                   >
-                    Check
+                    Check Car
                   </NavigatorButton>
                 </TableHead>
               </TableRow>

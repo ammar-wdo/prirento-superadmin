@@ -53,7 +53,7 @@ const ToggleExtraOptionsFeed = async (props: Props) => {
               <TableHead>Car model</TableHead>
               <TableHead>Company</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Toggle</TableHead>
+             
               <TableHead className="">Link</TableHead>
             </TableRow>
           </TableHeader>
@@ -80,15 +80,14 @@ const ToggleExtraOptionsFeed = async (props: Props) => {
                     </span>
                   </TableHead>
                 </TableHead>
-                <TableHead className="">
-                  <ToggleButon id={extraOption.id} type="extra-option" />
-                </TableHead>
+             
                 <TableHead className="">
                   <NavigatorButton
+                  className="p-0"
                     variant={"link"}
                     href={`/dashboard/car/${extraOption.car.id}/extra-options`}
                   >
-                    Check
+                    Check Option
                   </NavigatorButton>
                 </TableHead>
               </TableRow>
