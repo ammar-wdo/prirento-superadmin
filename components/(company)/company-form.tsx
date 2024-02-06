@@ -222,7 +222,7 @@ const CompanyForm = ({ categories, company }: Props) => {
           name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone number*</FormLabel>
+              <FormLabel>Operating hours*</FormLabel>
               <FormControl>
                 <PhoneInput
                   enableSearch={true}
