@@ -97,11 +97,25 @@ export const deleteCarAvailability = async (id: string) => {
 
     if (!id || typeof id !== "string") return { error: "Invalid Id " };
 
+    const availability = await prisma.carAvailability.findUnique({
+      where: {
+        id,
+        car:{
+          company:{email:session.user?.email as string}
+        }
+      },
+    
+    });
+    if(!availability) return {error:"Unauthorized"}
+
    
 
     await prisma.carAvailability.delete({
       where: {
         id,
+        car:{
+          company:{email:session.user?.email as string}
+        }
       },
     
     });
