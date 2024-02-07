@@ -26,7 +26,7 @@ const BlogCategoryModal = (props: Props) => {
       <DialogHeader>
         <DialogTitle>Category</DialogTitle>
         <DialogDescription>
-          Manage Blog's categories
+          Manage Blog&apos;s categories
         </DialogDescription>
       </DialogHeader>
       <BlogCategoryForm />
