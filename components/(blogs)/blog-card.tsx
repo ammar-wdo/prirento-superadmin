@@ -10,8 +10,8 @@ type Props = {
 
 const BlogCard = ({ blog }: Props) => {
   return (
-    <div className="w-[300px] border rounded-lg overflow-hidden flex flex-col">
-      <div className="relative aspect-video w-full">
+    <div className="w-[300px] border rounded-lg overflow-hidden flex flex-col bg-white">
+      <div className="relative aspect-video w-full border-b">
         <Image
           src={blog.featuredImage}
           alt="logo"
