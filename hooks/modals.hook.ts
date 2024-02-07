@@ -1,4 +1,4 @@
-import { Car, CarAvailability, CarBrand, CarDiscount, CarExtraOption, CarModel, Category, Location, SubLocation, SuperadminRule } from "@prisma/client";
+import { BlogCategory, Car, CarAvailability, CarBrand, CarDiscount, CarExtraOption, CarModel, Category, Location, SubLocation, SuperadminRule } from "@prisma/client";
 import { create } from "zustand";
 
 export type DeleteFunction = (
@@ -63,6 +63,12 @@ export type ModalInputs =
       toDelete: false;
       modal: "carExtraOptions";
       carExtraOption?: CarExtraOption;
+   
+    }
+  | {
+      toDelete: false;
+      modal: "blogCategory";
+      blogCategory?: BlogCategory;
    
     }
 

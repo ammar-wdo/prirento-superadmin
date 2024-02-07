@@ -334,6 +334,33 @@ model CarExtraOption {
   updatedAt DateTime @updatedAt
 }
 
+model BlogCategory {
+  id    String @id @default(uuid())
+  label String @unique
+  slug  String @unique
+
+  blogs     Blog[]
+  createdAt DateTime @default(now())
+  updatedUt DateTime @updatedAt
+}
+
+model Blog {
+  id String @id @default(uuid())
+
+  title            String
+  content          String
+  slug             String   @unique
+  tags             String[]
+  featuredImage    String
+  categoryId       String
+  author           String
+  shortDescription String
+
+  category BlogCategory @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedUt DateTime @updatedAt
+}
 
 
 

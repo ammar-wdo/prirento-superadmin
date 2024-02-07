@@ -409,3 +409,21 @@ export const carExtraOptionStatus = ['pending', 'active'] as const
    
 
   })
+
+
+  export const  blogCategorySchema = z.object({
+    label: requiredString,
+    slug:requiredString
+  })
+
+
+  export const blogSchema = z.object({
+    title: requiredString,
+    content: requiredString,
+    slug: requiredString,
+    author: requiredString,
+    shortDescription: requiredString,
+    tags: z.array(z.string()),
+    logo: z.string().min(1,{message:'Upload an image please '}),
+    categoryId: z.string().min(1),
+  });

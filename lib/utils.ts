@@ -68,7 +68,7 @@ export const transformSlug = (slug: string) => {
 
 export const checkSlug = async (
   slug: string,
-  model: "company" | "car",
+  model: "company" | "car" | "blogCategory" | "blog",
   id?: string
 ) => {
   if (model === "car") {
@@ -85,6 +85,41 @@ export const checkSlug = async (
     });
     if (company) {
       throw new Error("Slug already exists");
+    }
+  }
+  if (model === "blogCategory") {
+    const category = await prisma.blogCategory.findUnique({
+      where: { slug, ...(id && { NOT: { id } }) },
+    });
+    if (category) {
+      throw new Error("Slug already exists");
+    }
+  }
+  if (model === "blog") {
+    const category = await prisma.blog.findUnique({
+      where: { slug, ...(id && { NOT: { id } }) },
+    });
+    if (category) {
+      throw new Error("Slug already exists");
+    }
+  }
+};
+
+export const checkLabel = async (
+  label: string,
+  model: "blogCategory",
+  id?: string
+) => {
+  if (model === "blogCategory") {
+    const category = await prisma.blogCategory.findUnique({
+      where: {
+        label,
+        ...(id && { NOT: { id } }),
+      },
+    });
+
+    if (category) {
+      throw new Error("Label already exists");
     }
   }
 };

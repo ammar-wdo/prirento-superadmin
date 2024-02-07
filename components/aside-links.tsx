@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import {
+  BookOpen,
   Building2,
   Car,
   Coins,
@@ -82,6 +83,18 @@ const AsideLinks = (props: Props) => {
           active: pathname === "/dashboard/admin-rules",
           icon: <Gavel className="h-4 w-4" />,
         },
+      ],
+    },
+    {
+      label: "Content",
+      elements: [
+        {
+          label: "Blogs",
+          href: "/dashboard/blog",
+          active: pathname === "/dashboard/blog",
+          icon: <BookOpen className="h-4 w-4" />,
+        },
+     
       ],
     },
   ];

@@ -1,6 +1,7 @@
 'use client'
 
 
+import BlogCategoryModal from "@/components/modals/blogCategory"
 import CarAvailabilityModal from "@/components/modals/carAvailabilityModal"
 import CarBrandModal from "@/components/modals/carBrand-modal"
 import CarDiscountModal from "@/components/modals/carDiscount-modal"
@@ -32,6 +33,7 @@ const ModalProvider = (props: Props) => {
     <CarDiscountModal/>
     <SuperadminRulesModal/>
     <CarExtraOptionsModal/>
+    <BlogCategoryModal/>
     </>
   )
 }
