@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { addLocation, editLocation } from "@/actions/location-actions";
 import { toast } from "sonner";
 import { Location } from "@prisma/client";
+import { useEffect } from "react";
+import { transformSlug } from "@/lib/utils";
 
 export const useLocation = () => {
   const { setClose, modalInputs } = useModal();
@@ -22,8 +24,14 @@ if(modalInputs?.modal==='location'){
     resolver: zodResolver(locationSchema),
     defaultValues: {
       name: location?.name || "",
+      slug:location?.slug || ""
     },
   });
+
+  useEffect(() => {
+    const refinedSlug = transformSlug(form.watch("slug"));
+    form.setValue("slug", refinedSlug);
+  }, [form.watch("slug")]);
 
   async function onSubmit(values: z.infer<typeof locationSchema>) {
     try {

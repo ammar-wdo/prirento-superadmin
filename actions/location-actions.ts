@@ -2,6 +2,7 @@
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import prisma from "@/lib/prisma";
+import { checkSlug } from "@/lib/utils";
 import { locationSchema } from "@/schemas";
 import { getServerSession } from "next-auth";
 
@@ -13,16 +14,23 @@ export const addLocation = async (data: any) => {
     const validData = locationSchema.safeParse(data);
     if (!validData.success) return { error: "Invalid inputs" };
 
+    await checkSlug(validData.data.slug,'location')
+
     await prisma.location.create({
       data: {
-        name: validData.data.name,
+       ...validData.data
       },
     });
 
     return { success: "Successfully added" };
   } catch (error) {
     console.log(error);
-    return { error: "Something went wrong" };
+    let message = "Something went wrong";
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    console.log(error);
+    return { error: message };
   }
 };
 
@@ -36,19 +44,26 @@ export const editLocation = async (data: any, id: string) => {
     const validData = locationSchema.safeParse(data);
     if (!validData.success) return { error: "Invalid inputs" };
 
+    await checkSlug(validData.data.slug,'location',id)
+
     await prisma.location.update({
       where: {
         id,
       },
       data: {
-        name: validData.data.name,
+       ...validData.data
       },
     });
 
     return { success: "Successfully updated" };
   } catch (error) {
     console.log(error);
-    return { error: "Something went wrong" };
+    let message = "Something went wrong";
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    console.log(error);
+    return { error: message };
   }
 };
 

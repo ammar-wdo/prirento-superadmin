@@ -8,6 +8,8 @@ import { addLocation, editLocation } from "@/actions/location-actions";
 import { toast } from "sonner";
 import { addSubLocation, editSubLocation } from "@/actions/sublocations-actions";
 import { SubLocation } from "@prisma/client";
+import { useEffect } from "react";
+import { transformSlug } from "@/lib/utils";
 
 export const useSubLocation = () => {
   const { setClose,  modalInputs} = useModal();
@@ -28,9 +30,15 @@ if(modalInputs?.modal==='sub-location'){
     resolver: zodResolver(subLocationSchema),
     defaultValues: {
       name: subLocation?.name || "",
+      slug:subLocation?.slug || "",
       locationId:parentId
     },
   });
+
+  useEffect(() => {
+    const refinedSlug = transformSlug(form.watch("slug"));
+    form.setValue("slug", refinedSlug);
+  }, [form.watch("slug")]);
 
   async function onSubmit(values: z.infer<typeof subLocationSchema>) {
     try {

@@ -39,6 +39,20 @@ const SubLocationForm = (props: Props) => {
             </FormItem>
           )}
         />
+         <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Slug*</FormLabel>
+                <FormControl>
+                  <Input placeholder="slug" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         <ActionLoaderButton isLoading={form.formState.isSubmitting}>
           {modalInputs?.modal === "sub-location" && modalInputs.subLocation
             ? "Update"

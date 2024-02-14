@@ -68,7 +68,7 @@ export const transformSlug = (slug: string) => {
 
 export const checkSlug = async (
   slug: string,
-  model: "company" | "car" | "blogCategory" | "blog",
+  model: "company" | "car" | "blogCategory" | "blog" | "location" | "sub-location",
   id?: string
 ) => {
   if (model === "car") {
@@ -96,10 +96,26 @@ export const checkSlug = async (
     }
   }
   if (model === "blog") {
-    const category = await prisma.blog.findUnique({
+    const blog = await prisma.blog.findUnique({
       where: { slug, ...(id && { NOT: { id } }) },
     });
-    if (category) {
+    if (blog) {
+      throw new Error("Slug already exists");
+    }
+  }
+  if (model === "location") {
+    const location = await prisma.location.findUnique({
+      where: { slug, ...(id && { NOT: { id } }) },
+    });
+    if (location) {
+      throw new Error("Slug already exists");
+    }
+  }
+  if (model === "sub-location") {
+    const subLocation = await prisma.subLocation.findUnique({
+      where: { slug, ...(id && { NOT: { id } }) },
+    });
+    if (subLocation) {
       throw new Error("Slug already exists");
     }
   }

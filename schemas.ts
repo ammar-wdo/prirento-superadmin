@@ -21,10 +21,12 @@ export const loginSchema = z.object({
 
 export const locationSchema = z.object({
   name: requiredString.max(20, "maximum 20 characters"),
+  slug:slugSchema
 });
 
 export const subLocationSchema = z.object({
   name: requiredString.max(100, "maximum 100 characters"),
+  slug:slugSchema,
   locationId: requiredString,
 });
 
