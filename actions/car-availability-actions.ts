@@ -104,9 +104,7 @@ export const deleteCarAvailability = async (id: string) => {
     await prisma.carAvailability.delete({
       where: {
         id,
-        car:{
-          company:{email:session.user?.email as string}
-        }
+       
       },
     
     });
