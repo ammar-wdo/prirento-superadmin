@@ -18,6 +18,14 @@ export const addCarDiscount = async (data: any) => {
     const startDateObject = combineDateAndTimeToUTC(startDate, startTime);
     const endDateObject = combineDateAndTimeToUTC(endDate, endTime);
 
+// check if exists
+    const existPromocode = await prisma.carDiscount.findUnique({
+      where:{
+        promocode:rest.promocode
+      }
+    })
+    if(existPromocode) return {error:'Promocode exists already'}
+
     await prisma.carDiscount.create({
       data: {
         ...rest,
@@ -54,6 +62,15 @@ export const editCarDiscount = async (
     const startDateObject = combineDateAndTimeToUTC(startDate, startTime);
     const endDateObject = combineDateAndTimeToUTC(endDate, endTime);
     console.log("carId",rest.carId || 'undefiend')
+
+    // check if exists
+    const existPromocode = await prisma.carDiscount.findUnique({
+      where:{
+        promocode:rest.promocode,
+        NOT:{id:id}
+      }
+    })
+    if(existPromocode) return {error:'Promocode exists already'}
 
     await prisma.carDiscount.update({
       where: {
