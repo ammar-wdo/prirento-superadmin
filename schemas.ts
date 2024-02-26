@@ -429,3 +429,12 @@ export const carExtraOptionStatus = ['pending', 'active'] as const
     logo: z.string().min(1,{message:'Upload an image please '}),
     categoryId: z.string().min(1),
   });
+
+
+  export const aboutSchema = z.object({
+    content:requiredString
+  })
+  export const faqSchema = z.object({
+    question:requiredString,
+    answer:requiredString
+  })

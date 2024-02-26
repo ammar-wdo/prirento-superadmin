@@ -9,7 +9,9 @@ import {
   Component,
   Gavel,
   Grid3X3,
+  Info,
   LayoutDashboard,
+  MessageCircleQuestion,
   Navigation,
   ShipWheel,
 } from "lucide-react";
@@ -89,10 +91,22 @@ const AsideLinks = (props: Props) => {
       label: "Content",
       elements: [
         {
+          label: "About",
+          href: "/dashboard/about",
+          active: pathname === "/dashboard/about",
+          icon: <Info className="h-4 w-4" />,
+        },
+        {
           label: "Blogs",
           href: "/dashboard/blog",
           active: pathname === "/dashboard/blog",
           icon: <BookOpen className="h-4 w-4" />,
+        },
+        {
+          label: "FAQ",
+          href: "/dashboard/faq",
+          active: pathname === "/dashboard/faq",
+          icon: <MessageCircleQuestion className="h-4 w-4" />,
         },
      
       ],

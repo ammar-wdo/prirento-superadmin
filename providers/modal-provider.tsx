@@ -9,6 +9,7 @@ import CarExtraOptionsModal from "@/components/modals/carExtraOptions-modal"
 import CarModelModal from "@/components/modals/carModel-modal"
 import CategoryModal from "@/components/modals/category-modal"
 import DeleteModal from "@/components/modals/delete-modal"
+import FaqModal from "@/components/modals/faq-modal"
 import LocationModal from "@/components/modals/location-modal"
 import SubLocationModal from "@/components/modals/sublocation-modal"
 import SuperadminRulesModal from "@/components/modals/superadmin-rule"
@@ -34,6 +35,7 @@ const ModalProvider = (props: Props) => {
     <SuperadminRulesModal/>
     <CarExtraOptionsModal/>
     <BlogCategoryModal/>
+    <FaqModal/>
     </>
   )
 }
