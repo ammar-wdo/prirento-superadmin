@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import {
+  Archive,
   BookOpen,
   Building2,
   Car,
@@ -50,6 +51,12 @@ const AsideLinks = (props: Props) => {
           href: "/dashboard/company",
           active: pathname === "/dashboard/company",
           icon: <Building2 className="h-4 w-4" />,
+        },
+        {
+          label: "Booking",
+          href: "/dashboard/booking",
+          active: pathname === "/dashboard/booking",
+          icon: <Archive className="h-4 w-4" />,
         },
       ],
     },
