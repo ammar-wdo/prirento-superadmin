@@ -434,7 +434,17 @@ export const carExtraOptionStatus = ['pending', 'active'] as const
   export const aboutSchema = z.object({
     content:requiredString
   })
+ 
   export const faqSchema = z.object({
     question:requiredString,
     answer:requiredString
+  })
+
+  export const termsSchema = z.object({
+    content:requiredString
+  })
+
+
+  export const privacySchema = z.object({
+    content:requiredString
   })

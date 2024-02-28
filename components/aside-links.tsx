@@ -7,7 +7,6 @@ import {
   Building2,
   Car,
   Coins,
-  Component,
   Gavel,
   Grid3X3,
   Info,
@@ -19,6 +18,8 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import SignoutButton from "./signout-button";
+import { GoLaw } from "react-icons/go";
+import { GoShieldLock } from "react-icons/go";
 
 type Props = {};
 
@@ -114,6 +115,18 @@ const AsideLinks = (props: Props) => {
           href: "/dashboard/faq",
           active: pathname === "/dashboard/faq",
           icon: <MessageCircleQuestion className="h-4 w-4" />,
+        },
+        {
+          label: "Terms & conditions",
+          href: "/dashboard/terms",
+          active: pathname === "/dashboard/terms",
+          icon: <GoLaw className="h-4 w-4" />,
+        },
+        {
+          label: "Privacy policy",
+          href: "/dashboard/privacy",
+          active: pathname === "/dashboard/privacy",
+          icon: <GoShieldLock className="h-4 w-4" />,
         },
      
       ],

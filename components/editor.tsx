@@ -50,5 +50,5 @@ export default function Editor({onChange,initialContent,editable}:Props) {
 
 
 
-  return <div><BlockNoteView   editor={editor} /></div>;
+  return <div><BlockNoteView theme={'light'}   editor={editor} /></div>;
 }
