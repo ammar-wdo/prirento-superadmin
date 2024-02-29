@@ -14,11 +14,17 @@ import { cn, formatDate } from "@/lib/utils";
 import ReactStarsComponent from "../react-stars-component";
 import { reviewMapper } from "@/mapper";
 import ReviewToggleButton from "./review-toggle-button";
+import ToolTip from "../tool-tip";
 
-type Props = {};
+type Props = {
+ dashboard?:boolean
+};
 
-const ReviewsFeed = async (props: Props) => {
+const ReviewsFeed = async ({dashboard}: Props) => {
   const reviews = await prisma.review.findMany({
+    ...(dashboard && {where:{
+        status:'PENDING'
+    }}),
     orderBy: {
       createdAt: "desc",
     },
@@ -82,7 +88,7 @@ const ReviewsFeed = async (props: Props) => {
             <TableHead>
               <ReactStarsComponent rate={review.rate} />
             </TableHead>
-            <TableHead>{review.reviewContent}</TableHead>
+            <TableHead><ToolTip  side="top" title={review.reviewContent || ''}><div  className="truncate max-w-[200px]">{review.reviewContent}</div></ToolTip></TableHead>
             <TableHead>{review.visibility}</TableHead>
             <TableHead>
               {review.car.carModel.carBrand.brand} {review.car.carModel.name}

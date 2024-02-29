@@ -21,7 +21,7 @@ import {
         <Tooltip delayDuration={40} >
           <TooltipTrigger className={className} type="button" >{children}</TooltipTrigger>
           <TooltipContent side={side || 'left'} >
-           <p >{title}</p>
+           <p className="max-w-[300px]">{title}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

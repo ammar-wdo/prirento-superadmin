@@ -1,3 +1,4 @@
+import ReviewsFeed from "@/components/(reviews)/reviews-feed";
 import FallbackLoader from "@/components/fallback-loader.tsx";
 import Heading from "@/components/heading";
 
@@ -21,6 +22,13 @@ const page = (props: Props) => {
       <div className="bg-white border p-4 rounded-md mt-12">
         <Suspense fallback={<FallbackLoader title="Pending extra options table ..."/>}>
         <ToggleExtraOptionsFeed />
+        </Suspense>
+       
+      </div>
+      <div className="bg-white border p-4 rounded-md mt-12">
+        <Suspense fallback={<FallbackLoader title="Pending Reviews..."/>}>
+          <h3 className="font-medium  capitalize">Pending Reviews</h3>
+        <ReviewsFeed dashboard={true} />
         </Suspense>
        
       </div>
