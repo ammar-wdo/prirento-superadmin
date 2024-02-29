@@ -20,6 +20,7 @@ import React from "react";
 import SignoutButton from "./signout-button";
 import { GoLaw } from "react-icons/go";
 import { GoShieldLock } from "react-icons/go";
+import { MdOutlineReviews } from "react-icons/md";
 
 type Props = {};
 
@@ -58,6 +59,12 @@ const AsideLinks = (props: Props) => {
           href: "/dashboard/booking",
           active: pathname === "/dashboard/booking",
           icon: <Archive className="h-4 w-4" />,
+        },
+        {
+          label: "Reviews",
+          href: "/dashboard/reviews",
+          active: pathname === "/dashboard/reviews",
+          icon: <MdOutlineReviews className="h-4 w-4" />,
         },
       ],
     },

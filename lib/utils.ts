@@ -212,7 +212,7 @@ export function formatDate(
   date: Date,
   locale: string = 'en-GB',
   options: Intl.DateTimeFormatOptions & { timeZone: string } = {
-    timeZone: 'UTC', // Ensuring timezone is always included in the options
+    timeZone: 'UTC', 
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',

@@ -448,3 +448,17 @@ export const carExtraOptionStatus = ['pending', 'active'] as const
   export const privacySchema = z.object({
     content:requiredString
   })
+
+
+
+  export const reviewVisibility= [  'FIRSTNAME',
+    'FULLNAME',
+    'ANOUNYMOS'] as const
+
+  export const reviewSchema = z.object({
+
+    reviewContent:z.string().optional(),
+    rate:z.number(),
+    visibility:z.enum(reviewVisibility).default('FULLNAME')
+
+  })
