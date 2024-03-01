@@ -1,9 +1,12 @@
 "use client"
 
 import { cn, formatDate } from "@/lib/utils"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 import { Booking } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 
 
@@ -15,18 +18,64 @@ export const paymentStatusMap:{[key:string]:string} ={
   
 
 
-export const columns: ColumnDef<Booking & {car :{carModel:{name:string,carBrand:{brand:string}}}}>[] = [
+export const columns: ColumnDef<Booking & {car :{company:{name:string},carModel:{name:string,carBrand:{brand:string}}}}>[] = [
   {
     accessorKey: "bookingCode",
-    header: "Booking Code",
+ 
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Booking Code
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell:({row})=> <Link className="text-blue-500 underline pl-6" href={`/dashboard/booking/${row.original.id}`}>{row.original.bookingCode}</Link>
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
-  
-    header: "Car",
+    accessorKey: "car.company.name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Company Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
+  accessorKey:'car.carModel.carBrand.brand',
+  header: ({ column }) => {
+    return (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Car
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    )
+  },
     cell:({row})=> <p>{row.original.car.carModel.carBrand.brand}{" "} {row.original.car.carModel.name}</p>
     
 
@@ -34,28 +83,91 @@ export const columns: ColumnDef<Booking & {car :{carModel:{name:string,carBrand:
 
   {
     accessorKey:'payNow',
-    header: "Price",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell:({row})=> <span>{row.original.payNow} AED</span>
     
     
   },
   {
+    accessorKey:'createdAt',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Booking
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell:({row})=> <span>{formatDate(row.original.createdAt,'en-GB',{ timeZone: 'Asia/Dubai', 
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false, })}</span>
+    
+    
+  },
+  {
     accessorKey:'startDate',
-    header: "Start Date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+        Start Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell:({row})=> <span>{formatDate(row.original.startDate)}</span>
     
     
   },
   {
     accessorKey:'endDate',
-    header: "End Date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          End Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell:({row})=> <span>{formatDate(row.original.endDate)}</span>
     
     
   },
   {
     accessorKey:'paymentStatus',
-    header: "Payment Status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Payment Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell:({row})=>  <span className={`px-4 py-2 ${paymentStatusMap[row.original.paymentStatus]} `}>{row.original.paymentStatus}</span>
     
     

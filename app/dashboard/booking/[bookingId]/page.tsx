@@ -1,0 +1,230 @@
+import BookingCard from "@/components/(bookings)/(booking)/booking-card";
+import KeyValueCard from "@/components/(bookings)/(booking)/key-value-card";
+import Heading from "@/components/heading";
+import prisma from "@/lib/prisma";
+import { formatDate } from "@/lib/utils";
+import { CarExtraOption, SuperadminRule } from "@prisma/client";
+import { notFound } from "next/navigation";
+import React from "react";
+
+type Props = {
+  params: { bookingId: string };
+};
+
+export type RefinedAdminRule ={
+    valueToPay: number;
+    id: string;
+    label: string;
+    description: string;
+    type: 'fixed' | 'percentage';
+    value: number;
+    mandatory: boolean;
+    applyToAll: boolean;
+    carId: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const page = async ({ params }: Props) => {
+  const booking = await prisma.booking.findUnique({
+    where: {
+      id: params.bookingId,
+    },
+    include: {
+      car: {
+        select: {
+          company: {
+            select: {
+              name: true,
+            },
+          },
+          carModel: {
+            select: {
+              name: true,
+              carBrand: {
+                select: {
+                  brand: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!booking) return notFound();
+
+  const extraOptions: CarExtraOption[] =
+    booking.extraOptions as unknown as CarExtraOption[];
+
+  const adminRules: RefinedAdminRule[] =
+    booking.adminRules as unknown as RefinedAdminRule[];
+
+  return (
+    <div>
+      <Heading
+        title={`Booking - ${booking.bookingCode}`}
+        description={`Booking details`}
+      />
+
+      <section className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-4">
+        {/* Driver Details */}
+        <BookingCard title="Driver Details">
+          <KeyValueCard title="First name:" description={booking.firstName} />
+          <KeyValueCard title="Last name:" description={booking.lastName} />
+          <KeyValueCard title="Email:" description={booking.email} />
+          <KeyValueCard
+            title="contact number:"
+            description={`+${booking.contactNumber}`}
+          />
+          <KeyValueCard
+            title="country:"
+            description={booking.countryOfResidance}
+          />
+        </BookingCard>
+        {/* Billing Details */}
+
+        <BookingCard title="Billing Details">
+          <KeyValueCard
+            title="First name:"
+            description={booking.billingFirstName}
+          />
+          <KeyValueCard
+            title="Last name:"
+            description={booking.billingLastname}
+          />
+          <KeyValueCard
+            title="contact number:"
+            description={`+${booking.billingContactNumber}`}
+          />
+          <KeyValueCard title="country:" description={booking.billingCountry} />
+          <KeyValueCard title="city:" description={booking.billingCity} />
+          <KeyValueCard title="address:" description={booking.billingAddress} />
+          <KeyValueCard
+            title="postcode:"
+            description={booking.billingZipcode}
+          />
+        </BookingCard>
+
+        {/* booking Details */}
+
+        <BookingCard title="Booking Details">
+          <KeyValueCard
+            title="booking type"
+            description={booking.business ? "Business" : "Personal"}
+          />
+          {booking.companyName && (
+            <KeyValueCard
+              title="company name"
+              description={booking.companyName}
+            />
+          )}
+          {booking.companyVat && (
+            <KeyValueCard
+              title="company name"
+              description={booking.companyVat}
+            />
+          )}
+          <KeyValueCard
+            title="booking date:"
+            description={formatDate(booking.createdAt, "en-GB", {
+              timeZone: "Asia/Dubai",
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+          />
+          <KeyValueCard
+            title="Pick-up date:"
+            description={formatDate(booking.startDate)}
+          />
+          <KeyValueCard
+            title="drop-off date:"
+            description={formatDate(booking.endDate)}
+          />
+          <KeyValueCard
+            title="pick-up location:"
+            description={booking.pickupLocation}
+          />
+          <KeyValueCard
+            title="drop-off location:"
+            description={booking.dropoffLocation || booking.pickupLocation}
+          />
+        </BookingCard>
+        {/* payment Details */}
+
+        <BookingCard title="Payment Details">
+          <KeyValueCard
+            title="payment method"
+            description={booking.paymentMethod}
+          />
+          <KeyValueCard
+            title="payment status:"
+            description={booking.paymentStatus}
+          />
+          <KeyValueCard
+            title="car rental price:"
+            description={"AED " + booking.subtotal.toFixed(2)}
+          />
+          <KeyValueCard
+            title="reservation fee:"
+            description={"AED " + booking.reservationFee.toFixed(2)}
+          />
+
+          <KeyValueCard
+            title="discount:"
+            description={"AED " + booking.discount.toFixed(2)}
+          />
+          <KeyValueCard
+            title="delivery fee:"
+            description={
+              (booking.deliveryFee &&
+                "AED " + booking.deliveryFee.toFixed(2)) ||
+              "N/A"
+            }
+          />
+          <KeyValueCard
+            title="Total amount:"
+            description={"AED " + booking.total.toFixed(2)}
+          />
+          <KeyValueCard
+            title="pay now:"
+            description={"AED " + booking.payNow.toFixed(2)}
+          />
+          <KeyValueCard
+            title="pay later:"
+            description={"AED " + booking.payLater.toFixed(2)}
+          />
+        </BookingCard>
+        {!!extraOptions.length && (
+          <BookingCard title="Extra options">
+            {extraOptions.map((option) => (
+              <KeyValueCard
+                key={option.id}
+                title={option.label}
+                description={`AED ${option.price.toFixed(2)}`}
+              />
+            ))}
+          </BookingCard>
+        )}
+        {!!adminRules.length && (
+          <BookingCard title="Admin rules">
+            {adminRules.map((option) => (
+              <KeyValueCard
+                key={option.id}
+                title={option.label}
+                description={`AED ${option.value.toFixed(2)}`}
+              />
+            ))}
+          </BookingCard>
+        )}
+      </section>
+    </div>
+  );
+};
+
+export default page;

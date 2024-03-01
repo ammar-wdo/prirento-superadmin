@@ -17,6 +17,12 @@ const BookingFeed = async (props: Props) => {
     include: {
       car: {
         select: {
+          company:{
+            select:{
+              name:true,
+              
+            }
+          },
           carModel: {
             select: {
               name: true,
@@ -29,6 +35,8 @@ const BookingFeed = async (props: Props) => {
           },
         },
       },
+       
+      
     },
   });
 

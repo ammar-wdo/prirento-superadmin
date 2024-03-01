@@ -218,7 +218,7 @@ export function formatDate(
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false, // Use 24-hour format
+    hour12: false, 
   }
 ): string {
   // Merge default options with any user-provided options
