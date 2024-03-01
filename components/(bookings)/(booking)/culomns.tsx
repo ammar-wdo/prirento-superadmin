@@ -106,7 +106,7 @@ export const columns: ColumnDef<Booking & {car :{company:{name:string},carModel:
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Booking
+          Booking Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )

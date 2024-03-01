@@ -211,7 +211,7 @@ const page = async ({ params }: Props) => {
             description={
               (booking.deliveryFee &&
                 "AED " + booking.deliveryFee.toFixed(2)) ||
-              "N/A"
+              "AED 0.00"
             }
           />
            <div className="w-full border-b my-2"/>

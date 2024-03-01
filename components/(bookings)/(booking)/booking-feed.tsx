@@ -7,13 +7,18 @@ import React from "react";
 import { DataTable } from "./booking-table";
 import { columns } from "./culomns";
 
-type Props = {};
+type Props = {
+  bookingCode:string | undefined,
+  page:string | undefined
+};
 
-const BookingFeed = async (props: Props) => {
+const BookingFeed = async ({bookingCode,page}: Props) => {
 
 
   const bookings = await prisma.booking.findMany({
-   
+  where:{
+    ...(bookingCode && {bookingCode})
+  },
     include: {
       car: {
         select: {
