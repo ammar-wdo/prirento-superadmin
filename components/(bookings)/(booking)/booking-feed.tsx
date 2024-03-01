@@ -14,7 +14,7 @@ type Props = {
 
 const BookingFeed = async ({bookingCode,page}: Props) => {
 
-  
+
 
   const bookings = await prisma.booking.findMany({
   where:{
@@ -44,6 +44,9 @@ const BookingFeed = async ({bookingCode,page}: Props) => {
        
       
     },
+    orderBy:{
+      createdAt:'desc'
+    }
   });
 
   return <DataTable columns={columns} data={bookings} />;
