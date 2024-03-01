@@ -166,19 +166,26 @@ const page = async ({ params }: Props) => {
             title="payment status:"
             description={booking.paymentStatus}
           />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="car rental price:"
             description={"AED " + booking.subtotal.toFixed(2)}
           />
           <KeyValueCard
+            title="refundable deposit:"
+            description={"AED " + booking..toFixed(2)}
+          />
+          <KeyValueCard
             title="reservation fee:"
             description={"AED " + booking.reservationFee.toFixed(2)}
           />
+           <div className="w-full border-b my-2"/>
 
           <KeyValueCard
             title="discount:"
             description={"AED " + booking.discount.toFixed(2)}
           />
+           <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="delivery fee:"
             description={
@@ -187,10 +194,28 @@ const page = async ({ params }: Props) => {
               "N/A"
             }
           />
+           <div className="w-full border-b my-2"/>
+            {!!adminRules.length &&  adminRules.map((option) => (
+              <KeyValueCard
+                key={option.id}
+                title={option.label}
+                description={`AED ${option.valueToPay.toFixed(2)}`}
+              />
+            ))}
+             <div className="w-full border-b my-2"/>
+             {!!extraOptions.length &&  extraOptions.map((option) => (
+              <KeyValueCard
+                key={option.id}
+                title={option.label}
+                description={`AED ${option.price.toFixed(2)}`}
+              />
+            ))}
+            <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="Total amount:"
             description={"AED " + booking.total.toFixed(2)}
           />
+           <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="pay now:"
             description={"AED " + booking.payNow.toFixed(2)}
@@ -200,28 +225,7 @@ const page = async ({ params }: Props) => {
             description={"AED " + booking.payLater.toFixed(2)}
           />
         </BookingCard>
-        {!!extraOptions.length && (
-          <BookingCard title="Extra options">
-            {extraOptions.map((option) => (
-              <KeyValueCard
-                key={option.id}
-                title={option.label}
-                description={`AED ${option.price.toFixed(2)}`}
-              />
-            ))}
-          </BookingCard>
-        )}
-        {!!adminRules.length && (
-          <BookingCard title="Admin rules">
-            {adminRules.map((option) => (
-              <KeyValueCard
-                key={option.id}
-                title={option.label}
-                description={`AED ${option.value.toFixed(2)}`}
-              />
-            ))}
-          </BookingCard>
-        )}
+      
       </section>
     </div>
   );
