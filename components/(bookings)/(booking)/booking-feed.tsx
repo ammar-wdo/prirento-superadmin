@@ -14,6 +14,7 @@ type Props = {
 
 const BookingFeed = async ({bookingCode,page}: Props) => {
 
+  
 
   const bookings = await prisma.booking.findMany({
   where:{
