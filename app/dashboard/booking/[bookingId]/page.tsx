@@ -68,16 +68,20 @@ const page = async ({ params }: Props) => {
         description={`Booking details`}
       />
 
-      <section className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-4">
+      <section className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
         {/* Driver Details */}
         <BookingCard title="Driver Details">
           <KeyValueCard title="First name:" description={booking.firstName} />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard title="Last name:" description={booking.lastName} />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard title="Email:" description={booking.email} />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="contact number:"
             description={`+${booking.contactNumber}`}
           />
+           <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="country:"
             description={booking.countryOfResidance}
@@ -86,25 +90,46 @@ const page = async ({ params }: Props) => {
         {/* Billing Details */}
 
         <BookingCard title="Billing Details">
+       
           <KeyValueCard
             title="First name:"
             description={booking.billingFirstName}
           />
+           <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="Last name:"
             description={booking.billingLastname}
           />
+           <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="contact number:"
             description={`+${booking.billingContactNumber}`}
           />
+           <div className="w-full border-b my-2"/>
           <KeyValueCard title="country:" description={booking.billingCountry} />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard title="city:" description={booking.billingCity} />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard title="address:" description={booking.billingAddress} />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="postcode:"
             description={booking.billingZipcode}
           />
+           <div className="w-full border-b my-2"/>
+           {booking.companyName && (
+            <div><KeyValueCard
+            title="company name"
+            description={booking.companyName}
+          /> <div className="w-full border-b my-2"/></div>
+          )}
+          {booking.companyVat && (
+           <div><KeyValueCard
+           title="company VAT"
+           description={booking.companyVat}
+         />
+       </div> 
+          )}
         </BookingCard>
 
         {/* booking Details */}
@@ -114,18 +139,8 @@ const page = async ({ params }: Props) => {
             title="booking type"
             description={booking.business ? "Business" : "Personal"}
           />
-          {booking.companyName && (
-            <KeyValueCard
-              title="company name"
-              description={booking.companyName}
-            />
-          )}
-          {booking.companyVat && (
-            <KeyValueCard
-              title="company name"
-              description={booking.companyVat}
-            />
-          )}
+           <div className="w-full border-b my-2"/>
+        
           <KeyValueCard
             title="booking date:"
             description={formatDate(booking.createdAt, "en-GB", {
@@ -138,18 +153,22 @@ const page = async ({ params }: Props) => {
               hour12: false,
             })}
           />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="Pick-up date:"
             description={formatDate(booking.startDate)}
           />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="drop-off date:"
             description={formatDate(booking.endDate)}
           />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="pick-up location:"
             description={booking.pickupLocation}
           />
+          <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="drop-off location:"
             description={booking.dropoffLocation || booking.pickupLocation}
@@ -196,22 +215,25 @@ const page = async ({ params }: Props) => {
             }
           />
            <div className="w-full border-b my-2"/>
-            {!!adminRules.length &&  adminRules.map((option) => (
+            {!!adminRules.length && <div>{adminRules.map((option) => (
               <KeyValueCard
                 key={option.id}
                 title={option.label}
                 description={`AED ${option.valueToPay.toFixed(2)}`}
               />
             ))}
-             <div className="w-full border-b my-2"/>
-             {!!extraOptions.length &&  extraOptions.map((option) => (
+                  <div className="w-full border-b my-2"/>
+            </div> }
+       
+             {!!extraOptions.length && <div>{extraOptions.map((option) => (
               <KeyValueCard
                 key={option.id}
                 title={option.label}
                 description={`AED ${option.price.toFixed(2)}`}
               />
             ))}
-            <div className="w-full border-b my-2"/>
+                    <div className="w-full border-b my-2"/></div> }
+    
           <KeyValueCard
             title="Total amount:"
             description={"AED " + booking.total.toFixed(2)}
