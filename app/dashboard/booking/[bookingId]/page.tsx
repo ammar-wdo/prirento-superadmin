@@ -171,16 +171,17 @@ const page = async ({ params }: Props) => {
             title="car rental price:"
             description={"AED " + booking.subtotal.toFixed(2)}
           />
-          <KeyValueCard
-            title="refundable deposit:"
-            description={"AED " + booking..toFixed(2)}
-          />
+       
           <KeyValueCard
             title="reservation fee:"
             description={"AED " + booking.reservationFee.toFixed(2)}
           />
            <div className="w-full border-b my-2"/>
-
+           <KeyValueCard
+            title="refundable deposit:"
+            description={"AED " + booking.deposit.toFixed(2)}
+          />
+           <div className="w-full border-b my-2"/>
           <KeyValueCard
             title="discount:"
             description={"AED " + booking.discount.toFixed(2)}
