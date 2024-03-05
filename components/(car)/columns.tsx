@@ -4,7 +4,9 @@ import { Car, CarModel } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import NavigatorButton from "../navigator-button";
-import { CheckCircle, CircleDollarSign, Cog, Edit } from "lucide-react";
+import { CheckCircle, CircleDollarSign, Cog, Edit , ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Button } from "../ui/button";
+
 
 type FullCar = Car & {
   carModel: CarModel & {
@@ -15,8 +17,19 @@ type FullCar = Car & {
 
 export const columns: ColumnDef<FullCar>[] = [
   {
-    accessorKey: "model",
-    header: "Model",
+    accessorKey:'car.carModel.carBrand.brand',
+    accessorFn:(data)=>`${data.carModel.carBrand.brand} ${data.carModel.name}`,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Model
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       return (
         <div className="text-right font-medium flex items-center justify-between capitalize w-full max-w-[200px]">
@@ -38,7 +51,17 @@ export const columns: ColumnDef<FullCar>[] = [
   },
   {
     accessorKey: "company.name",
-    header: "Company",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+       Company
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <p className="capitalize">{row.original.company.name}</p>
     ),
