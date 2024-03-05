@@ -64,6 +64,7 @@ export const columns: ColumnDef<Booking & {car :{company:{name:string},carModel:
     },
   },
   {
+    accessorFn:(data)=>`${data.car.carModel.carBrand.brand} ${data.car.carModel.name}`,
   accessorKey:'car.carModel.carBrand.brand',
   header: ({ column }) => {
     return (
