@@ -7,6 +7,11 @@ const nextConfig = {
               hostname: 'files.edgestore.dev',
        
             },
+            {
+              protocol: 'http',
+              hostname: 'res.cloudinary.com',
+       
+            },
           ]
     },
 };
