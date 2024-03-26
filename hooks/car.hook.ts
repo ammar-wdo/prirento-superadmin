@@ -45,7 +45,7 @@ export const useCar = (
       commession: car?.commession! || undefined,
       companyId: car?.companyId || "",
       coolDown: car?.coolDown || undefined,
-      deleviryFee: car?.deleviryFee || undefined,
+      deleviryFee: car?.deleviryFee || 0,
       deposite: car?.deposite || undefined,
       description: car?.description || "",
       disabled: car?.disabled || false,
