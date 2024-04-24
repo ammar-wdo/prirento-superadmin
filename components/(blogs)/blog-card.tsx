@@ -2,7 +2,9 @@ import { Blog } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import NavigatorButton from "../navigator-button";
-import { Edit } from "lucide-react";
+import { Delete, Edit } from "lucide-react";
+import ClientModalButton from "../client-modal-button";
+import { deleteBlog } from "@/actions/blog-actions";
 
 type Props = {
   blog: Blog & { category: { label: string } };
@@ -32,13 +34,16 @@ const BlogCard = ({ blog }: Props) => {
      
        
       </div>
-<div className="mt-auto p-4">
+<div className="mt-auto p-4 flex flex-col gap-2">
 <NavigatorButton
           className="w-full "
           href={`/dashboard/blog/${blog.id}`}
         >
           Edit <Edit className="ml-2 w-4 h-4"/>
         </NavigatorButton>
+        <ClientModalButton className="w-full" destructive={true} modalInputs={{toDelete:true,deleteFunction:deleteBlog,deleteId:blog.id,modal:'delete'}}>
+          Delete <Delete className="ml-2 w-4 h-4" />
+        </ClientModalButton>
 </div>
      
     </div>

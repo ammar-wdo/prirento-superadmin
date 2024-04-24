@@ -83,7 +83,7 @@ export const deleteBlog= async (id: string) => {
 
    
 
-    await prisma.blogCategory.delete({
+    await prisma.blog.delete({
       where: {
         id,
       },
