@@ -1,4 +1,4 @@
-import { BlogCategory, Car, CarAvailability, CarBrand, CarDiscount, CarExtraOption, CarModel, Category, Faq, Location, SubLocation, SuperadminRule } from "@prisma/client";
+import { BlogCategory, Car, CarAvailability, CarBrand, CarDiscount, CarExtraOption, CarModel, Category, Faq, Location, Review, SubLocation, SuperadminRule } from "@prisma/client";
 import { create } from "zustand";
 
 export type DeleteFunction = (
@@ -76,6 +76,23 @@ export type ModalInputs =
       modal: "faq";
       faq?: Faq;
    
+    } |{
+      toDelete: false;
+      modal:'review',
+      review?:Review,
+      companies?:{
+        name: string;
+        id: string;
+        cars: {
+            carModel: {
+                name: string;
+                carBrand: {
+                    brand: string;
+                };
+            };
+            id: string;
+        }[];
+    }[]
     }
 
 type Store = {

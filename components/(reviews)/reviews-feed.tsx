@@ -15,6 +15,9 @@ import ReactStarsComponent from "../react-stars-component";
 import { reviewMapper } from "@/mapper";
 import ReviewToggleButton from "./review-toggle-button";
 import ToolTip from "../tool-tip";
+import ClientModalButton from "../client-modal-button";
+import { Edit, Trash } from "lucide-react";
+import { deleteReveiw } from "@/actions/review-actions";
 
 type Props = {
  dashboard?:boolean
@@ -31,18 +34,20 @@ const ReviewsFeed = async ({dashboard}: Props) => {
     select: {
       id: true,
       rate: true,
+      email:true,
+      firstName:true,
+      lastName:true,
       visibility: true,
       reviewContent: true,
       status: true,
       createdAt: true,
+      bookingId:true,
+      companyId:true,
+      carId:true,
+      placeholderDate:true,
+      updatedUt:true,
 
-      booking: {
-        select: {
-          email: true,
-          firstName: true,
-          lastName: true,
-        },
-      },
+    
       car: {
         select: {
           carModel: {
@@ -77,14 +82,15 @@ const ReviewsFeed = async ({dashboard}: Props) => {
           <TableHead>Created at</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Toggle</TableHead>
+          <TableHead>Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {reviews.map((review) => (
           <TableRow key={review.id}>
-            <TableHead>{review.booking.email}</TableHead>
-            <TableHead>{review.booking.firstName}</TableHead>
-            <TableHead>{review.booking.lastName}</TableHead>
+            <TableHead>{review.email}</TableHead>
+            <TableHead>{review.firstName}</TableHead>
+            <TableHead>{review.lastName}</TableHead>
             <TableHead>
               <ReactStarsComponent rate={review.rate} />
             </TableHead>
@@ -95,7 +101,7 @@ const ReviewsFeed = async ({dashboard}: Props) => {
             </TableHead>
             <TableHead>{review.company.name}</TableHead>
             <TableHead>
-              {formatDate(new Date(review.createdAt), "en-GB", {
+              {formatDate(new Date(review.placeholderDate || review.createdAt), "en-GB", {
                 timeZone: "Asia/Dubai",
                 year: "numeric",
                 month: "2-digit",
@@ -107,6 +113,12 @@ const ReviewsFeed = async ({dashboard}: Props) => {
             </TableHead>
             <TableHead ><span className={cn(reviewMapper[review.status],'border py-1 px-2 text-sm rounded-xl ')}>{review.status}</span></TableHead>
             <TableHead><ReviewToggleButton id={review.id} state={review.status==='ACTIVE'} /></TableHead>
+            <TableHead><div className="flex items-center gap-2">
+              
+              <ClientModalButton modalInputs={{toDelete:false,modal:'review',review}}>Edit<Edit size={20} className="ml-2" /> </ClientModalButton>
+              <ClientModalButton destructive={true} modalInputs={{toDelete:true,deleteFunction:deleteReveiw,deleteId:review.id,modal:'delete'}}>Delete<Trash size={20} className="ml-2" /> </ClientModalButton>
+            
+            </div></TableHead>
           </TableRow>
         ))}
       </TableBody>

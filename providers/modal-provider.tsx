@@ -11,6 +11,7 @@ import CategoryModal from "@/components/modals/category-modal"
 import DeleteModal from "@/components/modals/delete-modal"
 import FaqModal from "@/components/modals/faq-modal"
 import LocationModal from "@/components/modals/location-modal"
+import ReviewModal from "@/components/modals/review-modal"
 import SubLocationModal from "@/components/modals/sublocation-modal"
 import SuperadminRulesModal from "@/components/modals/superadmin-rule"
 import { useEffect, useState } from "react"
@@ -36,6 +37,7 @@ const ModalProvider = (props: Props) => {
     <CarExtraOptionsModal/>
     <BlogCategoryModal/>
     <FaqModal/>
+    <ReviewModal/>
     </>
   )
 }

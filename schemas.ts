@@ -21,20 +21,18 @@ export const loginSchema = z.object({
 
 export const locationSchema = z.object({
   name: requiredString.max(20, "maximum 20 characters"),
-  slug:slugSchema
+  slug: slugSchema,
 });
 
 export const subLocationSchema = z.object({
   name: requiredString.max(100, "maximum 100 characters"),
-  slug:slugSchema,
+  slug: slugSchema,
   locationId: requiredString,
 });
 
 export const categorySchema = z.object({
   name: requiredString.max(20, "maximum 20 characters"),
 });
-
-
 
 const newPassword = z.string().min(8, { message: "Enter at least 8 chars" });
 
@@ -65,8 +63,8 @@ export const companySchema = z.object({
   gallary: z.array(requiredString),
   content: requiredString,
   promoted: z.coerce.boolean().default(false),
-  away:z.coerce.boolean(),
-  openingTime:z.object({
+  away: z.coerce.boolean(),
+  openingTime: z.object({
     Monday: dayOpeningTimeSchema,
     Tuesday: dayOpeningTimeSchema,
     Wednesday: dayOpeningTimeSchema,
@@ -102,7 +100,7 @@ export const carTypes = [
   "business",
 ] as const;
 export const transmition = ["auto", "manual"] as const;
-export const electric = ["none","fully_electric", "hybrid"] as const;
+export const electric = ["none", "fully_electric", "hybrid"] as const;
 export const carStatus = ["pending", "active"] as const;
 export const carColors = [
   "Black",
@@ -214,9 +212,10 @@ const numericValues = z
       .positive({ message: "Enter positive value " })
       .optional()
       .or(z.literal(undefined)),
-    deleviryFee: requiredNumber
-     
-      .refine((val) => (!val || val >= 0), "Enter positive value"),
+    deleviryFee: requiredNumber.refine(
+      (val) => !val || val >= 0,
+      "Enter positive value"
+    ),
     coolDown: requiredNumber
       .refine((val) => val, "Required field")
       .refine((val) => val > 0, "Enter positive value"),
@@ -398,67 +397,79 @@ export const superAdminSchema = z
     { message: "Either to all cars or one car is allowed", path: ["carId"] }
   );
 
-export const carExtraOptionStatus = ['pending', 'active'] as const
+export const carExtraOptionStatus = ["pending", "active"] as const;
 
-
-  export const carExtraOptionsSchema = z.object({
-    label:requiredString,
-    description:requiredString,
-    price:requiredNumber .refine((val) => val, "Required field")
+export const carExtraOptionsSchema = z.object({
+  label: requiredString,
+  description: requiredString,
+  price: requiredNumber
+    .refine((val) => val, "Required field")
     .refine((val) => val > 0, "Enter positive value"),
-    status:z.enum(carExtraOptionStatus).refine(val=>carExtraOptionStatus.includes(val),'Invalid input'),
-    logo:requiredString,
-   
+  status: z
+    .enum(carExtraOptionStatus)
+    .refine((val) => carExtraOptionStatus.includes(val), "Invalid input"),
+  logo: requiredString,
+});
 
+export const blogCategorySchema = z.object({
+  label: requiredString,
+  slug: requiredString,
+});
+
+export const blogSchema = z.object({
+  title: requiredString,
+  content: requiredString,
+  slug: requiredString,
+  author: requiredString,
+  shortDescription: requiredString,
+  tags: z.array(z.string()),
+  logo: z.string().min(1, { message: "Upload an image please " }),
+  categoryId: z.string().min(1),
+});
+
+export const aboutSchema = z.object({
+  content: requiredString,
+});
+
+export const faqSchema = z.object({
+  question: requiredString,
+  answer: requiredString,
+});
+
+export const termsSchema = z.object({
+  content: requiredString,
+});
+
+export const privacySchema = z.object({
+  content: requiredString,
+});
+
+export const reviewVisibility = ["FIRSTNAME", "FULLNAME", "ANOUNYMOS"] as const;
+
+export const reviewVisibilityArray = ["FIRSTNAME", "FULLNAME", "ANOUNYMOS"];
+
+export const reviewStatus = ["PENDING", "ACTIVE"] as const;
+export const reviewStatusArray = ["PENDING", "ACTIVE"]
+
+export const reviewSchema = z
+  .object({
+    companyId: z.string().min(1),
+    carId: z.string().min(1),
+    firstName: z.string().optional().or(z.literal(undefined)),
+    lastName: z.string().optional().or(z.literal(undefined)),
+    email: z.string().email(),
+    reviewContent: z.string().optional(),
+    rate: z.number(),
+    visibility: z.enum(reviewVisibility).default("FULLNAME"),
+    status: z.enum(reviewStatus).default("PENDING"),
+    placeholderDate: z.date(),
   })
-
-
-  export const  blogCategorySchema = z.object({
-    label: requiredString,
-    slug:requiredString
+  .refine((data) => (data.visibility !== "FIRSTNAME") || !!data.firstName, {
+    message: "First name is required",
+    path: ["firstName"],
   })
-
-
-  export const blogSchema = z.object({
-    title: requiredString,
-    content: requiredString,
-    slug: requiredString,
-    author: requiredString,
-    shortDescription: requiredString,
-    tags: z.array(z.string()),
-    logo: z.string().min(1,{message:'Upload an image please '}),
-    categoryId: z.string().min(1),
-  });
-
-
-  export const aboutSchema = z.object({
-    content:requiredString
-  })
- 
-  export const faqSchema = z.object({
-    question:requiredString,
-    answer:requiredString
-  })
-
-  export const termsSchema = z.object({
-    content:requiredString
-  })
-
-
-  export const privacySchema = z.object({
-    content:requiredString
-  })
-
-
-
-  export const reviewVisibility= [  'FIRSTNAME',
-    'FULLNAME',
-    'ANOUNYMOS'] as const
-
-  export const reviewSchema = z.object({
-
-    reviewContent:z.string().optional(),
-    rate:z.number(),
-    visibility:z.enum(reviewVisibility).default('FULLNAME')
-
-  })
+  .refine(
+    (data) =>
+      (data.visibility !== "FULLNAME") || (!!data.firstName && !!data.lastName),
+    { message: "Firstname and Lastname are required", path: ["lastName"] }
+  );
