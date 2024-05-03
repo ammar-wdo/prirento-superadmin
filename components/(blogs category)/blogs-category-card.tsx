@@ -10,7 +10,7 @@ type Props = {
 
 const BlogCategoryCard = ({ category }: Props) => {
   return (
-    <div className="p-4 border rounded-md bg-white">
+    <div className="p-4 border rounded-md  bg-white">
       <p className="font-medium capitalize">{category.label}</p>
       <div className="w-full flex items-center gap-1 mt-3">
         <ClientModalButton
