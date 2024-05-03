@@ -2,8 +2,7 @@ import prisma from "@/lib/prisma";
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
+  
   TableHead,
   TableHeader,
   TableRow,
@@ -11,7 +10,7 @@ import {
 import NoResult from "./no-result";
 import NavigatorButton from "./navigator-button";
 import { statusMap } from "@/app/mapping";
-import ToggleButon from "./toggle-button";
+
 
 type Props = {};
 
