@@ -1,5 +1,6 @@
 'use server'
 
+import prisma from "@/lib/prisma"
 import { sendPushNotification } from "@/lib/utils"
 import { pushNotificationsSchema } from "@/schemas"
 
@@ -17,6 +18,16 @@ export const createPushNotifications = async (data:any)=>{
         const {description,title,expoPushNotificationId}  =validDate.data
 
         if(!expoPushNotificationId) return {success:false,error:"Expo Push Notification Id is required"}
+
+        const company = await prisma.company.findUnique({
+            where:{
+                id:validDate.data.companyId
+            }
+        })
+
+        if(!company) return {success:false,error:"Company does not exist."}
+
+        if(!company.pushNotificationToken) return ({success:false,error:"Company does not have Expo Push Token"})
 
 await sendPushNotification(expoPushNotificationId,title,description)
 
