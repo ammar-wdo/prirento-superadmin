@@ -13,6 +13,7 @@ import {
   LayoutDashboard,
   MessageCircleQuestion,
   Navigation,
+  SendHorizonal,
   ShipWheel,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -65,6 +66,12 @@ const AsideLinks = (props: Props) => {
           href: "/dashboard/reviews",
           active: pathname === "/dashboard/reviews",
           icon: <MdOutlineReviews className="h-4 w-4" />,
+        },
+        {
+          label: "Push Notifications",
+          href: "/dashboard/push-notifications",
+          active: pathname === "/dashboard/push-notifications",
+          icon: <SendHorizonal className="h-4 w-4" />,
         },
       ],
     },

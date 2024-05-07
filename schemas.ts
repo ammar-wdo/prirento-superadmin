@@ -473,3 +473,12 @@ export const reviewSchema = z
       (data.visibility !== "FULLNAME") || (!!data.firstName && !!data.lastName),
     { message: "Firstname and Lastname are required", path: ["lastName"] }
   );
+
+
+
+  export const pushNotificationsSchema = z.object({
+    title: requiredString,
+    description: requiredString.optional().or(z.literal(undefined)),
+    expoPushNotificationId: requiredString.optional().or(z.literal(undefined)),
+ companyId:requiredString
+  });

@@ -93,6 +93,12 @@ export type ModalInputs =
             id: string;
         }[];
     }[]
+    }| {
+      toDelete: false;
+      modal: "push-notification";
+      companyId:string,
+      companyName:string,
+      expoPushNotificationId?:string
     }
 
 type Store = {

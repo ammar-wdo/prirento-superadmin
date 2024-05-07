@@ -14,7 +14,8 @@ type Props = {
   modalInputs: ModalInputs;
   small?: boolean;
   destructive?: boolean;
-  type?:'submit'|'button'
+  type?:'submit'|'button';
+  disabled?:boolean
   
 
 } & React.HtmlHTMLAttributes<HTMLButtonElement>
@@ -26,11 +27,13 @@ type,
   destructive,
   modalInputs,
   className,
+  disabled,
   ...rest
 }: Props) => {
   const { setOpen } = useModal();
   return (
     <Button
+    disabled={disabled}
   type={type}
       className={cn(className || "")}
       variant={destructive ? "destructive" : "default"}
