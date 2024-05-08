@@ -83,7 +83,14 @@ export const editCompany = async (data: any, id: string) => {
     const thePassword = await newPasswordCheck(newPassword,password)
     
 
+const company = await prisma.company.findUnique({
+  where:{
+    id:id
+  }
+})
 
+
+const setPushNotificationToNull = company?.email !== validData.data.email
 
 
 
@@ -94,7 +101,8 @@ export const editCompany = async (data: any, id: string) => {
       data: {
        ...rest,
        password:thePassword,
-       email:rest.email.toLocaleLowerCase()
+       email:rest.email.toLocaleLowerCase(),
+       ...(!!setPushNotificationToNull && {pushNotificationToken:null})
       },
     });
 
